@@ -1,5 +1,7 @@
 {
     "private": true,
+    "name": "vue-3",
+    "description": null,
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
@@ -10,20 +12,38 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@inertiajs/inertia": "^0.8.4",
+        "@inertiajs/inertia-vue3": "^0.3.5",
+        "@inertiajs/progress": "^0.2.4",
+        "@tailwindcss/forms": "^0.2.1",
+        "@tailwindcss/typography": "^0.3.0",
+        "@vue/compiler-sfc": "^3.0.5",
         "autoprefixer": "^10.2.6",
         "axios": "^0.21",
         "bootstrap": "^4.6.0",
+        "browser-sync": "^2.26.14",
+        "browser-sync-webpack-plugin": "^2.3.0",
+        "css-loader": "^5.2.6",
+        "file-loader": "^6.2.0",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
+        "mini-css-extract-plugin": "^1.6.0",
         "popper.js": "^1.16.1",
         "postcss": "^8.3.0",
+        "postcss-import": "^12.0.1",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1",
-        "tailwindcss": "^2.1.2",
-        "vue": "^2.6.12",
-        "vue-loader": "^15.9.7",
-        "vue-template-compiler": "^2.6.12"
+        "tailwindcss": "^2.0.1",
+        "vue": "^3.0.5",
+        "vue-loader": "^16.1.2",
+        "vue-template-compiler": "^2.6.13"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.2.0",
+        "@heroicons/vue": "^1.0.1",
+        "@tailwindcss/forms": "^0.3.3",
+        "@tailwindcss/typography": "^0.4.1"
     }
 }
