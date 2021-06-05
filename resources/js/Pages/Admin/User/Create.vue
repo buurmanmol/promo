@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin>
+    <app-layout-admin :user="user">
         <!--
           This example requires Tailwind CSS v2.0+
 
@@ -274,7 +274,7 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 export default {
-    // props:['users'],
+    props:['user'],
     components: {
         AppLayoutAdmin
     },

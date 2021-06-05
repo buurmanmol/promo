@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -17,13 +19,19 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return Inertia::render('Admin/User/Index', ['users' => $users]);
+        return Inertia::render('Admin/User/Index', ['users' => $users, 'currentUser' => Auth::user()]);
     }
 
     public function create()
     {
         $users = User::all();
 
-        return Inertia::render('Admin/User/Create', ['users' => $users]);
+        return Inertia::render('Admin/User/Create', ['user' => Auth::user()]);
+    }
+
+    public function update(User $user, Request $request)
+    {
+
+        return Inertia::render('Admin/User/Update',['user' => $user]);
     }
 }
