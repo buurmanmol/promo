@@ -41,7 +41,7 @@
                             </div>
                         </TransitionChild>
                         <div class="flex-shrink-0 flex items-center px-4">
-                            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg" alt="Easywire logo" />
+                            <img class="h-8 w-auto" src="/images/logo.png" alt="Promofix logo" />
                         </div>
                         <nav class="mt-5 flex-shrink-0 h-full divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar">
                             <div class="px-2 space-y-1">
@@ -73,7 +73,7 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex flex-col flex-grow bg-azure-radiance-700 pt-5 pb-4 overflow-y-auto">
                     <div class="flex items-center flex-shrink-0 px-4">
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/easywire-logo-cyan-300-mark-white-text.svg" alt="Easywire logo" />
+                        <img class="h-8 w-auto" src="/images/logo.png" alt="Easywire logo" />
                     </div>
                     <nav class="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar">
                         <div class="px-2 space-y-1">
@@ -124,21 +124,21 @@
                         <Menu as="div" class="ml-3 relative">
                             <div>
                                 <MenuButton class="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
-                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                                    <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>Emilia Birch</span>
+                                    <img class="h-8 w-8 rounded-full" :src="'/storage/' + user.profile_photo_path" alt="" />
+                                    <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>{{ user.name }}</span>
                                     <ChevronDownIcon class="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block" aria-hidden="true" />
                                 </MenuButton>
                             </div>
                             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <MenuItem v-slot="{ active }">
-                                        <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your Profile</a>
+                                        <a href="/user/profile" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your Profile</a>
                                     </MenuItem>
                                     <MenuItem v-slot="{ active }">
                                         <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
                                     </MenuItem>
                                     <MenuItem v-slot="{ active }">
-                                        <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Logout</a>
+                                        <a href="/logout" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Logout</a>
                                     </MenuItem>
                                 </MenuItems>
                             </transition>
@@ -154,12 +154,12 @@
                             <div class="flex-1 min-w-0">
                                 <!-- Profile -->
                                 <div class="flex items-center">
-                                    <img class="hidden h-16 w-16 rounded-full sm:block" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
+                                    <img class="hidden h-16 w-16 rounded-full sm:block" :src="'/storage/' + user.profile_photo_path" alt="" />
                                     <div>
                                         <div class="flex items-center">
-                                            <img class="h-16 w-16 rounded-full sm:hidden" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
+                                            <img class="h-16 w-16 rounded-full sm:hidden" :src="'/storage/' + user.profile_photo_path" alt="" />
                                             <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                                                Good morning, Emilia Birch
+                                                Good morning, {{ user.name }}
                                             </h1>
                                         </div>
                                         <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -241,6 +241,11 @@ import {
     ShieldCheckIcon,
     UserGroupIcon,
     XIcon,
+    TicketIcon,
+    DocumentSearchIcon,
+    DocumentTextIcon,
+    DeviceMobileIcon,
+
 } from '@heroicons/vue/outline'
 import {
     CashIcon,
@@ -249,20 +254,20 @@ import {
     ChevronRightIcon,
     OfficeBuildingIcon,
     SearchIcon,
+
 } from '@heroicons/vue/solid'
 
 const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: true },
-    { name: 'History', href: '#', icon: ClockIcon, current: false },
-    { name: 'Balances', href: '#', icon: ScaleIcon, current: false },
-    { name: 'Cards', href: '#', icon: CreditCardIcon, current: false },
-    { name: 'Recipients', href: '#', icon: UserGroupIcon, current: false },
-    { name: 'Reports', href: '#', icon: DocumentReportIcon, current: false },
+    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
+    { name: 'Mijn facturen', href: '/user/facturen', icon: DocumentTextIcon, current: false },
+    { name: 'Mijn reparaties', href: '/user/reparaties', icon: TicketIcon, current: false },
 ]
 const secondaryNavigation = [
-    { name: 'Settings', href: '#', icon: CogIcon },
-    { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
-    { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
+    { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
+    { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },
+    { name: 'Telefoons', href: '/admin/telefoons', icon: DeviceMobileIcon },
+    { name: 'Onderdelen', href: '/admin/onderdelen', icon: CogIcon },
+
 ]
 const cards = [
     { name: 'Account balance', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
@@ -288,6 +293,7 @@ const statusStyles = {
 }
 
 export default {
+    props:['user'],
     components: {
         Dialog,
         DialogOverlay,
