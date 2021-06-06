@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/admin/users', [UserController::class, 'index']);
     Route::get('/admin/users/create', [UserController::class, 'create']);
     Route::get('/admin/user/{user}', [UserController::class, 'update']);
+    Route::get('/admin/companies', [CompanyController::class, 'index']);
+    Route::get('/admin/company/{company}', [CompanyController::class, 'details']);
 
 });

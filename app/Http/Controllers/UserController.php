@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::with('company')->get();
 
         return Inertia::render('Admin/User/Index', ['users' => $users, 'currentUser' => Auth::user()]);
     }
@@ -31,7 +31,7 @@ class UserController extends Controller
 
     public function update(User $user, Request $request)
     {
-
+        $user->update($request->all());
         return Inertia::render('Admin/User/Update',['user' => $user]);
     }
 }
