@@ -58,7 +58,7 @@
                                 {{ person.role }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a :href="'/admin/user/' + person.id" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>
+                                <a :href="'/admin/user/' + person.id + '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>
                             </td>
                         </tr>
                         </tbody>
