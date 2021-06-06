@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -27,7 +27,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'company_id'
     ];
 
     /**
@@ -60,8 +59,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function identity()
+    public function company()
     {
-        return $this->hasOne(Identity::class);
+        return $this->hasOne(Company::class);
     }
 }
