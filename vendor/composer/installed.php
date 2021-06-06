@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'd19c3771541379a2d12dac608463a8ac220aee84',
+    'reference' => '83d8d68f0ff500e4c9e15dbb87de3fc2262cd921',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -168,6 +168,15 @@
       array (
       ),
       'reference' => 'a8ccedc7ca95189ead0e407c43b530dc17791d6a',
+    ),
+    'goldspecdigital/laravel-eloquent-uuid' => 
+    array (
+      'pretty_version' => 'v8.0.1',
+      'version' => '8.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e98748113e3b9de5b408cdc306e9d93e18121988',
     ),
     'graham-campbell/result-type' => 
     array (
@@ -499,7 +508,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'd19c3771541379a2d12dac608463a8ac220aee84',
+      'reference' => '83d8d68f0ff500e4c9e15dbb87de3fc2262cd921',
     ),
     'laravel/sail' => 
     array (

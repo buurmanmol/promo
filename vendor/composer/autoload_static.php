@@ -150,6 +150,7 @@ class ComposerStaticInit4a12095d689aeb256e4685b9c7698f07
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
+            'GoldSpecDigital\\LaravelEloquentUUID\\' => 36,
         ),
         'F' => 
         array (
@@ -471,6 +472,10 @@ class ComposerStaticInit4a12095d689aeb256e4685b9c7698f07
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
+        'GoldSpecDigital\\LaravelEloquentUUID\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/goldspecdigital/laravel-eloquent-uuid/src',
         ),
         'Fruitcake\\Cors\\' => 
         array (
@@ -1572,6 +1577,11 @@ class ComposerStaticInit4a12095d689aeb256e4685b9c7698f07
         'Fideloper\\Proxy\\TrustedProxyServiceProvider' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustedProxyServiceProvider.php',
         'Fruitcake\\Cors\\CorsServiceProvider' => __DIR__ . '/..' . '/fruitcake/laravel-cors/src/CorsServiceProvider.php',
         'Fruitcake\\Cors\\HandleCors' => __DIR__ . '/..' . '/fruitcake/laravel-cors/src/HandleCors.php',
+        'GoldSpecDigital\\LaravelEloquentUUID\\Console\\UuidModelCommand' => __DIR__ . '/..' . '/goldspecdigital/laravel-eloquent-uuid/src/Console/UuidModelCommand.php',
+        'GoldSpecDigital\\LaravelEloquentUUID\\Database\\Eloquent\\Model' => __DIR__ . '/..' . '/goldspecdigital/laravel-eloquent-uuid/src/Database/Eloquent/Model.php',
+        'GoldSpecDigital\\LaravelEloquentUUID\\Database\\Eloquent\\Uuid' => __DIR__ . '/..' . '/goldspecdigital/laravel-eloquent-uuid/src/Database/Eloquent/Uuid.php',
+        'GoldSpecDigital\\LaravelEloquentUUID\\Foundation\\Auth\\User' => __DIR__ . '/..' . '/goldspecdigital/laravel-eloquent-uuid/src/Foundation/Auth/User.php',
+        'GoldSpecDigital\\LaravelEloquentUUID\\UuidServiceProvider' => __DIR__ . '/..' . '/goldspecdigital/laravel-eloquent-uuid/src/UuidServiceProvider.php',
         'GrahamCampbell\\ResultType\\Error' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Error.php',
         'GrahamCampbell\\ResultType\\Result' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Result.php',
         'GrahamCampbell\\ResultType\\Success' => __DIR__ . '/..' . '/graham-campbell/result-type/src/Success.php',
