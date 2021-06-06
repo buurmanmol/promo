@@ -264,6 +264,8 @@ const navigation = [
 ]
 const secondaryNavigation = [
     { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
+    { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon },
+
     { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },
     { name: 'Telefoons', href: '/admin/telefoons', icon: DeviceMobileIcon },
     { name: 'Onderdelen', href: '/admin/onderdelen', icon: CogIcon },
@@ -309,9 +311,9 @@ export default {
         ChevronDownIcon,
         ChevronRightIcon,
         MenuAlt1Icon,
-        OfficeBuildingIcon,
         SearchIcon,
         XIcon,
+        OfficeBuildingIcon
     },
     setup() {
         const sidebarOpen = ref(false)

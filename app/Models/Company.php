@@ -11,6 +11,13 @@ class Company extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = [
+        'name',
+        'address',
+        'zipcode',
+        'telephone',
+        'email'
+    ];
     public function user()
     {
         return $this->hasOne(User::class);
