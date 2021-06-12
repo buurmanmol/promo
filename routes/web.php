@@ -55,9 +55,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/admin/repair/{repair}', [RepairController::class, 'details']);
     Route::get('/admin/repairs/create', [RepairController::class, 'create']);
     Route::get('/admin/repair/{repair}/update', [RepairController::class, 'update']);
-    Route::get('/admin/invoices', [InvoiceController::class, 'index']);
-    Route::get('/admin/invoice/{invoice}', [InvoiceController::class, 'details']);
-    Route::get('/admin/invoices/create', [InvoiceController::class, 'create']);
-    Route::get('/admin/invoice/{invoice}/update', [InvoiceController::class, 'update']);
+    Route::get('/admin/facturen', [InvoiceController::class, 'index']);
+    Route::get('/admin/factuur/{invoice}', [InvoiceController::class, 'details']);
+    Route::get('/admin/facturen/create', [InvoiceController::class, 'create']);
+    Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'update']);
 
 });
