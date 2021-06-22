@@ -16,7 +16,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Wouter',
+            'first_name' => 'Wouter',
+            'last_name' => 'Moelker',
+            'address' => 'Oppenheimstraat 37',
+            'postal_code' => '9718LL',
+            'city' => 'Groningen',
+            'province' => 'Groningen',
             'email' => 'wouter.moelker@hotmail.com',
             'password' => bcrypt('123')
         ]);
@@ -24,7 +29,12 @@ class UserSeeder extends Seeder
         $faker = \Faker\Factory::create();
         for($i = 0;$i < 10; $i++) {
             User::create([
-                'name' =>  $faker->name,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'address' => $faker->address,
+                'postal_code' => $faker->postcode,
+                'city' => $faker->city,
+                'province' => $faker->state,
                 'email' => $faker->email,
                 'password' => bcrypt('123'),
             ]);

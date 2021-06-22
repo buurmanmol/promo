@@ -18,8 +18,9 @@ class Company extends Model
         'telephone',
         'email'
     ];
-    public function user()
+    public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsToMany(User::class);
     }
+
 }

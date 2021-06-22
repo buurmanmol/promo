@@ -20,10 +20,7 @@ class CreateCompaniesTable extends Migration
             $table->string('zipcode');
             $table->string('email');
             $table->string('telephone');
-            $table->BigInteger('user_id')->unsigned();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
