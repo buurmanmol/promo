@@ -107,9 +107,18 @@
                                 <input v-model="user.postal_code" type="text" name="zip" id="zip" autocomplete="postal-code" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                             </div>
                         </div>
+                        <div class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">
+                                Company
+                            </label>
+                            <div class="mt-1">
+                                <select v-model="selectedCompany" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                    <option v-for="company in companies" :value="company.id">{{company.name}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
 
             <div v-if="errors.length" class="rounded-md bg-red-50 p-4">
@@ -156,10 +165,13 @@ export default {
     data() {
       return {
           errors: [],
+          selectedCompany: [],
+          companies: [],
           user: {
               first_name: '',
               last_name: '',
               city: '',
+              address:'',
               province: '',
               postal_code: '',
               phone_number: '',
@@ -169,7 +181,19 @@ export default {
           },
       }
     },
+    mounted() {
+      this.getCompanies();
+    },
     methods: {
+        getCompanies() {
+            axios.get('/api/companies')
+                .then((response) => {
+                    console.log(response);
+                    this.companies = response.data.companies;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         checkForm:function(e) {
             this.errors = [];
             if(!this.user.first_name) this.errors.push("First name required.");
@@ -181,6 +205,7 @@ export default {
             if(!this.user.phone_number) this.errors.push("Phone number required.");
             if(!this.user.postal_code) this.errors.push("Postal Code required.");
             if(!this.user.password) this.errors.push("Password Code required.");
+            if(!this.selectedCompany) this.errors.push("Select a company.");
 
             if (!this.errors.length) {
                 this.createUser()
@@ -189,10 +214,10 @@ export default {
             e.preventDefault();
         },
         createUser(){
+            this.user.company = this.selectedCompany;
             axios.post('/api/users/create', this.user)
                 .then((response) => {
                     console.log(response);
-                    this.message = "Reservation updated";
                     window.location = '/admin/users'
                 }, (error) => {
                     console.log(error);

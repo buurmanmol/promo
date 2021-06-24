@@ -55,6 +55,14 @@
                                 <input v-model="user.email" id="email" name="email" type="email" autocomplete="email" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                             </div>
                         </div>
+                        <div class="sm:col-span-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700">
+                                Email address
+                            </label>
+                            <div class="mt-1">
+                                <input v-model="user.phone_number" id="phone_number" name="phone_number" type="text" autocomplete="telephone" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                            </div>
+                        </div>
 
                         <div class="sm:col-span-6">
                             <label for="street_address" class="block text-sm font-medium text-gray-700">
@@ -91,9 +99,18 @@
                                 <input v-model="user.postal_code" type="text" name="zip" id="zip" autocomplete="postal-code" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                             </div>
                         </div>
+                        <div class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">
+                                Company
+                            </label>
+                            <div class="mt-1">
+                                <select v-model="selectedCompany" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                    <option v-for="company in companies" :value="company.id">{{company.name}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="pt-5">
@@ -119,14 +136,35 @@ export default {
       return {
           message: '',
           errors: [],
+          companies:[],
+          selectedCompany: '',
       }
     },
+    mounted() {
+        this.getCompanies();
+        this.user.company = this.user.company[0];
+        this.selectedCompany = this.user.company.id;
+        this.user.originalCompany = this.user.company;
+    },
     setup() {
+
         return {
         }
     },
     methods: {
+        getCompanies() {
+            axios.get('/api/companies')
+                .then((response) => {
+                    console.log(response);
+                   this.companies = response.data.companies;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         updateUser(id){
+            if(this.selectedCompany.length > 1) {
+                this.user.company = this.selectedCompany
+            }
             axios.post('/api/user/' + id + '/update', this.user)
                 .then((response) => {
                     console.log(response);

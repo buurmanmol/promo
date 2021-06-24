@@ -17,7 +17,7 @@ class CreateCompanyUserTable extends Migration
             $table->id();
             $table->BigInteger('user_id')->unsigned();
             $table->uuid('company_id');
-            $table->timestamps();
+//            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

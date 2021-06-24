@@ -20,10 +20,10 @@ class CompanySeeder extends Seeder
 
         foreach($users as $user){
         $company = Company::create([
-           'name' =>  $faker->name,
+           'name' =>  $faker->company,
             'address' => $faker->address,
-            'zipcode' => $faker->postcode,
-            'telephone' => $faker->phoneNumber,
+            'postal_code' => $faker->postcode,
+            'phone_number' => $faker->phoneNumber,
             'email' => $faker->email,
         ]);
         $company->users()->attach($user);

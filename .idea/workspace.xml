@@ -1,47 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e655b248-6461-4fa3-a517-619f78884d22" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/Pages/Admin/Company/Create.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/Pages/Admin/Company/Update.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_06_090235_create_companies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_06_06_090235_create_companies_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_22_074915_create_company_user_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_06_22_074915_create_company_user_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeders/CompanySeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/CompanySeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeders/UserSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/UserSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/dialog/dialog.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/dialog/dialog.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/listbox/listbox.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/listbox/listbox.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/menu/menu.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/menu/menu.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/radio-group/radio-group.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/radio-group/radio-group.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/switch/switch.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/switch/switch.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/transitions/transition.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/transitions/transition.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/transitions/utils/transition.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/components/transitions/utils/transition.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.development.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.development.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.development.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.production.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.production.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.production.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.cjs.production.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.esm.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.esm.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.development.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.development.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.development.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.production.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.production.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.production.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/headlessui.umd.production.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/internal/open-closed.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/internal/open-closed.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/utils/render.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/dist/utils/render.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@headlessui/vue/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@headlessui/vue/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@tailwindcss/forms/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@tailwindcss/forms/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@tailwindcss/typography/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/@tailwindcss/typography/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/Layouts/AppLayoutAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Layouts/AppLayoutAdmin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/Pages/Admin/Company/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Pages/Admin/Company/Index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/Pages/Admin/User/Create.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Pages/Admin/User/Create.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/Pages/Admin/User/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Pages/Admin/User/Index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/Pages/Admin/User/Update.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Pages/Admin/User/Update.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
