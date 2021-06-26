@@ -2,23 +2,8 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
     <app-layout-admin :user="user">
-        <!--
-          This example requires Tailwind CSS v2.0+
-
-          This example requires some changes to your config:
-
-          ```
-          // tailwind.config.js
-          module.exports = {
-            // ...
-            plugins: [
-              // ...
-              require('@tailwindcss/forms'),
-            ]
-          }
-          ```
-        -->
             <form class="p-4 bg-white space-y-8 divide-y divide-gray-200">
+                <div class="bg-red-300 absolute inset-0 z-0 hidden" @click="modal = false"> </div>
                 <div class="space-y-8 divide-y divide-gray-200">
                     <div>
                         <div>
@@ -29,6 +14,22 @@
                                 This information will be displayed publicly so be careful what you share.
                             </p>
                         </div>
+                        <div class="sm:col-span-3">
+                                <label for="country" class="block text-sm font-medium text-gray-700">
+                                    Bedrijf naam
+                                </label>
+                                <div class="mt-1 flex flex-col">
+                                    <input v-model="companyName" type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" autocomplete="off"  @focus="modal = true; $event.target.select() " />
+                                    <div v-if="filteredCompanies && modal">
+                                        <ul >
+                                            <li v-for="filteredComapany in filteredCompanies" class="px-2 py-2 border cursor-pointer" @click="setCompany(filteredComapany.name)"> {{filteredComapany.name}} </li>
+                                        </ul>
+                                    </div> 
+                                   <!-- <select id="name" name="name" autocomplete="name" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                                        <option v-for="company in companies" :key="company.id" >{{company.name}}</option>
+                                    </select> -->
+                                </div>
+                            </div>
 
                         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                             <div class="sm:col-span-4">
@@ -275,10 +276,44 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 export default {
-    props:['user'],
+    props:['user', 'companies'],
     components: {
-        AppLayoutAdmin
+        AppLayoutAdmin,
     },
+    data: function() {
+        return {
+            companyName: '',
+            modal: false,
+            companiesNames: this.companies,
+            filteredCompanies: [],
+            test: this.companies,
+        }
+    },
+    mounted(){
+        this.filterCompanies();
+    },
+
+    methods: {
+        
+        filterCompanies(){
+            var names = JSON.parse(JSON.stringify(this.companiesNames));
+            this.filteredCompanies = names.filter(companyName => {
+               return companyName.name.toLowerCase().startsWith(this.companyName.toLowerCase());
+            });
+        },
+        setCompany(filteredCompany){
+            this.companyName = filteredCompany;
+            this.modal = false;
+        },
+
+    },
+
+    watch:{
+        companyName(){
+            this.filterCompanies();
+        }
+    },
+
     setup() {
         return {
         }

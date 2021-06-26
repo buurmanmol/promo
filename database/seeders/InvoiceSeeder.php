@@ -21,13 +21,11 @@ class InvoiceSeeder extends Seeder
         foreach($users as $user){
         Invoice::create([
             'name' =>  $faker->company,
-            'factuur_id' => $faker->randomDigit,
-            'aantal' => $faker->randomDigit,
-            'omschrijving' => $faker->text,
-            'bedrag'=> $faker->randomDigit,
+            'invoice_path' => '/' . implode('/', $faker->words($faker->numberBetween(0, 4))),
+            'payed' => $faker->boolean,
             'user_id' => $faker->randomDigit,
             'company_id' => $faker->postcode
-        ]);
+          ]);
         }
     }
 }

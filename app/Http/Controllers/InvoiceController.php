@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Company;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,15 +27,17 @@ class InvoiceController extends Controller
 
     public function create()
     {
+        $companies = Company::all("name");
+        //$users = User::with([invoice, company]);
         $invoices = Invoice::all();
 
-        return Inertia::render('Admin/Invoice/Create', ['user' => Auth::user()]);
+        return Inertia::render('Admin/Invoice/Create', ['companies' => $companies, 'user' => Auth::user()]);
     }
     
     public function update(User $user, Request $request)
     {
         //$invoice = Invoice::where('id', $request->id);
-        $user->update($request->all());
+        //$user->update($request->all());
         return Inertia::render('Admin/Invoice/Update',['user' => Auth::user()]);
     }
 }

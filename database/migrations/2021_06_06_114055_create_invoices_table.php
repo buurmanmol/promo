@@ -17,11 +17,9 @@ class CreateInvoicesTable extends Migration
             $table->id();
             
             $table->string('name');
-            $table->string('factuur_id');
-            $table->integer('aantal');
-            $table->string('omschrijving');
-            $table->float('bedrag');
+            $table->string('invoice_path');
             $table->integer('user_id');
+            $table->boolean('payed');
             $table->string('company_id');
             $table->timestamps();
             

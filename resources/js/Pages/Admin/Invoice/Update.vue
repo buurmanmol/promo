@@ -29,6 +29,10 @@
                             This information will be displayed publicly so be careful what you share.
                         </p>
                     </div>
+                    <div> 
+                        hi
+                        {{invoice}}
+                    </div>
 
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                         <div class="sm:col-span-4">
@@ -275,8 +279,9 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 export default {
-    name:'UserUpdate',
-    props:['user'],
+    name:'InvoiceUpdate',
+    props:['invoice'],
+    
     components: {
         AppLayoutAdmin
     },
