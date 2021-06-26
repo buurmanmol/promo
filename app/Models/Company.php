@@ -14,12 +14,13 @@ class Company extends Model
     protected $fillable = [
         'name',
         'address',
-        'zipcode',
-        'telephone',
+        'postal_code',
+        'phone_number',
         'email'
     ];
-    public function user()
+    public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsToMany(User::class);
     }
+
 }

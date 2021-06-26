@@ -32,32 +32,51 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/dashboard', [UserController::class, 'dashboard']);
-
-
-
-
+// Page routes
+    //Users
     Route::get('/admin/users', [UserController::class, 'index']);
-    Route::get('/admin/users/create', [UserController::class, 'create']);
-    Route::get('/admin/user/{user}/update', [UserController::class, 'update']);
+    Route::get('/admin/users/create', [UserController::class, 'createIndex']);
+    Route::get('/admin/user/{user}/update', [UserController::class, 'updateIndex']);
+
+    //Companies
     Route::get('/admin/companies', [CompanyController::class, 'index']);
-    Route::get('/admin/company/{company}', [CompanyController::class, 'details']);
-    Route::get('/admin/companies/create', [CompanyController::class, 'create']);
-    Route::get('/admin/company/{company}/update', [CompanyController::class, 'update']);
+    Route::get('/admin/company/create', [CompanyController::class, 'createIndex']);
+    Route::get('/admin/company/{company}/update', [CompanyController::class, 'updateIndex']);
+
+
+    //Phones
     Route::get('/admin/phones', [PhoneController::class, 'index']);
     Route::get('/admin/phone/{company}', [PhoneController::class, 'details']);
-    Route::get('/admin/phones/create', [PhoneController::class, 'create']);
+    Route::post('/admin/phones/create', [PhoneController::class, 'create']);
     Route::get('/admin/phone/{phone}/update', [PhoneController::class, 'update']);
+
+    //Parts
     Route::get('/admin/parts', [PartController::class, 'index']);
     Route::get('/admin/part/{part}', [PartController::class, 'details']);
-    Route::get('/admin/parts/create', [PartController::class, 'create']);
-    Route::get('/admin/part/{part}/update', [PartController::class, 'update']);
+    Route::post('/admin/parts/create', [PartController::class, 'create']);
+    Route::put('/admin/part/{part}/update', [PartController::class, 'update']);
+
+    //Repairs
     Route::get('/admin/repairs', [RepairController::class, 'index']);
     Route::get('/admin/repair/{repair}', [RepairController::class, 'details']);
-    Route::get('/admin/repairs/create', [RepairController::class, 'create']);
-    Route::get('/admin/repair/{repair}/update', [RepairController::class, 'update']);
+    Route::post('/admin/repairs/create', [RepairController::class, 'create']);
+    Route::put('/admin/repair/{repair}/update', [RepairController::class, 'update']);
+
+    //Facturen
     Route::get('/admin/facturen', [InvoiceController::class, 'index']);
     Route::get('/admin/factuur/{invoice}', [InvoiceController::class, 'details']);
     Route::get('/admin/facturen/create', [InvoiceController::class, 'create']);
     Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'update']);
+
+
+//API routes
+
+    Route::post('/api/users/create', [UserController::class, 'create']);
+    Route::post('/api/user/{user}/update', [UserController::class, 'update']);
+
+
+    Route::get('/api/companies', [CompanyController::class, 'getCompanies']);
+    Route::put('/api/company/{company}/update', [CompanyController::class, 'update']);
+    Route::post('/api/company/create', [CompanyController::class, 'create']);
 
 });

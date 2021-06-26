@@ -2,10 +2,10 @@
 <template>
     <app-layout-admin :user="currentUser">
     <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="my-2 sm:overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                    <a href="/admin/users/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
+                    <a href="/admin/users/create" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
                         User toevoegen +
                     </a>
                     <table class="min-w-full rounded-md divide-y divide-gray-200">
@@ -15,13 +15,13 @@
                                 Name
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Title
+                                address
                             </th>
+<!--                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">-->
+<!--                                Postcode-->
+<!--                            </th>-->
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Role
+                                Bedrijf
                             </th>
                             <th scope="col" class="relative px-6 py-3">
                                 <span class="sr-only">Edit</span>
@@ -33,11 +33,11 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" :src="'/storage/' + person.profile_photo_path" alt="" />
+                                        <img class="h-10 w-10 rounded-full" :src="person.profile_photo_path" alt="" />
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{ person.name }}
+                                            {{ person.first_name }} {{person.last_name}}
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             {{ person.email }}
@@ -45,17 +45,18 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company.id">{{ person.company.name }}</a></div>
-                                <div class="text-sm text-gray-500">{{ person.company.telephone }}</div>
+                            <td class="px-6 text-sm text-gray-900 max-w-sm overflow-x-scroll py-4 whitespace-nowrap">
+                                {{person.address}}
+<!--                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">-->
+<!--                    Active-->
+<!--                  </span>-->
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Active
-                  </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ person.role }}
+<!--                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-->
+<!--                                {{ person.postal_code }}-->
+<!--                            </td>-->
+                            <td v-if="person.company.length > 0" class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company[0].id">{{ person.company[0].name }}</a></div>
+                                <div class="text-sm text-gray-500">{{ person.company[0].phone_number }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a :href="'/admin/user/' + person.id + '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>
@@ -72,14 +73,26 @@
 
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import CreateUser from "@/Pages/Admin/User/Create";
 export default {
     props:['users', 'currentUser'],
     components: {
-      AppLayoutAdmin
+      AppLayoutAdmin,
+        CreateUser
     },
     setup() {
         return {
         }
     },
+    data() {
+      return {
+          createModal: false,
+      }
+    },
+    methods: {
+        deleteUser() {
+
+        }
+    }
 }
 </script>

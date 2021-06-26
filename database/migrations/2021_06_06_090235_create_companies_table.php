@@ -17,13 +17,10 @@ class CreateCompaniesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('address');
-            $table->string('zipcode');
+            $table->string('postal_code');
             $table->string('email');
-            $table->string('telephone');
-            $table->BigInteger('user_id')->unsigned();
+            $table->string('phone_number');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

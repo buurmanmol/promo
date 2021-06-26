@@ -124,7 +124,7 @@
                         <Menu as="div" class="ml-3 relative">
                             <div>
                                 <MenuButton class="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
-                                    <img class="h-8 w-8 rounded-full" :src="'/storage/' + user.profile_photo_path" alt="" />
+                                    <img class="h-8 w-8 rounded-full" :src="user.profile_photo_path" alt="" />
                                     <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>{{ user.name }}</span>
                                     <ChevronDownIcon class="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block" aria-hidden="true" />
                                 </MenuButton>
@@ -154,10 +154,10 @@
                             <div class="flex-1 min-w-0">
                                 <!-- Profile -->
                                 <div class="flex items-center">
-                                    <img class="hidden h-16 w-16 rounded-full sm:block" :src="'/storage/' + user.profile_photo_path" alt="" />
+                                    <img class="hidden h-16 w-16 rounded-full sm:block" :src="user.profile_photo_path" alt="" />
                                     <div>
                                         <div class="flex items-center">
-                                            <img class="h-16 w-16 rounded-full sm:hidden" :src="'/storage/' + user.profile_photo_path" alt="" />
+                                            <img class="h-16 w-16 rounded-full sm:hidden" :src="user.profile_photo_path" alt="" />
                                             <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
                                                 Good morning, {{ user.name }}
                                             </h1>

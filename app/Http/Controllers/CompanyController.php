@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -10,6 +11,13 @@ use const http\Client\Curl\AUTH_ANY;
 
 class CompanyController extends Controller
 {
+
+    public function getCompanies()
+    {
+        $companies = Company::all();
+
+        return ['companies' => $companies];
+    }
     public function index()
     {
         $companies = Company::all();
@@ -19,5 +27,35 @@ class CompanyController extends Controller
     public function details(Company $company)
     {
         return Inertia::render('Admin/Company/Details', ['company' =>$company]);
+    }
+
+    public function createIndex()
+    {
+        return Inertia::render('Admin/Company/Create', ['user' => Auth::user()]);
+    }
+
+    public function create(Request $request)
+    {
+        $company = Company::create([
+            'name' => $request->get('name'),
+            'address' => $request->get('address'),
+            'postal_code' => $request->get('postal_code'),
+            'phone_number' => $request->get('phone_number'),
+            'email' => $request->get('email'),
+        ]);
+
+        return ['company' => $company];
+    }
+
+    public function updateIndex(Company $company, Request $request)
+    {
+        return Inertia::render('Admin/Company/Update',['company' => $company]);
+    }
+
+    public function update(Company $company, Request $request)
+    {
+        $company->update($request->all());
+
+        return ['company' => $company];
     }
 }

@@ -19,14 +19,14 @@ class CompanySeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         foreach($users as $user){
-        Company::create([
-           'name' =>  $faker->name,
+        $company = Company::create([
+           'name' =>  $faker->company,
             'address' => $faker->address,
-            'zipcode' => $faker->postcode,
-            'telephone' => $faker->phoneNumber,
+            'postal_code' => $faker->postcode,
+            'phone_number' => $faker->phoneNumber,
             'email' => $faker->email,
-            'user_id' => $user->id
         ]);
+        $company->users()->attach($user);
         }
     }
 }
