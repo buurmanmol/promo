@@ -17,17 +17,12 @@ class Invoice extends Model
     protected $fillable = [
         'name',
         'invoice_path',
-        'payed',
+        'invoice_name',
         'user_id',
-        'company_id'
     ];
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function companies()
-    {
-        return $this->belongsTo(Company::class);
-    }
 }

@@ -16,7 +16,9 @@ class InvoiceController extends Controller
     public function index()
     {
 
-        $invoices = Invoice::all();
+        $invoices = Invoice::join('users', 'users.id', '=', 'invoices.user_id')
+        ->orderBy('invoices.id','DESC')
+        ->get(['users.first_name', 'users.last_name', 'users.email', 'invoices.id', 'invoices.invoice_name', 'invoices.created_at']);
         return Inertia::render('Admin/Invoice/Index', ['invoices' => $invoices, 'user' => Auth::user()]);
 
     }
@@ -25,13 +27,26 @@ class InvoiceController extends Controller
         return Inertia::render('Admin/Invoice/Details', ['Invoice' => $invoice]);
     }
 
-    public function create()
-    {
-        $companies = Company::all("name");
-        //$users = User::with([invoice, company]);
-        $invoices = Invoice::all();
+    public function createIndex(){
+        $usersList = User::all(
+            "id",
+            "first_name", 
+            "last_name", 
+            "email",
+        );
+        return Inertia::render('Admin/Invoice/Create', ['usersList' => $usersList, 'user' => Auth::user()]);
+    }
 
-        return Inertia::render('Admin/Invoice/Create', ['companies' => $companies, 'user' => Auth::user()]);
+    public function create(Request $request)
+    {
+        $pathToFile = $request->file('file')->store('invoices', 'public');
+        $invoice = Invoice::create([
+            'invoice_name' => $request->get('invoiceName'),
+            'invoice_path' => $pathToFile,
+            'user_id' => $request->get('userId'),
+        ]);
+
+        return ['invoice' => $invoice];
     }
     
     public function update(User $user, Request $request)

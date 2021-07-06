@@ -20,11 +20,9 @@ class InvoiceSeeder extends Seeder
 
         foreach($users as $user){
         Invoice::create([
-            'name' =>  $faker->company,
-            'invoice_path' => '/' . implode('/', $faker->words($faker->numberBetween(0, 4))),
-            'payed' => $faker->boolean,
+            'invoice_name' =>  $faker->company,
+            'invoice_path' => '/storage/' . implode('/', $faker->words($faker->numberBetween(0, 4))),
             'user_id' => $faker->randomDigit,
-            'company_id' => $faker->postcode
           ]);
         }
     }
