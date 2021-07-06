@@ -14,8 +14,13 @@ class CreatePartsTable extends Migration
     public function up()
     {
         Schema::create('parts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->uuid('phone_id')->nullable();
+
             $table->timestamps();
+
+            $table->foreign('phone_id')->references('id')->on('phones')->onDelete('cascade');
+
         });
     }
 
