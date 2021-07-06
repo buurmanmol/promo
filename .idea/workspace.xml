@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="e655b248-6461-4fa3-a517-619f78884d22" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/resources/js/Pages/User/Repair/Create.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -13,6 +11,9 @@
       <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_06_113506_create_parts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_06_06_113506_create_parts_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_06_113521_create_repairs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_06_06_113521_create_repairs_table.php" afterDir="false" />
     </list>
+=======
+    <list default="true" id="e655b248-6461-4fa3-a517-619f78884d22" name="Default Changelist" comment="database fixed and start" />
+>>>>>>> origin/anton
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -173,7 +174,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="editorconfig.notification" value="lf;" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/files" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -185,6 +187,9 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Anton\Documents\promofix-zakelijk\public\files" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/js/Pages" />
       <recent name="$PROJECT_DIR$/resources/js" />
@@ -210,9 +215,21 @@
       <workItem from="1622550131493" duration="1906000" />
       <workItem from="1622708965568" duration="1260000" />
       <workItem from="1622892998615" duration="21213000" />
+<<<<<<< HEAD
       <workItem from="1624653338598" duration="1197000" />
       <workItem from="1625566748646" duration="1286000" />
+=======
+      <workItem from="1625486865946" duration="10152000" />
+>>>>>>> origin/anton
     </task>
+    <task id="LOCAL-00001" summary="database fixed and start">
+      <created>1625573325999</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1625573325999</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,5 +246,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="database fixed and start" />
+    <option name="LAST_COMMIT_MESSAGE" value="database fixed and start" />
   </component>
 </project>

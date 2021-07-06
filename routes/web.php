@@ -30,6 +30,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/kktelefoons', [PhoneController::class, 'kk']);
+
+
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/dashboard', [UserController::class, 'dashboard']);
 // Page routes

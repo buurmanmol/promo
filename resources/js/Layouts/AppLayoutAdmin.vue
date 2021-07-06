@@ -202,7 +202,7 @@
 <!--                    desktop-->
                     <!-- Activity table (small breakpoint and up) -->
                     <div class="hidden sm:block">
-                        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="px-4 sm:px-6 lg:px-8">
                             <div class="flex flex-col mt-2">
                                 <div class="align-middle min-w-full overflow-x-auto overflow-hidden sm:rounded-lg">
                                     <slot></slot>
@@ -267,7 +267,7 @@ const secondaryNavigation = [
     { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon },
 
     { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },
-    { name: 'Telefoons', href: '/admin/telefoons', icon: DeviceMobileIcon },
+    { name: 'Telefoons', href: '/admin/phones', icon: DeviceMobileIcon },
     { name: 'Onderdelen', href: '/admin/onderdelen', icon: CogIcon },
 
 ]

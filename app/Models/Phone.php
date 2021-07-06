@@ -8,7 +8,8 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 class Phone extends Model
 {
     use HasFactory;
-
+ protected $keyType = 'string';
+    public $incrementing = false;
     public function repairs()
     {
         return $this->belongsToMany(Repair::class);
@@ -17,5 +18,4 @@ class Phone extends Model
     {
         return $this->hasMany(Part::class);
     }
-
 }

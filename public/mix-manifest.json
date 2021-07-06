@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=9cc45cc34143f229f42a",
     "/css/app.css": "/css/app.css?id=a456e7b8597fde7f3f96"
+=======
+    "/js/app.js": "/js/app.js?id=e19885ae03e272d1305e",
+    "/css/app.css": "/css/app.css?id=7cc0326625882641ff1d"
+>>>>>>> origin/anton
 }

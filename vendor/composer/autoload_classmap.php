@@ -230,6 +230,7 @@ return array(
     'Database\\Seeders\\CompanySeeder' => $baseDir . '/database/seeders/CompanySeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\InvoiceSeeder' => $baseDir . '/database/seeders/InvoiceSeeder.php',
+    'Database\\Seeders\\PhoneSeeder' => $baseDir . '/database/seeders/PhoneSeeder.php',
     'Database\\Seeders\\UserSeeder' => $baseDir . '/database/seeders/UserSeeder.php',
     'DeepCopy\\DeepCopy' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
     'DeepCopy\\Exception\\CloneException' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
