@@ -15,7 +15,7 @@ class CreateRepairsTable extends Migration
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->BigInteger('user_id')->unsigned();
             $table->uuid('phone_id');
             $table->uuid('part_id');
 

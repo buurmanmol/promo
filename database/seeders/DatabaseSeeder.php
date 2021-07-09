@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CompanySeeder::class,
             InvoiceSeeder::class,
-            PhoneSeeder::class
+            PartSeeder::class,
+            TechSeeder::class
         ]);
     }
 }

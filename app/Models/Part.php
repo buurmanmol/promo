@@ -7,6 +7,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 
 class Part extends Model
 {
+    public $fillable = ['phone_id'];
     use HasFactory;
     public function phone()
     {

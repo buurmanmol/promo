@@ -14,7 +14,7 @@ class CreatePhonesTable extends Migration
     public function up()
     {
         Schema::create('phones', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('product_id')->nullable();
             $table->string('sku')->nullable();
             $table->text('name')->nullable();

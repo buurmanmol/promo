@@ -15,7 +15,7 @@ class PhoneSeeder extends Seeder
 
     public function run()
     {
-        $filename = public_path('files\phones.json');
+        $filename = public_path('files/phones.json');
        $jsondata = file_get_contents($filename);
        $data = json_decode($jsondata, true);
 //       dd($data);
