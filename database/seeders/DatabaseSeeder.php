@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             InvoiceSeeder::class,
             PartSeeder::class,
-            TechSeeder::class
+            TechSeeder::class,
+            RepairSeeder::class
         ]);
     }
 }

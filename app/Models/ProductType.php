@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductType extends Model
 {
     use HasFactory;
+    public function repairs()
+    {
+        return $this->belongsToMany(Repair::class);
+    }
 }

@@ -8,15 +8,16 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 class Repair extends Model
 {
     use HasFactory;
+    protected $fillable = ['brands_models_id', 'product_type_id', 'user_id', 'comment'];
 
-    public function phone()
+    public function productType()
     {
-        return $this->hasOne(Phone::class);
+        return $this->belongsTo(ProductType::class);
     }
 
-    public function part()
+    public function brandsModels()
     {
-        return $this->hasOne(Part::class);
+        return $this->belongsTo(BrandsModel::class);
     }
 
     public function user()

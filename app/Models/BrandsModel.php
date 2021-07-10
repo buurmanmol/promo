@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class BrandsModel extends Model
 {
     use HasFactory;
+
+    public function repairs()
+    {
+        return $this->belongsToMany(Repair::class);
+    }
 }
