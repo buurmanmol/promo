@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::put('/admin/part/{part}/update', [PartController::class, 'update']);
 
     //Repairs
-    Route::get('/admin/repairs', [RepairController::class, 'index']);
+    Route::get('/admin/repairs', [RepairController::class, 'repairIndexAdmin']);
     Route::get('/admin/repair/{repair}', [RepairController::class, 'details']);
     Route::post('/admin/repairs/create', [RepairController::class, 'create']);
     Route::put('/admin/repair/{repair}/update', [RepairController::class, 'update']);
@@ -82,8 +82,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/user/{user}/update', [UserController::class, 'update']);
 
     Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
+    Route::post('/api/brand/models', [BrandsModelsController::class, 'getBrandsModelsByName']);
 
     Route::post('/api/repairs/{user}/create', [RepairController::class, 'createRepairs']);
+    Route::post('/api/repair/{repair}/update', [RepairController::class, 'update']);
+    Route::post('/api/user/{user}/repair-all', [RepairController::class, 'repairAll']);
 
 
     Route::get('/api/companies', [CompanyController::class, 'getCompanies']);

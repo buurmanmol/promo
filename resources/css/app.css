@@ -2,6 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+.vue-select {
+    width:100% !important;
+}
 .vue-input {
     transition: .3s ease !important;
     font-size: 0.875rem !important;

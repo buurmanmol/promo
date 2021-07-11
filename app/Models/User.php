@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Company::class);
     }
+
+    public function repairs()
+    {
+        return $this->hasMany(Repair::class);
+    }
 }

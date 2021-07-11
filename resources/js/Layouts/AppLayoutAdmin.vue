@@ -265,6 +265,7 @@ const navigation = [
 const secondaryNavigation = [
     { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
     { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon },
+    { name: 'Reparaties', href: '/admin/repairs', icon: TicketIcon },
 
     { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },
     { name: 'Telefoons', href: '/admin/phones', icon: DeviceMobileIcon },

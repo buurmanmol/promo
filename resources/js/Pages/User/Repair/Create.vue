@@ -332,9 +332,11 @@ export default {
             if(this.repairs.length < 1) {
                 this.repair.comment = this.comment;
                 this.repairs.push(this.repair)
+            } else {
+                this.repairs.forEach((item) => {
+                    item.comment = this.comment;
+                });
             }
-
-            this.repairs.comment = this.comment;
 
             Swal.fire({
                 title: 'Pas op! heeft u alle toestellen toegevoegd?',

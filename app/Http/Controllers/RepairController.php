@@ -14,11 +14,39 @@ use Inertia\Inertia;
 
 class RepairController extends Controller
 {
+    public function update(Repair $repair, Request $request)
+    {
+     $repair->update($request->all());
+
+     return $repair;
+    }
+
+    public function repairAll(User $user)
+    {
+        $repairs = Repair::where('user_id', $user->id)->get();
+
+        foreach($repairs as $repair) {
+            Repair::where('id', $repair->id)->update([
+                'is_repaired' => 1,
+            ]);
+        }
+
+        return $repairs;
+    }
+
     public function repairIndex()
     {
         $repair = Repair::with('productType', 'brandsModels')->where('user_id', auth()->user()->id)->get();
-
         return Inertia::render('User/Repair/Index', ['repairs' => $repair, 'user' => Auth::user()]);
+    }
+
+    public function repairIndexAdmin()
+    {
+        $users = User::with('repairs.brandsModels','repairs.productType', 'company')->get();
+        $brands_models = BrandsModel::all();
+        $brands = Brand::all();
+        $product_types = ProductType::all();
+        return Inertia::render('Admin/Repair/Index', ['users' => $users, 'user' => Auth::user(),'brandsModels' => $brands_models, 'brands' => $brands, 'productTypes' => $product_types]);
     }
 
     public function createRepairs(User $user, Request $request)
@@ -27,7 +55,7 @@ class RepairController extends Controller
         foreach($repairs as $repair) {
             Repair::create([
                 'brands_models_id' => $repair['model']['id'],
-                'comment' => $repair['comment'],
+                'comment' => $repair['comment'] || '',
                 'product_type_id' => $repair['productType']['id'],
                 'user_id' => $user->id,
             ]);

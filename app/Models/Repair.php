@@ -8,7 +8,7 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 class Repair extends Model
 {
     use HasFactory;
-    protected $fillable = ['brands_models_id', 'product_type_id', 'user_id', 'comment'];
+    protected $fillable = ['brands_models_id', 'product_type_id', 'user_id', 'comment', 'is_repaired'];
 
     public function productType()
     {

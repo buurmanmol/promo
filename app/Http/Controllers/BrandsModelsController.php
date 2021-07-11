@@ -14,4 +14,11 @@ class BrandsModelsController extends Controller
 
         return ['data' => $models];
     }
+
+    public function getBrandsModelsByName(Request $request)
+    {
+        $models = BrandsModel::where('brand', $request->get('brand'))->get();
+//        dd($models);
+        return ['data' => $models];
+    }
 }
