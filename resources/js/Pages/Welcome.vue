@@ -160,7 +160,7 @@
                             Alles onder 1 dak, geen externe partijen te pas.
                         </p>
                         <p class="mt-5 max-w-prose mx-auto text-xl text-gray-500">
-                            Door gebruik te maken van Promofix,
+                            Voor onze zakelijke klanten kunnen wij een pakket op maat leveren, waarbij we alle zorgen op het gebied van mobiele devices uit handen nemen.
                         </p>
                         <div class="mt-12">
                             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -393,13 +393,14 @@
 import { defineComponent, h } from 'vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import {
+    BadgeCheckIcon, ClockIcon,
     CloudUploadIcon,
-    CogIcon,
+    CogIcon, DeviceMobileIcon, LibraryIcon,
     LockClosedIcon,
-    MenuIcon,
+    MenuIcon, PhoneIcon,
     RefreshIcon,
     ServerIcon,
-    ShieldCheckIcon,
+    ShieldCheckIcon, SupportIcon, SwitchVerticalIcon,
     XIcon,
 } from '@heroicons/vue/outline'
 import { ChevronRightIcon, ExternalLinkIcon } from '@heroicons/vue/solid'
@@ -414,17 +415,17 @@ const features = [
     {
         name: 'Reparaties',
         description: 'U kunt bij PromoFix terecht voor alle reparaties van mobiele apparaten, van tablets tot smartphones!',
-        icon: CloudUploadIcon,
+        icon: DeviceMobileIcon,
     },
     {
         name: 'Data overzetten',
         description: 'Als u nieuwe apparaten voor uw organisatie heeft, zorgen wij ervoor dat alles wordt overgezet zodat u zonder problemen verder kunt.',
-        icon: LockClosedIcon,
+        icon: SwitchVerticalIcon,
     },
     {
         name: 'Support',
         description: 'Als u met technische vragen zit, kunt u die gerust aan ons stellen. Onze experts kunnen u telefonisch of fysiek te woord staan.',
-        icon: RefreshIcon,
+        icon: SupportIcon,
     },
     {
         name: 'Kwaliteit gegarandeerd',
@@ -434,12 +435,12 @@ const features = [
     {
         name: '24 uur garantie',
         description: 'Een reparatie kan binnen een half uur worden uitgevoerd als het onderdeel voorradig is. Hierdoor kunnen wij een oplossing binnen 24 uur garanderen.',
-        icon: CogIcon,
+        icon: ClockIcon,
     },
     {
         name: 'All-in-one',
         description: 'Met een pakket op maat voor úw bedrijf hoeft u zich geen zorgen meer te maken om uw mobiele apparaten binnen uw organisatie.',
-        icon: ServerIcon,
+        icon: LibraryIcon,
     },
 ]
 const blogPosts = [
