@@ -29,12 +29,12 @@
     <div class="bg-white">
         <div class="relative overflow-hidden">
             <Popover as="header" class="relative">
-                <div class="bg-gray-800 pt-6">
+                <div class="bg-gray-900 pt-6">
                     <nav class="relative max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6" aria-label="Global">
                         <div class="flex items-center flex-1">
                             <div class="flex items-center justify-between w-full md:w-auto">
                                 <a href="#">
-                                    <span class="sr-only">Workflow</span>
+                                    <span class="sr-only">Promofix</span>
                                     <img class="h-8 w-auto sm:h-10" src=../../../v2.png />
                                 </a>
                                 <div class="-mr-2 flex items-center md:hidden">
@@ -81,7 +81,7 @@
                                     <a href="#" class="block text-center w-full py-3 px-4 rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-medium hover:from-teal-600 hover:to-cyan-700">Start free trial</a>
                                 </div>
                                 <div class="mt-6 px-5">
-                                    <p class="text-center text-base font-medium text-gray-500">Existing customer? <a href="#" class="text-gray-900 hover:underline">Login</a></p>
+                                    <p class="text-center text-base font-medium text-gray-500">Bestaande klant? <a href="#" class="text-gray-900 hover:underline">Login</a></p>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                 </transition>
             </Popover>
             <main>
-                <div class="pt-10 bg-gray-800 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
+                <div class="pt-10 bg-gray-900 sm:pt-16 lg:pt-8 lg:pb-14 lg:overflow-hidden">
                     <div class="mx-auto max-w-7xl lg:px-8">
                         <div class="lg:grid lg:grid-cols-2 lg:gap-8">
                             <div class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
@@ -155,12 +155,12 @@
                 <!-- Feature section with grid -->
                 <div class="relative bg-white py-16 sm:py-24 lg:py-32">
                     <div class="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
-                        <h2 class="text-base font-semibold tracking-wider text-cyan-600 uppercase">Deploy faster</h2>
+                        <h2 class="text-base font-semibold tracking-wider text-cyan-600 uppercase">Geen gedoe</h2>
                         <p class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-                            Everything you need to deploy your app
+                            Alles onder 1 dak, geen externe partijen te pas.
                         </p>
                         <p class="mt-5 max-w-prose mx-auto text-xl text-gray-500">
-                            Phasellus lorem quam molestie id quisque diam aenean nulla in. Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend condimentum id viverra nulla.
+                            Door gebruik te maken van Promofix,
                         </p>
                         <div class="mt-12">
                             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -168,7 +168,7 @@
                                     <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
                                         <div class="-mt-6">
                                             <div>
-                        <span class="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
+                        <span class="inline-flex items-center justify-center p-3 bg-cyan-500 rounded-md shadow-lg">
                           <component :is="feature.icon" class="h-6 w-6 text-white" aria-hidden="true" />
                         </span>
                                             </div>
@@ -199,16 +199,16 @@
                             <div class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:px-0 lg:py-20 lg:max-w-none">
                                 <blockquote>
                                     <div>
-                                        <svg class="h-12 w-12 text-white opacity-25" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+                                        <svg class="h-12 w-12 text-cyan-600 opacity-25" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
                                             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                                         </svg>
-                                        <p class="mt-6 text-2xl font-medium text-white">
+                                        <p class="mt-6 text-2xl font-medium text-cyan-600">
                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed urna nulla vitae laoreet augue. Amet feugiat est integer dolor auctor adipiscing nunc urna, sit.
                                         </p>
                                     </div>
                                     <footer class="mt-6">
-                                        <p class="text-base font-medium text-white">Judith Black</p>
-                                        <p class="text-base font-medium text-cyan-100">CEO at PureInsights</p>
+                                        <p class="text-base font-medium text-cyan-300">Judith Black</p>
+                                        <p class="text-base font-medium text-cyan-300">CEO at PureInsights</p>
                                     </footer>
                                 </blockquote>
                             </div>
@@ -412,34 +412,33 @@ const navigation = [
 ]
 const features = [
     {
-        name: 'Push to Deploy',
-        description: 'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi vitae lobortis.',
+        name: 'Reparaties',
+        description: 'U kunt bij PromoFix terecht voor alle reparaties van mobiele apparaten, van tablets tot smartphones!',
         icon: CloudUploadIcon,
     },
     {
-        name: 'SSL Certificates',
-        description: 'Qui aut temporibus nesciunt vitae dicta repellat sit dolores pariatur. Temporibus qui illum aut.',
+        name: 'Data overzetten',
+        description: 'Als u nieuwe apparaten voor uw organisatie heeft, zorgen wij ervoor dat alles wordt overgezet zodat u zonder problemen verder kunt.',
         icon: LockClosedIcon,
     },
     {
-        name: 'Simple Queues',
-        description: 'Rerum quas incidunt deleniti quaerat suscipit mollitia. Amet repellendus ut odit dolores qui.',
+        name: 'Support',
+        description: 'Als u met technische vragen zit, kunt u die gerust aan ons stellen. Onze experts kunnen u telefonisch of fysiek te woord staan.',
         icon: RefreshIcon,
     },
     {
-        name: 'Advanced Security',
-        description: 'Ullam laboriosam est voluptatem maxime ut mollitia commodi. Et dignissimos suscipit perspiciatis.',
+        name: 'Kwaliteit gegarandeerd',
+        description: 'Bij PromoFix worden alleen de hoogste kwaliteit onderdelen gebruikt. Wij zorgen ervoor dat u zo snel en professioneel mogelijk wordt geholpen.',
         icon: ShieldCheckIcon,
     },
     {
-        name: 'Powerful API',
-        description:
-            'Ab a facere voluptatem in quia corrupti veritatis aliquam. Veritatis labore quaerat ipsum quaerat id.',
+        name: '24 uur garantie',
+        description: 'Een reparatie kan binnen een half uur worden uitgevoerd als het onderdeel voorradig is. Hierdoor kunnen wij een oplossing binnen 24 uur garanderen.',
         icon: CogIcon,
     },
     {
-        name: 'Database Backups',
-        description: 'Quia qui et est officia cupiditate qui consectetur. Ratione similique et impedit ea ipsum et.',
+        name: 'All-in-one',
+        description: 'Met een pakket op maat voor úw bedrijf hoeft u zich geen zorgen meer te maken om uw mobiele apparaten binnen uw organisatie.',
         icon: ServerIcon,
     },
 ]
