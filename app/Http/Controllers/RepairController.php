@@ -37,7 +37,7 @@ class RepairController extends Controller
 
     public function completeIndex()
     {
-        $repairs = Repair::where('user_id', Auth::user()->id)->get();
+        $repairs = Repair::with('brandsModels', 'productType')->where('user_id', Auth::user()->id)->get();
         return Inertia::render('User/Repair/Complete', ['user' => Auth::user(), 'repairs' => $repairs]);
     }
 
