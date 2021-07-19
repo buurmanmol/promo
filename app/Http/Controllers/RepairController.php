@@ -37,15 +37,19 @@ class RepairController extends Controller
 
     public function repairIndex()
     {
-        $repairs = Repair::with('productType', 'brandsModels')->where('user_id', auth()->user()->id)->get();
-
+        $repairs = Repair::where('user_id', auth()->user()->id)->get();
+        $fullArr = [];
         foreach($repairs as $repair) {
-            $createDate = Carbon::create($repair->created_at);
-            $dateArr = [];
+            $sameDate = Repair::whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'brandsModels')->get();
+            array_push($fullArr, $sameDate);
+        }
+            $s = array_unique($fullArr, SORT_REGULAR);
 
+        foreach($s as $i) {
+            $i->date = $i[0]->created_at;
         }
 
-        return Inertia::render('User/Repair/Index', ['repairs' => $repair, 'user' => Auth::user()]);
+        return Inertia::render('User/Repair/Index', ['repairs' => $s, 'user' => Auth::user()]);
     }
 
     public function repairIndexAdmin()
