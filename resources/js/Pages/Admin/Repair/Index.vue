@@ -1,0 +1,262 @@
+<template>
+    <app-layout-admin :user="user">
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <a href="/user/repair/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
+                            Reparatie toevoegen +
+                        </a>
+                        <table class="min-w-full rounded-md divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Naam
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Bedrijf
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Aantal reparaties
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                            <template  v-for="(user, key) in users" :key="user.id">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-bold text-gray-700">
+                                            {{ user.first_name }} {{ user.last_name }}
+
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-bold text-gray-700">
+                                            {{user.company[0].name}}
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
+                                        <span>{{ user.repairs.length }} Reparaties</span>
+                                        <button @click="repairAll(user)" class="ml-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-green-900 bg-green-200 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Repair all</button>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <Disclosure>
+                                            <DisclosureButton
+                                                @click="selectDisclosure(key, selectedDisclosure)"
+                                                class="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
+                                            >
+                                                <span>Reparaties</span>
+                                                <ChevronUpIcon
+                                                    :class="key === selectedDisclosure ? 'transform transition duration-200 rotate-180' : ''"
+                                                    class="w-5 h-5 text-azure-radiance-500"
+                                                />
+                                            </DisclosureButton>
+                                        </Disclosure>
+                                    </td>
+                                </tr>
+                                        <tr  v-if="key === selectedDisclosure">
+                                            <td colspan="4">
+                                                <table class="min-w-full rounded-md divide-y divide-gray-200">
+                                                    <tbody class="bg-white max-h-96 overflow-y-scroll divide-y divide-gray-200">
+                                                    <template  v-for="(repair, key) in user.repairs">
+                                                        <tr>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <div class="text-sm text-bold text-gray-500">
+                                                                    # {{ key + 1}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <div class="text-sm text-gray-500">
+                                                                    {{repair.brands_models.brand}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <div class="text-sm text-gray-500">
+                                                                    {{repair.brands_models.model}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <div class="text-sm text-gray-500">
+                                                                    {{repair.product_type.name}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <div class="text-sm text-gray-500">
+                                                                    <button @click="selectRepairEdit(key, selectedRepairEdit, repair.brands_models.brand ,repair)">Edit</button>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="flex content-center flex-wrap">
+                                                                    <div class="flex-initial">
+                                                                        <Switch
+                                                                            @click="postRepair(repair)"
+                                                                            v-model="repair.is_repaired"
+                                                                            :class="repair.is_repaired ? 'bg-green-600' : 'bg-red-600'"
+                                                                            class="relative inline-flex items-center h-7 rounded-full w-14"
+                                                                        >
+                                                                            <span class="sr-only">Enable notifications</span>
+                                                                            <span
+                                                                                :class="repair.is_repaired ? 'translate-x-8' : 'translate-x-1'"
+                                                                                class="inline-block transition duration-200 ease-in-out transform w-5 h-5 transform bg-white rounded-full"
+                                                                            />
+                                                                        </Switch>
+                                                                    </div>
+                                                                    <div class="flex-initial ml-4">
+                                                                          <span v-if="repair.is_repaired" class="px-2 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                            Repaired
+                                                                          </span>
+                                                                        <span v-else class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                               Not repaired
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr v-if="selectedRepairEdit === key">
+                                                            <td class="px-6 py-2 whitespace-nowrap"></td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <vue-select  searchable v-model="brand" :options="brands" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-azure-radiance-500 focus:border-azure-radiance-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <vue-select  searchable v-model="model" :options="models" label-by="model" :close-on-select="true" class="shadow-sm z-30 focus:ring-azure-radiance-500 focus:border-azure-radiance-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap">
+                                                                <vue-select  searchable v-model="productType" :options="productTypes" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-azure-radiance-500 focus:border-azure-radiance-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
+                                                            </td>
+                                                            <td class="px-6 py-2 whitespace-nowrap"></td>
+                                                            <td class="px-6 py-2 whitespace-nowrap"></td>
+                                                        </tr>
+                                                    </template>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                            </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-layout-admin>
+</template>
+
+<script>
+import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
+import { ChevronUpIcon } from '@heroicons/vue/solid'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { Switch } from '@headlessui/vue'
+import VueNextSelect from 'vue-next-select';
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+export default {
+    name: "Index",
+    props:['users', 'user', 'brands', 'brandsModels','productTypes'],
+    components: {
+        Disclosure,
+        DisclosureButton,
+        'vue-select': VueNextSelect,
+        Switch,
+        DisclosurePanel,
+        AppLayoutAdmin,
+        ChevronUpIcon
+    },
+    data() {
+      return {
+          open: false,
+          model: null,
+          productType: null,
+          enabled: false,
+          brand: null,
+          models: [],
+          selectedDisclosure: null,
+          selectedRepairEdit: null,
+      }
+    },
+    watch: {
+        brand: function (val) {
+            // console.log(val)
+          this.getModels(val.name);
+        }
+    },
+    methods: {
+        selectDisclosure(key, selectedValue) {
+            if(key === selectedValue) {
+                this.selectedDisclosure = null;
+            } else {
+                this.selectedDisclosure = key;
+            }
+        },
+        selectRepairEdit(key, selectedEdit,brand, repair) {
+            // this.setRepairEdit(repair.brands_models.brand, repair.brands_models, repair.product_type);
+            if(key === selectedEdit) {
+                this.selectedRepairEdit = null;
+            } else {
+                this.selectedRepairEdit = key;
+            }
+            this.getModels(brand);
+        },
+        setRepairEdit(brand, model, productType) {
+            this.model = model;
+            this.brand = brand;
+            this.productType = productType;
+        },
+        postRepair(repair, brand, model){
+            axios.post('/api/repair/' + repair.id + '/update' , repair)
+                .then((response) => {
+                    console.log(response);
+                    this.models = response.data.data;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        repairAll(user) {
+            Swal.fire({
+                title: 'Weet u het zeker?',
+                text: "Hierdoor zullen alle reparaties op \" Gerepareerd \" worden gezet. ",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ja, repareer alles!',
+                cancelButtonText:'Annuleren'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post('/api/user/' + this.user.id + '/repair-all', user.repairs)
+                        .then((response) => {
+                            console.log(response);
+                            this.models = response.data.data;
+                        }, (error) => {
+                            console.log(error);
+                        });
+                    Swal.fire(
+                        'Poof!',
+                        'Alle reperaties van deze user zijn op \" Gerepareerd \" gezet.',
+                        'success'
+                    )
+                }
+            })
+
+        },
+        getModels(brand) {
+            let newBrand = {'brand': brand}
+            console.log(brand)
+
+            axios.post('/api/brand/models', newBrand)
+                .then((response) => {
+                    console.log(response);
+                    this.models = response.data.data;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+    }
+}
+</script>
+
+<style scoped>
+
+</style>

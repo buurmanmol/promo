@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandsModelsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PartController;
@@ -30,6 +31,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/kktelefoons', [PhoneController::class, 'kk']);
+
+
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/dashboard', [UserController::class, 'dashboard']);
 // Page routes
@@ -57,10 +61,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::put('/admin/part/{part}/update', [PartController::class, 'update']);
 
     //Repairs
-    Route::get('/admin/repairs', [RepairController::class, 'index']);
+    Route::get('/admin/repairs', [RepairController::class, 'repairIndexAdmin']);
     Route::get('/admin/repair/{repair}', [RepairController::class, 'details']);
     Route::post('/admin/repairs/create', [RepairController::class, 'create']);
     Route::put('/admin/repair/{repair}/update', [RepairController::class, 'update']);
+    Route::get('/user/repair/complete', [RepairController::class, 'completeIndex']);
 
     //Facturen
     Route::get('/admin/facturen', [InvoiceController::class, 'index']);
@@ -70,11 +75,20 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/admin/facturen/create', [InvoiceController::class, 'createIndex']);
     Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'updateIndex']);
 
+    Route::get('/user/reparaties', [RepairController::class, 'repairIndex']);
+    Route::get('/user/repair/create', [RepairController::class, 'createIndex']);
 
 //API routes
 
     Route::post('/api/users/create', [UserController::class, 'create']);
     Route::post('/api/user/{user}/update', [UserController::class, 'update']);
+
+    Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
+    Route::post('/api/brand/models', [BrandsModelsController::class, 'getBrandsModelsByName']);
+
+    Route::post('/api/repairs/{user}/create', [RepairController::class, 'createRepairs']);
+    Route::post('/api/repair/{repair}/update', [RepairController::class, 'update']);
+    Route::post('/api/user/{user}/repair-all', [RepairController::class, 'repairAll']);
 
 
     Route::get('/api/companies', [CompanyController::class, 'getCompanies']);

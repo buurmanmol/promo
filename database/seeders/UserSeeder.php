@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Faker\Core\File;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
         User::create([
             'first_name' => 'Wouter',
             'last_name' => 'Moelker',
