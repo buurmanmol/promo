@@ -27,6 +27,11 @@ class InvoiceController extends Controller
         return Inertia::render('Admin/Invoice/Details', ['Invoice' => $invoice]);
     }
 
+    public function generatePdf(Invoice $invoice) {
+        dd($invoice);
+        // return DOMPDF
+    }
+
     public function createIndex(){
         $usersList = User::all(
             "id",
@@ -49,10 +54,9 @@ class InvoiceController extends Controller
         return ['invoice' => $invoice];
     }
     
-    public function update(User $user, Request $request)
+    public function updateIndex(Invoice $invoice, Request $request)
     {
-        //$invoice = Invoice::where('id', $request->id);
-        //$user->update($request->all());
-        return Inertia::render('Admin/Invoice/Update',['user' => Auth::user()]);
+        $client = User::find($invoice['user_id']);
+        return Inertia::render('Admin/Invoice/Update',['invoice' => $invoice, 'client'=>$client, 'user' => Auth::user()]);
     }
 }
