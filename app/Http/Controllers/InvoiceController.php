@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Company;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,9 @@ class InvoiceController extends Controller
     public function index()
     {
 
-        $invoices = Invoice::all();
+        $invoices = Invoice::join('users', 'users.id', '=', 'invoices.user_id')
+        ->orderBy('invoices.id','DESC')
+        ->get(['users.first_name', 'users.last_name', 'users.email', 'invoices.id', 'invoices.invoice_name', 'invoices.created_at']);
         return Inertia::render('Admin/Invoice/Index', ['invoices' => $invoices, 'user' => Auth::user()]);
 
     }
@@ -24,17 +27,36 @@ class InvoiceController extends Controller
         return Inertia::render('Admin/Invoice/Details', ['Invoice' => $invoice]);
     }
 
-    public function create()
-    {
-        $invoices = Invoice::all();
+    public function generatePdf(Invoice $invoice) {
+        dd($invoice);
+        // return DOMPDF
+    }
 
-        return Inertia::render('Admin/Invoice/Create', ['user' => Auth::user()]);
+    public function createIndex(){
+        $usersList = User::all(
+            "id",
+            "first_name", 
+            "last_name", 
+            "email",
+        );
+        return Inertia::render('Admin/Invoice/Create', ['usersList' => $usersList, 'user' => Auth::user()]);
+    }
+
+    public function create(Request $request)
+    {
+        $pathToFile = $request->file('file')->store('invoices', 'public');
+        $invoice = Invoice::create([
+            'invoice_name' => $request->get('invoiceName'),
+            'invoice_path' => $pathToFile,
+            'user_id' => $request->get('userId'),
+        ]);
+
+        return ['invoice' => $invoice];
     }
     
-    public function update(User $user, Request $request)
+    public function updateIndex(Invoice $invoice, Request $request)
     {
-        //$invoice = Invoice::where('id', $request->id);
-        $user->update($request->all());
-        return Inertia::render('Admin/Invoice/Update',['user' => Auth::user()]);
+        $client = User::find($invoice['user_id']);
+        return Inertia::render('Admin/Invoice/Update',['invoice' => $invoice, 'client'=>$client, 'user' => Auth::user()]);
     }
 }
