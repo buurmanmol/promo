@@ -8,6 +8,7 @@ use App\Models\Model;
 use App\Models\ProductType;
 use App\Models\Repair;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -36,7 +37,14 @@ class RepairController extends Controller
 
     public function repairIndex()
     {
-        $repair = Repair::with('productType', 'brandsModels')->where('user_id', auth()->user()->id)->get();
+        $repairs = Repair::with('productType', 'brandsModels')->where('user_id', auth()->user()->id)->get();
+
+        foreach($repairs as $repair) {
+            $createDate = Carbon::create($repair->created_at);
+            $dateArr = [];
+
+        }
+
         return Inertia::render('User/Repair/Index', ['repairs' => $repair, 'user' => Auth::user()]);
     }
 
