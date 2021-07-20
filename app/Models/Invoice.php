@@ -19,7 +19,7 @@ class Invoice extends Model
         'invoice_path',
         'invoice_name',
         'user_id',
-        'status',
+        'price',
     ];
     public function user()
     {
