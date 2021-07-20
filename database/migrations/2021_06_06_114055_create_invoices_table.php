@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->string('invoice_name');
             $table->string('invoice_path');
             $table->integer('user_id');
+            $table->boolean('status')->default(0);
             $table->timestamps();
             
         });

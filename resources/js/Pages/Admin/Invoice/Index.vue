@@ -68,7 +68,7 @@
                                             tracking-wider
                                         "
                                     >
-                                        Name
+                                        Factuur naam
                                     </th>
                                     <th
                                         scope="col"
@@ -82,7 +82,21 @@
                                             tracking-wider
                                         "
                                     >
-                                        Title
+                                        Gebruiker
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        class="
+                                            px-6
+                                            py-4
+                                            text-left text-xs
+                                            font-medium
+                                            text-gray-500
+                                            uppercase
+                                            tracking-wider
+                                        "
+                                    >
+                                        Telefoon nummer
                                     </th>
                                     <th
                                         scope="col"
@@ -97,20 +111,6 @@
                                         "
                                     >
                                         Status
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="
-                                            px-6
-                                            py-4
-                                            text-left text-xs
-                                            font-medium
-                                            text-gray-500
-                                            uppercase
-                                            tracking-wider
-                                        "
-                                    >
-                                        Role
                                     </th>
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">Edit</span>
@@ -168,7 +168,18 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    
+                                    <td
+                                        class="
+                                            px-6
+                                            py-4
+                                            whitespace-nowrap
+                                            text-sm text-gray-500
+                                        "
+                                    >
+                                        {{ invoice.phone_number }}
+                                    </td>
+                                    <td v-if='invoice.status' class="px-6 py-4 whitespace-nowrap">
                                         <span
                                             class="
                                                 px-2
@@ -181,18 +192,24 @@
                                                 text-green-800
                                             "
                                         >
-                                            Active
+                                            Betaald
                                         </span>
                                     </td>
-                                    <td
-                                        class="
-                                            px-6
-                                            py-4
-                                            whitespace-nowrap
-                                            text-sm text-gray-500
-                                        "
-                                    >
-                                        {{ invoice.company_id }}
+                                    <td v-else class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="
+                                                px-2
+                                                inline-flex
+                                                text-xs
+                                                leading-5
+                                                font-semibold
+                                                rounded-full
+                                                bg-red-100
+                                                text-red-800
+                                            "
+                                        >
+                                            Onbetaald
+                                        </span>
                                     </td>
                                     <td
                                         class="
@@ -234,7 +251,7 @@ export default {
         AppLayoutAdmin,
     },
     mounted() {
-        console.log(this.invoices);
+        
     },
     setup() {
         return {};

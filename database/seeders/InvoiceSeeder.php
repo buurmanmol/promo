@@ -23,6 +23,7 @@ class InvoiceSeeder extends Seeder
             'invoice_name' =>  $faker->company,
             'invoice_path' => '/storage/' . implode('/', $faker->words($faker->numberBetween(0, 4))),
             'user_id' => $faker->randomDigit,
+            'status' => $faker->boolean,
           ]);
         }
     }

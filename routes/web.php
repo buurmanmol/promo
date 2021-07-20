@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/company/create', [CompanyController::class, 'create']);
 
     Route::post('/api/invoice/create', [InvoiceController::class, 'create']);
-    Route::post('/api/invoice/{invoice}/update', [InvoiceController::class, 'update']);
+    Route::put('/api/invoice/{invoice}/update', [InvoiceController::class, 'update']);
     Route::get('/api/invoice/{invoice}/pdf', [InvoiceController::class, 'generatePdf']);
 
 });

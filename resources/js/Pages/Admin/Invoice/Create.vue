@@ -31,54 +31,36 @@
                                 for="country"
                                 class="block text-sm font-medium text-gray-700"
                             >
-                                Voornaam
+                                Gebruiker
                             </label>
                             <div class="mt-1 flex flex-col">
-                                <input
-                                    v-model="invoice.userName"
-                                    name="first_name"
-                                    type="text"
-                                    class="
-                                        shadow-sm
-                                        focus:ring-indigo-500
-                                        focus:border-indigo-500
-                                        block
-                                        w-full
-                                        sm:text-sm
-                                        border-gray-300
-                                        rounded-md
-                                    "
-                                    autocomplete="off"
-                                    @focus="
-                                        modal = true;
-                                        $event.target.select();
-                                    "
-                                />
-                                <div v-if="filteredUsers && modal">
-                                    <ul>
-                                        <li
-                                            v-for="filteredUser in filteredUsers"
-                                            :key="filteredUser.id"
-                                            class="
-                                                px-2
-                                                py-2
-                                                border
-                                                cursor-pointer
-                                            "
-                                            @click="
-                                                setUser(
-                                                    filteredUser.first_name,
-                                                    filteredUser.last_name,
-                                                    filteredUser.email,
-                                                    filteredUser.id
-                                                )
-                                            "
-                                        >
-                                            {{ filteredUser.first_name }}
-                                            {{ filteredUser.last_name }}
-                                        </li>
-                                    </ul>
-                                </div>
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <vue-select
+                                        searchable
+                                        v-model="userObject"
+                                        :options="usersList"
+                                        label-by="first_name"
+                                        :close-on-select="true"
+                                        class="
+                                            shadow-sm
+                                            z-30
+                                            focus:ring-azure-radiance-500
+                                            focus:border-azure-radiance-500
+                                            block
+                                            w-full
+                                            sm:text-sm
+                                            border-gray-300
+                                            rounded-md
+                                        "
+                                    >
+                                        <template #dropdown-item="{ option }">
+                                            <div @click="setUser(option)">
+                                                {{ option.first_name }}
+                                                {{ option.last_name }}
+                                            </div>
+                                        </template>
+                                    </vue-select>
+                                </td>
                             </div>
                         </div>
                         <div class="sm:col-span-4">
@@ -270,11 +252,17 @@
 
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import VueNextSelect from "vue-next-select";
+import { ref } from "vue";
+
 export default {
     props: ["user", "usersList"],
+
     components: {
         AppLayoutAdmin,
+        "vue-select": VueNextSelect,
     },
+
     data: function () {
         return {
             invoice: {
@@ -284,44 +272,48 @@ export default {
                 invoiceName: "",
                 file: "",
             },
-
-            modal: false,
-            userNameList: this.usersList,
-            filteredUsers: [],
+            allUsers: ref(this.userList),
+            userObject: ref(null),
             errors: [],
         };
     },
-    mounted() {
-        this.filterCompanies();
-    },
+
+    mounted() {},
 
     methods: {
-        filterCompanies() {
-            var names = JSON.parse(JSON.stringify(this.userNameList));
-            this.filteredUsers = names.filter((user) => {
-                return user.first_name
-                    .toLowerCase()
-                    .startsWith(this.invoice.userName.toLowerCase());
-            });
+        /**
+         * Sets user variables in form in order to check if user is correct. (In case multiple peopleh ave the same name)
+         *
+         * @author Kevin
+         *
+         * @version 2.0.0
+         */
+        setUser(option) {
+            this.invoice = {
+                userName: option.first_name,
+                userEmail: option.email,
+                userId: option.id,
+            };
         },
 
-        setUser(
-            filteredFirstName,
-            filteredLastName,
-            filteredUserEmail,
-            filteredUserId
-        ) {
-            this.invoice.userName = filteredFirstName + " " + filteredLastName;
-            this.invoice.userEmail = filteredUserEmail;
-            this.invoice.userId = filteredUserId;
-            this.modal = false;
-        },
-
+        /**
+         * Handles the upload of a file.
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         handleFileUpload(e) {
             this.invoice.file = e.target.files[0];
-            console.log(this.invoice.file);
         },
 
+        /**
+         * Checks if form is filled in correctly.
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         checkForm: function (e) {
             this.errors = [];
             if (!this.invoice.userName) this.errors.push("Name required.");
@@ -335,6 +327,13 @@ export default {
             e.preventDefault();
         },
 
+        /**
+         * Submits data and posts it to api
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         submit() {
             const formData = new FormData();
             formData.set("userId", this.invoice.userId);
@@ -353,11 +352,7 @@ export default {
         },
     },
 
-    watch: {
-        companyName() {
-            this.filterCompanies();
-        },
-    },
+    watch: {},
 
     setup() {
         return {};

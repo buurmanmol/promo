@@ -18,9 +18,6 @@
                             factuur.
                         </p>
                     </div>
-                    {{ invoice }}
-
-                    {{ client }}
                     <div
                         class="
                             mt-6
@@ -111,7 +108,7 @@
                             </div>
                         </div>
 
-                        <div class="sm:col-span-6">
+                        <div class="sm:col-span-4">
                             <label
                                 for="invoice_name"
                                 class="block text-sm font-medium text-gray-700"
@@ -136,11 +133,106 @@
                                 />
                             </div>
                         </div>
+                        <div class="sm:col-span-2">
+                            <label
+                                for="user_id"
+                                class="block text-sm font-medium text-gray-700"
+                            >
+                                Factuur betaald
+                            </label>
+                            <div class="mt-1">
+                                <Switch
+                                    v-model="enabled"
+                                    :class="[
+                                        enabled
+                                            ? 'bg-indigo-600'
+                                            : 'bg-gray-200',
+                                        'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                                    ]"
+                                >
+                                    <span class="sr-only">Use setting</span>
+                                    <span
+                                        :class="[
+                                            enabled
+                                                ? 'translate-x-5'
+                                                : 'translate-x-0',
+                                            'pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200',
+                                        ]"
+                                    >
+                                        <span
+                                            :class="[
+                                                enabled
+                                                    ? 'opacity-0 ease-out duration-100'
+                                                    : 'opacity-100 ease-in duration-200',
+                                                'absolute inset-0 h-full w-full flex items-center justify-center transition-opacity',
+                                            ]"
+                                            aria-hidden="true"
+                                        >
+                                            <svg
+                                                class="h-3 w-3 text-gray-400"
+                                                fill="none"
+                                                viewBox="0 0 12 12"
+                                            >
+                                                <path
+                                                    d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
+                                            </svg>
+                                        </span>
+                                        <span
+                                            :class="[
+                                                enabled
+                                                    ? 'opacity-100 ease-in duration-200'
+                                                    : 'opacity-0 ease-out duration-100',
+                                                'absolute inset-0 h-full w-full flex items-center justify-center transition-opacity',
+                                            ]"
+                                            aria-hidden="true"
+                                        >
+                                            <svg
+                                                class="h-3 w-3 text-indigo-600"
+                                                fill="currentColor"
+                                                viewBox="0 0 12 12"
+                                            >
+                                                <path
+                                                    d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </Switch>
+                            </div>
+                        </div>
 
                         <section class="sm:col-span-3">
-                            <iframe :src="pdfsrc"></iframe>
-
-                            <!-- <pdf src="invoice.invoice_path"></pdf> -->
+                            <a
+                                @click="downloadInvoice"
+                                type="button"
+                                class="
+                                    my-4
+                                    inline-flex
+                                    items-center
+                                    px-3
+                                    py-2
+                                    border border-transparent
+                                    text-sm
+                                    leading-4
+                                    font-medium
+                                    rounded-md
+                                    shadow-sm
+                                    text-white
+                                    bg-azure-radiance-600
+                                    hover:bg-azure-radiance-700
+                                    focus:outline-none
+                                    focus:ring-2
+                                    focus:ring-offset-2
+                                    focus:ring-azure-radiance-500
+                                "
+                            >
+                                Factuur downloaden
+                            </a>
                         </section>
                     </div>
                 </div>
@@ -202,47 +294,97 @@
 </template>
 
 <script>
-//import pdf from "vue-pdf";
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import { ref } from "vue";
+import { Switch } from "@headlessui/vue";
+import moment from "moment";
+
 export default {
     props: ["client", "invoice"],
     components: {
         AppLayoutAdmin,
-        // pdf,
+        Switch,
     },
 
     data: function () {
         return {
             fullname: "",
-            pdfsrc: this.invoice.invoice_path,
+            pdfsrc: "",
             errors: [],
         };
     },
     mounted() {
         this.fullname = this.client.first_name + " " + this.client.last_name;
-        this.getPDFPath();
+        this.invoice.status === 1
+            ? (this.enabled = true)
+            : (this.enabled = false);
+    },
+
+    watch: {
+        /**
+         * Checks if enabled is true or false and updates invoice.status correctly.
+         */
+        enabled: function () {
+            this.enabled === true
+                ? (this.invoice.status = 1)
+                : (this.invoice.status = 0);
+        },
     },
 
     methods: {
-        getPDFPath() {
-            return axios
-                .get("api/invoice/" + this.invoice.id + "/pdf", {
-                    invoice: this.invoice.invoice_path,
-                    responseType: "blob",
-                })
-                .then((response) => {
-                    console.log("Success", response);
-                    const blob = new Blob([response.data]);
-                    const objectUrl = URL.createObjectURL(blob);
-                    this.pdfsrc = objectUrl;
-                })
-                .catch(console.error); //
+        /**
+         * Downloads the invoice, sets the name to "invoice_dd/mm/yyyy.pdf"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        downloadInvoice() {
+            return axios({
+                url: "/api/invoice/" + this.invoice.id + "/pdf",
+                method: "GET",
+                responseType: "blob",
+            }).then((response) => {
+                const url = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute(
+                    "download",
+                    "invoice_" +
+                        this.formatDate(this.invoice.created_at) +
+                        ".pdf"
+                );
+                document.body.appendChild(link);
+                link.click();
+            });
         },
 
+        /**
+         * Formats the date from something like "2021-07-20T07:29:02.000000Z" to "20/07/2021"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        formatDate(value) {
+            if (value) {
+                return moment(String(value)).format("DD/MM/YYYY");
+            }
+        },
+
+        /**
+         * Checks if form is filled in
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         checkForm: function (e) {
             this.errors = [];
-            if (!this.invoice.userName) this.errors.push("Name required.");
-            if (!this.invoice.invoiceName)
+            if (!this.invoice.user_id) this.errors.push("User required.");
+            if (!this.invoice.invoice_name)
                 this.errors.push("Invoice name required.");
 
             if (!this.errors.length) {
@@ -252,26 +394,36 @@ export default {
             e.preventDefault();
         },
 
+        /**
+         * Submits the update and reroutes to /admin/facturen
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         submit() {
-            const formData = new FormData();
-            formData.set("userId", this.invoice.userId);
-            formData.set("invoiceName", this.invoice.invoiceName);
-            formData.set("file", this.invoice.file);
-
             axios
-                .post("/api/invoice/create", formData)
-                .then(function () {
-                    window.location = "/admin/facturen";
-                })
-                .catch(function (response) {
-                    console.log(response);
-                    console.log("FAILURE!!");
-                });
+                .put(
+                    "/api/invoice/" + this.invoice.id + "/update",
+                    this.invoice
+                )
+                .then(
+                    (response) => {
+                        console.log(response);
+                        window.location = "/admin/facturen";
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
         },
     },
 
     setup() {
-        return {};
+        const enabled = ref(false);
+        return {
+            enabled,
+        };
     },
 };
 </script>
