@@ -15,14 +15,10 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('name');
-            $table->string('factuur_id');
-            $table->integer('aantal');
-            $table->string('omschrijving');
-            $table->float('bedrag');
+            $table->string('invoice_name');
+            $table->string('invoice_path');
             $table->integer('user_id');
-            $table->string('company_id');
+            $table->boolean('status')->default(0);
             $table->timestamps();
             
         });

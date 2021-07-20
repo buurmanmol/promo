@@ -8,20 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+    
     protected $keyType = 'string';
+    protected $table = 'invoices';
+
     public $incrementing = false;
 
     protected $fillable = [
         'name',
-        'factuur_id',
-        'aantal',
-        'omschrijving',
-        'bedrag',
+        'invoice_path',
+        'invoice_name',
         'user_id',
-        'company_id'
+        'status',
     ];
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
+
 }
