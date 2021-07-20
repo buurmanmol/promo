@@ -13,13 +13,17 @@ use const http\Client\Curl\AUTH_ANY;
 
 class InvoiceController extends Controller
 {
-    public function index()
-    {
 
-        $invoices = Invoice::join('users', 'users.id', '=', 'invoices.user_id')
-        ->orderBy('invoices.id','DESC')
-        ->get(['users.first_name', 'users.last_name', 'users.email', 'users.phone_number', 'invoices.id', 'invoices.invoice_name', 'invoices.created_at', 'invoices.status']);
-        return Inertia::render('Admin/Invoice/Index', ['invoices' => $invoices, 'user' => Auth::user()]);
+    /**
+     * returns the index page for invoices
+     * 
+     * @author Kevin
+     * 
+     * @version 1.0.0
+     */
+    public function index()
+    {   
+        return Inertia::render('Admin/Invoice/Index', ['user' => Auth::user()]);
 
     }
 
@@ -67,6 +71,7 @@ class InvoiceController extends Controller
             'invoice_name' => $request->get('invoiceName'),
             'invoice_path' => $pathToFile,
             'user_id' => $request->get('userId'),
+            'price' => $request->get('price'), 
         ]);
 
         return ['invoice' => $invoice];
@@ -96,5 +101,31 @@ class InvoiceController extends Controller
     public function update(Invoice $invoice, Request $request){
         $invoice->update($request->all());
         return ['invoice' => $invoice];
+    }
+
+    /**
+     * deletes incoming invoice
+     * 
+     * @author Kevin
+     * 
+     * @version 1.0.0
+     */
+    public function delete(Invoice $invoice){
+        $invoice->delete();
+        return ['invoice' => $invoice];
+    }
+    
+    /**
+     * gets a list of all invoices, linked with user where user.id = invoice.user_id
+     * 
+     * @author Kevin
+     * 
+     * @version 1.0.0
+     */
+    public function getInvoices(){
+        $invoices = Invoice::join('users', 'users.id', '=', 'invoices.user_id')
+        ->orderBy('invoices.id','DESC')
+        ->get(['users.first_name', 'users.last_name', 'users.email', 'users.phone_number', 'invoices.id', 'invoices.invoice_name', 'invoices.created_at', 'invoices.price', 'invoices.created_at']);
+        return $invoices;
     }
 }

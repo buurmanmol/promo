@@ -110,10 +110,16 @@
                                             tracking-wider
                                         "
                                     >
-                                        Status
+                                        Prijs
                                     </th>
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">Edit</span>
+                                    </th>
+                                    <th scope="col" class="relative px-6 py-3">
+                                        <span class="sr-only">Delete</span>
+                                    </th>
+                                    <th scope="col" class="relative px-6 py-3">
+                                        <span class="sr-only">Download</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -168,7 +174,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    
+
                                     <td
                                         class="
                                             px-6
@@ -179,47 +185,17 @@
                                     >
                                         {{ invoice.phone_number }}
                                     </td>
-                                    <td v-if='invoice.status' class="px-6 py-4 whitespace-nowrap">
-                                        <span
-                                            class="
-                                                px-2
-                                                inline-flex
-                                                text-xs
-                                                leading-5
-                                                font-semibold
-                                                rounded-full
-                                                bg-green-100
-                                                text-green-800
-                                            "
-                                        >
-                                            Betaald
-                                        </span>
-                                    </td>
-                                    <td v-else class="px-6 py-4 whitespace-nowrap">
-                                        <span
-                                            class="
-                                                px-2
-                                                inline-flex
-                                                text-xs
-                                                leading-5
-                                                font-semibold
-                                                rounded-full
-                                                bg-red-100
-                                                text-red-800
-                                            "
-                                        >
-                                            Onbetaald
-                                        </span>
-                                    </td>
                                     <td
                                         class="
                                             px-6
                                             py-4
                                             whitespace-nowrap
-                                            text-right text-sm
-                                            font-medium
+                                            text-sm text-gray-500
                                         "
                                     >
+                                        €{{ invoice.price }}
+                                    </td>
+                                    <td>
                                         <a
                                             :href="
                                                 '/admin/factuur/' +
@@ -227,11 +203,87 @@
                                                 '/update'
                                             "
                                             class="
-                                                text-azure-radiance-600
-                                                hover:text-azure-radiance-900
+                                                my-4
+                                                inline-flex
+                                                items-center
+                                                px-3
+                                                py-2
+                                                border border-transparent
+                                                text-sm
+                                                leading-4
+                                                font-medium
+                                                rounded-md
+                                                shadow-sm
+                                                text-white
+                                                bg-azure-radiance-600
+                                                hover:bg-azure-radiance-700
+                                                focus:outline-none
+                                                focus:ring-2
+                                                focus:ring-offset-2
+                                                focus:ring-azure-radiance-500
                                             "
                                             >Edit</a
                                         >
+                                    </td>
+                                    <td>
+                                        <button
+                                            class="
+                                                my-4
+                                                inline-flex
+                                                items-center
+                                                px-3
+                                                py-2
+                                                border border-transparent
+                                                text-sm
+                                                leading-4
+                                                font-medium
+                                                rounded-md
+                                                shadow-sm
+                                                text-white
+                                                bg-azure-radiance-600
+                                                hover:bg-azure-radiance-700
+                                                focus:outline-none
+                                                focus:ring-2
+                                                focus:ring-offset-2
+                                                focus:ring-azure-radiance-500
+                                            "
+                                            @click="deleteInvoice(invoice.id)"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button
+                                            @click="
+                                                downloadInvoice(
+                                                    invoice.id,
+                                                    invoice.created_at
+                                                )
+                                            "
+                                            type="button"
+                                            class="
+                                                my-4
+                                                inline-flex
+                                                items-center
+                                                px-3
+                                                py-2
+                                                border border-transparent
+                                                text-sm
+                                                leading-4
+                                                font-medium
+                                                rounded-md
+                                                shadow-sm
+                                                text-white
+                                                bg-azure-radiance-600
+                                                hover:bg-azure-radiance-700
+                                                focus:outline-none
+                                                focus:ring-2
+                                                focus:ring-offset-2
+                                                focus:ring-azure-radiance-500
+                                            "
+                                        >
+                                            Factuur downloaden
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -245,13 +297,125 @@
 
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
+import moment from "moment";
+
 export default {
-    props: ["invoices", "user"],
+    props: ["user"],
     components: {
         AppLayoutAdmin,
     },
+    data: () => {
+        return {
+            invoices: "",
+        };
+    },
     mounted() {
-        
+        this.getInvoices();
+    },
+    methods: {
+        /**
+         * Downloads the invoice, sets the name to "invoice_dd/mm/yyyy.pdf"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        downloadInvoice(invoice_id, invoice_date) {
+            return axios({
+                url: "/api/invoice/" + invoice_id + "/pdf",
+                method: "GET",
+                responseType: "blob",
+            })
+                .then((response) => {
+                    console.log(response);
+                    const url = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute(
+                        "download",
+                        "invoice_" + this.formatDate(invoice_date) + ".pdf"
+                    );
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((response) => {
+                    Swal.fire("Dit factuur kan niet worden gevonden!");
+                });
+        },
+
+        /**
+         * Formats the date from something like "2021-07-20T07:29:02.000000Z" to "20/07/2021"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        formatDate(value) {
+            if (value) {
+                return moment(String(value)).format("DD/MM/YYYY");
+            }
+        },
+
+        /**
+         * Deletes invoice with fancy alert box
+         *
+         * @author Wouter
+         * @author Kevin
+         *
+         * @version 1.2.0
+         */
+        deleteInvoice(selected) {
+            Swal.fire({
+                title: "Weet u het zeker?",
+                text: "Hierdoor zal dit factuur verloren gaan!. ",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ja, verwijder",
+                cancelButtonText: "Annuleren",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .delete("/api/invoice/" + selected + "/delete")
+                        .then(() => {
+                            this.getInvoices();
+                        })
+                        .catch((response) => {
+                            console.log(response);
+                            console.log("FAILURE!!");
+                        });
+                    Swal.fire(
+                        "Poof!",
+                        "Dit factuur is nu verwijderd.",
+                        "Success"
+                    );
+                }
+            });
+        },
+
+        /**
+         * fetches a new list of the invoices.
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        getInvoices() {
+            axios
+                .get("/api/invoice")
+                .then((response) => {
+                    this.invoices = response.data;
+                })
+                .catch((response) => {
+                    console.log(response);
+                    console.log("FAILURE!");
+                });
+        },
     },
     setup() {
         return {};

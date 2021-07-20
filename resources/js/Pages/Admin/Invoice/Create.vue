@@ -119,7 +119,7 @@
                             </div>
                         </div>
 
-                        <div class="sm:col-span-6">
+                        <div class="sm:col-span-4">
                             <label
                                 for="invoice_name"
                                 class="block text-sm font-medium text-gray-700"
@@ -142,6 +142,68 @@
                                     placeholder="F12345678"
                                     v-model="invoice.invoiceName"
                                 />
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <div>
+                                <label
+                                    for="price"
+                                    class="
+                                        block
+                                        text-sm
+                                        font-medium
+                                        text-gray-700
+                                    "
+                                    >Factuur prijs</label
+                                >
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div
+                                        class="
+                                            absolute
+                                            inset-y-0
+                                            left-0
+                                            pl-3
+                                            flex
+                                            items-center
+                                            pointer-events-none
+                                        "
+                                    >
+                                        <span class="text-gray-500 sm:text-sm">
+                                            €
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="price"
+                                        v-model="invoice.price"
+                                        id="price"
+                                        class="
+                                            focus:ring-indigo-500
+                                            focus:border-indigo-500
+                                            block
+                                            w-full
+                                            pl-7
+                                            pr-12
+                                            sm:text-sm
+                                            border-gray-300
+                                            rounded-md
+                                        "
+                                        placeholder="0,00"
+                                        aria-describedby="price-currency"
+                                    />
+                                    <div
+                                        class="
+                                            absolute
+                                            inset-y-0
+                                            right-0
+                                            pr-3
+                                            flex
+                                            items-center
+                                            pointer-events-none
+                                        "
+                                    ></div>
+                                </div>
                             </div>
                         </div>
 
@@ -270,6 +332,7 @@ export default {
                 userEmail: "",
                 userId: "",
                 invoiceName: "",
+                price: "",
                 file: "",
             },
             allUsers: ref(this.userList),
@@ -319,6 +382,16 @@ export default {
             if (!this.invoice.userName) this.errors.push("Name required.");
             if (!this.invoice.invoiceName)
                 this.errors.push("Invoice name required.");
+            if (!this.invoice.file) this.errors.push("File required");
+
+            if (this.invoice.price.toString().includes(","))
+                this.errors.push("The price needs a Dot instead of a comma");
+
+            if (this.hasLetters(this.invoice.price))
+                this.errors.push("The price cannot contain letters");
+
+            if (!this.invoice.price)
+                this.errors.push("Invoice price required.");
 
             if (!this.errors.length) {
                 this.submit();
@@ -338,17 +411,30 @@ export default {
             const formData = new FormData();
             formData.set("userId", this.invoice.userId);
             formData.set("invoiceName", this.invoice.invoiceName);
+            formData.set("price", this.invoice.price);
             formData.set("file", this.invoice.file);
 
             axios
                 .post("/api/invoice/create", formData)
-                .then(function () {
+                .then(() => {
                     window.location = "/admin/facturen";
                 })
-                .catch(function (response) {
+                .catch((response) => {
                     console.log(response);
                     console.log("FAILURE!!");
                 });
+        },
+
+        /**
+         * Tests if string contains only letters, returns true or false
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        hasLetters(val) {
+            if (/[a-zA-Z]/.test(val)) return true;
+            return false;
         },
     },
 
