@@ -34,8 +34,8 @@
                         <div class="flex items-center flex-1">
                             <div class="flex items-center justify-between w-full md:w-auto">
                                 <a href="#">
-                                    <span class="sr-only">Promofix</span>
-                                    <img class="h-8 w-auto sm:h-10" src=../../../v2.png />
+                                    <span class="sr-only">PromoFix</span>
+                                    <img class="h-8 w-auto sm:h-10" src="/images/logo.png" />
                                 </a>
                                 <div class="-mr-2 flex items-center md:hidden">
                                     <PopoverButton class="bg-gray-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus-ring-inset focus:ring-white">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="hidden md:flex md:items-center md:space-x-6">
-                            <a href="#" class="text-base font-medium text-white hover:text-gray-300">
+                            <a href="/login" class="text-base font-medium text-white hover:text-gray-300">
                                 Inloggen
                             </a>
                             <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
@@ -203,12 +203,12 @@
                                             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                                         </svg>
                                         <p class="mt-6 text-2xl font-medium text-cyan-600">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed urna nulla vitae laoreet augue. Amet feugiat est integer dolor auctor adipiscing nunc urna, sit.
+                                            Hier komt een quote van Zamir, CEO van PromoFix
                                         </p>
                                     </div>
                                     <footer class="mt-6">
-                                        <p class="text-base font-medium text-cyan-300">Judith Black</p>
-                                        <p class="text-base font-medium text-cyan-300">CEO at PureInsights</p>
+                                        <p class="text-base font-medium text-cyan-300">Zamir Hamidi</p>
+                                        <p class="text-base font-medium text-cyan-300">CEO van PromoFix</p>
                                     </footer>
                                 </blockquote>
                             </div>
@@ -220,12 +220,12 @@
                 <div class="relative bg-gray-50 py-16 sm:py-24 lg:py-32">
                     <div class="relative">
                         <div class="text-center mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
-                            <h2 class="text-base font-semibold tracking-wider text-cyan-600 uppercase">Learn</h2>
+                            <h2 class="text-base font-semibold tracking-wider text-cyan-600 uppercase">Specialisten</h2>
                             <p class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-                                Helpful Resources
+                                Ons vak
                             </p>
                             <p class="mt-5 mx-auto max-w-prose text-xl text-gray-500">
-                                Phasellus lorem quam molestie id quisque diam aenean nulla in. Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend condimentum id viverra nulla.
+                                Met 10+ jaar ervaring in het repareren van smartphones en tablets ben je bij ons aan het juiste adres voor uw schades op het gebied van smart-devices!
                             </p>
                         </div>
                         <div class="mt-12 mx-auto max-w-md px-4 grid gap-8 sm:max-w-lg sm:px-6 lg:px-8 lg:grid-cols-3 lg:max-w-7xl">
@@ -235,12 +235,7 @@
                                 </div>
                                 <div class="flex-1 bg-white p-6 flex flex-col justify-between">
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-cyan-600">
-                                            <a :href="post.category.href" class="hover:underline">
-                                                {{ post.category.name }}
-                                            </a>
-                                        </p>
-                                        <a :href="post.href" class="block mt-2">
+                                        <a>
                                             <p class="text-xl font-semibold text-gray-900">
                                                 {{ post.title }}
                                             </p>
@@ -248,29 +243,6 @@
                                                 {{ post.preview }}
                                             </p>
                                         </a>
-                                    </div>
-                                    <div class="mt-6 flex items-center">
-                                        <div class="flex-shrink-0">
-                                            <a :href="post.author.href">
-                                                <img class="h-10 w-10 rounded-full" :src="post.author.imageUrl" :alt="post.author.name" />
-                                            </a>
-                                        </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-900">
-                                                <a :href="post.author.href" class="hover:underline">
-                                                    {{ post.author.name }}
-                                                </a>
-                                            </p>
-                                            <div class="flex space-x-1 text-sm text-gray-500">
-                                                <time :datetime="post.datetime">
-                                                    {{ post.date }}
-                                                </time>
-                                                <span aria-hidden="true">
-                          &middot;
-                        </span>
-                                                <span> {{ post.readingLength }} read </span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +352,7 @@
                     </div>
                     <div class="mt-12 border-t border-gray-200 py-8">
                         <p class="text-base text-gray-400 xl:text-center">
-                            &copy; 2020 Workflow, Inc. All rights reserved.
+                            &copy; 2021 PromoFix, Inc. All rights reserved.
                         </p>
                     </div>
                 </div>
@@ -446,34 +418,31 @@ const features = [
 const blogPosts = [
     {
         id: 1,
-        title: 'Boost your conversion rate',
+        title: 'Smartphone reparaties',
         href: '#',
-        date: 'Mar 16, 2020',
-        datetime: '2020-03-16',
         category: { name: 'Article', href: '#' },
         imageUrl:
-            'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80',
+            '/images/repair.png',
         preview:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.',
+            'Kapot scherm, een batterij die niet lang meegaat of een laadpoort die kapot is? Wij kunnen uw smartphone binnen een half uur repareren. Hierdoor zit u niet lang zonder telefoon, en kunt u zo weer door.',
         author: {
-            name: 'Roel Aufderehar',
+            name: '',
             imageUrl:
-                'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+                '',
             href: '#',
         },
-        readingLength: '6 min',
     },
     {
         id: 2,
-        title: 'How to use search engine optimization to drive sales',
+        title: 'Microsolderen',
         href: '#',
         date: 'Mar 10, 2020',
         datetime: '2020-03-10',
         category: { name: 'Video', href: '#' },
         imageUrl:
-            'https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80',
+            '/images/micro.png',
         preview:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit facilis asperiores porro quaerat doloribus, eveniet dolore. Adipisci tempora aut inventore optio animi., tempore temporibus quo laudantium.',
+            'Chips in telefoons worden steeds kleiner en geavanceerder. Hierdoor is de kans dat een chip defect raakt steeds groter geworden. Voor onze specialisten is dit echter geen probleem.',
         author: {
             name: 'Brenna Goyette',
             imageUrl:
@@ -484,15 +453,15 @@ const blogPosts = [
     },
     {
         id: 3,
-        title: 'Improve your customer experience',
+        title: 'Tablet reparaties',
         href: '#',
         date: 'Feb 12, 2020',
         datetime: '2020-02-12',
         category: { name: 'Case Study', href: '#' },
         imageUrl:
-            'https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80',
+            '/images/tablet.png',
         preview:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum rerum voluptatem quo recusandae magni placeat saepe molestiae, sed excepturi cumque corporis perferendis hic.',
+            'Tablets zijn tegenwoordig niet te missen binnen een organisatie/school. Ze zijn fragieler dan smartphones, waardoor een reparatie lastiger is. Voor onze specialisten is dat geen enkel probleem!',
         author: {
             name: 'Daniela Metz',
             imageUrl:
