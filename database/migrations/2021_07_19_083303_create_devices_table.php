@@ -17,11 +17,12 @@ class CreateDevicesTable extends Migration
             $table->uuid('id')->primary();
             $table->BigInteger('user_id')->unsigned();
             $table->bigInteger('brands_models_id')->unsigned();
-            $table->BigInteger('product_type_id')->unsigned();
             $table->boolean('is_repaired')->default(false);
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('brands_models_id')->references('id')->on('brands_models')->onDelete('cascade');
-            $table->foreign('product_type_id')->references('id')->on('product_types')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 

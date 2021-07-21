@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', ['user' => Auth::user()]);
     }
 
     public function index()
@@ -72,5 +72,11 @@ class UserController extends Controller
 //        $company->users()->attach($user);
 
         return ['user' => $user];
+    }
+
+    public function delete(User $user)
+    {
+        $user->delete();
+        return 'deleted';
     }
 }

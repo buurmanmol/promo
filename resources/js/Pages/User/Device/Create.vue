@@ -25,19 +25,9 @@
                         <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Model</div>
                     </div>
                     <div :class="[selectedSlide >= 2 ? 'border-azure-radiance-600' : '']"  class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"></div>
-                    <div class="flex items-center text-gray-500 transition duration-500 relative">
-                        <div @click="selectedSlide = 2" :class="[selectedSlide >= 2 ? 'bg-azure-radiance-600' : '']" class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-auto w-full h-full" fill="none" viewBox="0 0 24 24"  :stroke="[selectedSlide >= 2 ? 'white' : 'gray']">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Product type</div>
-                    </div>
-                    <div :class="[selectedSlide >= 3 ? 'border-azure-radiance-600' : '']"  class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"></div>
                     <div class="flex items-center text-gray-500 relative">
-                        <div @click="selectedSlide = 3" :class="[selectedSlide >= 3 ? 'bg-azure-radiance-600' : '']"  class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300">
-                            <svg  xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" :stroke="[selectedSlide >= 3 ? 'white' : 'gray']" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database ">
+                        <div @click="selectedSlide = 2" :class="[selectedSlide >= 2 ? 'bg-azure-radiance-600' : '']"  class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300">
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" :stroke="[selectedSlide >= 2 ? 'white' : 'gray']" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database ">
                                 <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                 <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
                                 <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
@@ -56,9 +46,6 @@
                         Volgende
                     </button>
                     <button  v-if="selectedSlide === 1" @click="validateSelect(model);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Volgende
-                    </button>
-                    <button v-if="selectedSlide === 2" @click="validateSelect(productType);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Volgende
                     </button>
                 </div>
@@ -83,7 +70,7 @@
                                     </DisclosurePanel>
                                 </Disclosure>
                             </div>
-                            <div class="col-span-2 md:col-span-1">
+                            <div class="col-span-2 px-4 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
                                     Brand
                                 </label>
@@ -126,37 +113,7 @@
                     </div>
                 </fade-transition>
                 <fade-transition>
-                    <div v-if="selectedSlide === 2" class="absolute top-10 left-4 bg-white">
-                        <div class="grid grid-cols-2">
-                            <div class="col-span-2 md:col-span-1">
-                                <Disclosure as="div" class="pt-6">
-                                    <dt class="text-lg">
-                                        <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
-                                            <span class="font-medium text-gray-900">
-                                              Indicatie reparatie
-                                            </span>
-                                        </DisclosureButton>
-                                    </dt>
-                                    <DisclosurePanel as="dd" class=" pr-12">
-                                        <p class="text-base text-gray-500 mt-2">
-                                            Hier kunt u een indicatie geven van wat kapot is van uw toestel(en). <br>
-                                            Geef aan wat u denkt wat er kapot is en klik daarna op de "volgende" knop.
-                                        </p>
-                                    </DisclosurePanel>
-                                </Disclosure>
-                            </div>
-                            <div class="col-span-2 md:col-span-1">
-                                <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    Broken
-                                </label>
-                                <vue-select  searchable v-model="productType" :options="productTypes" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
-                                <errors v-if="errors.length > 0" :errors="errors"></errors>
-                            </div>
-                        </div>
-                    </div>
-                </fade-transition>
-                <fade-transition>
-                    <div v-if="selectedSlide === 3" class="px-4 w-full bg-white">
+                    <div v-if="selectedSlide === 2" class="px-4 w-full bg-white">
                         <div class="grid grid-cols-2">
                             <div class="col-span-1 xs:col-span-2">
                                 <Disclosure as="div" class="pt-6">
@@ -179,15 +136,6 @@
                                         <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw toestel</button>
                                     </div>
                                 </Disclosure>
-                            </div>
-                            <div class="col-span-1 xs:col-span-2">
-                                    <label for="comment" class="block text-sm font-medium text-gray-700">
-                                        Opmerkingen
-                                    </label>
-                                    <div class="mt-1">
-                                        <textarea v-model="comment" id="comment" name="comment" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
-                                    </div>
-                                    <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
                             </div>
                             <div class="relative lg:mt-4 col-span-2" aria-hidden="true">
                                 <div class="grid grid-cols-2">
@@ -220,11 +168,6 @@
                                                     {{ repair.model.model }}
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {{ repair.productType.name }}
-                                                  </span>
-                                            </td>
                                             <td>
                                                 <div>
                                                     <label for="email" class="block text-sm font-medium text-gray-700">Aantal reparaties van ditzelfde toestel</label>
@@ -255,11 +198,6 @@
                                                     {{ repair.model.model }}
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            {{ repair.productType.name }}
-                                          </span>
-                                            </td>
                                         </tr>
                                     </template>
                                     </tbody>
@@ -277,6 +215,12 @@
 <script>
 import { HashtagIcon, DeviceMobileIcon } from '@heroicons/vue/outline'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import {
+    RadioGroup,
+    RadioGroupLabel,
+    RadioGroupDescription,
+    RadioGroupOption,
+} from '@headlessui/vue'
 
 import FadeTransition from "../../../Components/FadeTransition";
 import AppLayoutUser from "../../../Layouts/AppLayoutUser";
@@ -287,10 +231,14 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 export default {
     name: "Create",
-    props: ['user', 'brands', 'productTypes'],
+    props: ['user', 'brands'],
     components: {
         FadeTransition,
         Swal,
+        RadioGroup,
+        RadioGroupLabel,
+        RadioGroupDescription,
+        RadioGroupOption,
         'vue-select': VueNextSelect,
         AppLayoutUser,
         HashtagIcon,
@@ -305,11 +253,9 @@ export default {
             models: [],
             repeats: null,
             comment: '',
-            productType: null,
             repair: {
                 model: null,
                 brand: null,
-                productType: null,
             },
             errors: [],
             repairs: [],
@@ -323,21 +269,12 @@ export default {
         brand() {
             this.getModels();
         },
-        productType() {
-            this.setRepair(this.brand, this.model, this.productType)
+        model() {
+            this.setRepair(this.brand, this.model)
         }
     },
     methods: {
         postRepairs() {
-            if(this.repairs.length < 1) {
-                this.repair.comment = this.comment;
-                this.repairs.push(this.repair)
-            } else {
-                this.repairs.forEach((item) => {
-                    item.comment = this.comment;
-                });
-            }
-
             Swal.fire({
                 title: 'Pas op! heeft u alle toestellen toegevoegd?',
                 text: "Deze inzending van reparaties is eenmalig.",
@@ -349,7 +286,7 @@ export default {
                 cancelButtonText:'Annuleren'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/api/repairs/'  + this.user.id + '/create', this.repairs)
+                    axios.post('/api/device/'  + this.user.id + '/create', this.repairs)
                         .then((response) => {
                             console.log(response);
                         }, (error) => {
@@ -360,7 +297,7 @@ export default {
                         'Uw reparatie(s) is/zijn aangemaakt.',
                         'success'
                     )
-                    window.location = '/user/repair/complete'
+                    window.location = '/user/device/complete'
                 }
             })
 
@@ -374,7 +311,7 @@ export default {
           }
         },
         getModels() {
-            axios.get('/api/user/brands/'  + this.brand.id + '/models')
+            axios.get('/api/brands/'  + this.brand.id + '/models')
                 .then((response) => {
                     console.log(response);
                     this.models = response.data.data;
@@ -382,11 +319,10 @@ export default {
                     console.log(error);
                 });
         },
-        setRepair(brand, model, productType) {
+        setRepair(brand, model) {
             this.repair = {
                 model: model,
                 brand: brand,
-                productType: productType,
             }
             // this.addRepair(this.repair);
             this.selectedSlide += 1;
