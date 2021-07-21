@@ -374,7 +374,7 @@ export default {
           }
         },
         getModels() {
-            axios.get('/api/brands/'  + this.brand.id + '/models')
+            axios.get('/api/user/brands/'  + this.brand.id + '/models')
                 .then((response) => {
                     console.log(response);
                     this.models = response.data.data;

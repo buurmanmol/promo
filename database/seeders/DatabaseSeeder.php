@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             PartSeeder::class,
             TechSeeder::class,
-            RepairSeeder::class
+            DeviceSeeder::class,
+            RepairSeeder::class,
         ]);
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin>
+    <app-layout-user>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Profile
@@ -35,11 +35,11 @@
 <!--                </template>-->
             </div>
         </div>
-    </app-layout-admin>
+    </app-layout-user>
 </template>
 
 <script>
-    import AppLayoutAdmin from '@/Layouts/AppLayoutAdmin'
+    import AppLayoutUser from '@/Layouts/AppLayoutUser'
     import DeleteUserForm from './DeleteUserForm'
     import JetSectionBorder from '@/Jetstream/SectionBorder'
     import LogoutOtherBrowserSessionsForm from './LogoutOtherBrowserSessionsForm'
@@ -51,7 +51,7 @@
         props: ['sessions'],
 
         components: {
-            AppLayoutAdmin,
+            AppLayoutUser,
             DeleteUserForm,
             JetSectionBorder,
             LogoutOtherBrowserSessionsForm,

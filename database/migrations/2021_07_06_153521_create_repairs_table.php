@@ -19,6 +19,7 @@ class CreateRepairsTable extends Migration
             $table->bigInteger('brands_models_id')->unsigned();
             $table->BigInteger('product_type_id')->unsigned();
             $table->text('comment')->nullable();
+            $table->integer('price')->nullable();
             $table->boolean('is_repaired')->default(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('brands_models_id')->references('id')->on('brands_models')->onDelete('cascade');

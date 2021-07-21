@@ -125,7 +125,7 @@
                             <div>
                                 <MenuButton class="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50">
                                     <img class="h-8 w-8 rounded-full" :src="user.profile_photo_path" alt="" />
-                                    <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>{{ user.name }}</span>
+                                    <span class="hidden ml-3 text-gray-700 text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>{{ user.first_name }}</span>
                                     <ChevronDownIcon class="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block" aria-hidden="true" />
                                 </MenuButton>
                             </div>
@@ -133,9 +133,6 @@
                                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <MenuItem v-slot="{ active }">
                                         <a href="/user/profile" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your Profile</a>
-                                    </MenuItem>
-                                    <MenuItem v-slot="{ active }">
-                                        <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
                                     </MenuItem>
                                     <MenuItem v-slot="{ active }">
                                         <a href="/logout" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Logout</a>
@@ -159,7 +156,7 @@
                                         <div class="flex items-center">
                                             <img class="h-16 w-16 rounded-full sm:hidden" :src="user.profile_photo_path" alt="" />
                                             <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                                                Good morning, {{ user.name }}
+                                                Hallo, {{ user.first_name }}
                                             </h1>
                                         </div>
                                         <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -258,11 +255,6 @@ import {
 } from '@heroicons/vue/solid'
 
 const navigation = [
-    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
-    { name: 'Mijn facturen', href: '/user/facturen', icon: DocumentTextIcon, current: false },
-    { name: 'Mijn reparaties', href: '/user/reparaties', icon: TicketIcon, current: false },
-]
-const secondaryNavigation = [
     { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
     { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon },
     { name: 'Reparaties', href: '/admin/repairs', icon: TicketIcon },
@@ -270,6 +262,15 @@ const secondaryNavigation = [
     { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },
     { name: 'Telefoons', href: '/admin/phones', icon: DeviceMobileIcon },
     { name: 'Onderdelen', href: '/admin/onderdelen', icon: CogIcon },
+]
+const secondaryNavigation = [
+    // { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
+    // { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon },
+    // { name: 'Reparaties', href: '/admin/repairs', icon: TicketIcon },
+    //
+    // { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },
+    // { name: 'Telefoons', href: '/admin/phones', icon: DeviceMobileIcon },
+    // { name: 'Onderdelen', href: '/admin/onderdelen', icon: CogIcon },
 
 ]
 const cards = [
