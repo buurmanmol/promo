@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\BrandsModel;
+use App\Models\Device;
 use App\Models\Model;
 use App\Models\ProductType;
 use App\Models\Repair;
@@ -35,22 +36,42 @@ class RepairController extends Controller
         return $repairs;
     }
 
+    public function details(User $user)
+    {
+        $repairs = Repair::where('user_id', $user->id)->get();
+        $fullArr = [];
+        foreach($repairs as $repair) {
+            $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'brandsModels') -> orderBy('created_at', 'desc')->get();
+//            dd($sameDate);
+            array_push($fullArr, $sameDate);
+        }
+        $s = array_unique($fullArr, SORT_REGULAR);
+//        dd($user['id'], auth()->user()->id);
+
+        $user->company = $user->company()->get();
+        $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
+        return Inertia::render('Admin/Repair/Details', ['repairs' => $s,'user' => $user, 'devices' => $devices]);
+    }
+
     public function repairIndex()
     {
-        $repairs = Repair::with('productType', 'brandsModels')->where('user_id', auth()->user()->id)->get();
-
+        $repairs = Repair::where('user_id', auth()->user()->id)->get();
+        $fullArr = [];
         foreach($repairs as $repair) {
-            $createDate = Carbon::create($repair->created_at);
-            $dateArr = [];
-
+            $sameDate = Repair::where('user_id', auth()->user()->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'brandsModels') -> orderBy('created_at', 'desc')->get();
+            array_push($fullArr, $sameDate);
         }
+            $s = array_unique($fullArr, SORT_REGULAR);
 
-        return Inertia::render('User/Repair/Index', ['repairs' => $repair, 'user' => Auth::user()]);
+        return Inertia::render('User/Repair/Index', ['repairs' => $s, 'user' => Auth::user()]);
     }
 
     public function repairIndexAdmin()
     {
-        $users = User::with('repairs.brandsModels','repairs.productType', 'company')->get();
+        $users = User::with(['repairs.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
+        $q->orderBy('created_at', 'desc');
+    }])->get();
+
         $brands_models = BrandsModel::all();
         $brands = Brand::all();
         $product_types = ProductType::all();
@@ -79,9 +100,21 @@ class RepairController extends Controller
 
     public function createIndex()
     {
-        $brands = Brand::all();
+
+        $user = User::where('id', Auth::user()->id)->with('devices.brandsModels')->firstOrFail();
+        $brandsNames = [];
+        $modelNames = [];
+
+        foreach($user->devices as $device) {
+            array_push($brandsNames, $device->brandsModels->brand);
+            array_push($modelNames, $device->brandsModels->model);
+        }
+        $uBrands = array_unique($brandsNames);
+        $uModels = array_unique($modelNames);
+
+        $brands = Brand::whereIn('name', $uBrands)->get();
         $productTypes = ProductType::all();
-        $models = BrandsModel::all();
+        $models = BrandsModel::whereIn('model', $uModels)->get();
 
         return Inertia::render('User/Repair/Create', ['user' => Auth::user(), 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }

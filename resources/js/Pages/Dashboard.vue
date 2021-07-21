@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin>
+    <app-layout-user :user="user">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -13,16 +13,17 @@
                 </div>
             </div>
         </div>
-    </app-layout-admin>
+    </app-layout-user>
 </template>
 
 <script>
-    import AppLayoutAdmin from '@/Layouts/AppLayoutAdmin'
+    import AppLayoutUser from '@/Layouts/AppLayoutUser'
     import Welcome from '@/Jetstream/Welcome'
 
     export default {
+        props: ['user'],
         components: {
-            AppLayoutAdmin,
+            AppLayoutUser,
             Welcome,
         },
     }

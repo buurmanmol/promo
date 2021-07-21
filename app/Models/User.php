@@ -28,6 +28,7 @@ class User extends Authenticatable
         'last_name',
         'address',
         'postal_code',
+        'role',
         'city',
         'province',
         'email',
@@ -73,5 +74,10 @@ class User extends Authenticatable
     public function repairs()
     {
         return $this->hasMany(Repair::class);
+    }
+
+    public function devices()
+    {
+        return $this->hasMany(Device::class);
     }
 }

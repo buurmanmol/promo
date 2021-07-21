@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
 
-class Repair extends Model
+class Device extends Model
 {
     use HasFactory;
-    protected $fillable = ['price','brands_models_id', 'product_type_id', 'user_id', 'comment', 'is_repaired'];
+    protected $fillable = ['brands_models_id', 'product_type_id', 'user_id', 'is_repaired'];
 
     public function productType()
     {

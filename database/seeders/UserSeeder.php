@@ -24,10 +24,25 @@ class UserSeeder extends Seeder
             'postal_code' => '9718LL',
             'phone_number' => '+31 6 31 67 33 18',
             'city' => 'Groningen',
+            'role' => 'admin',
             'province' => 'Groningen',
             'email' => 'wouter.moelker@hotmail.com',
             'password' => bcrypt('123')
         ]);
+
+        User::create([
+            'first_name' => 'Thomas',
+            'last_name' => 'Mol',
+            'address' => 'Dwarsstraat 32',
+            'postal_code' => '9123 LS',
+            'phone_number' => '+31 6 31 67 23 18',
+            'city' => 'Groningen',
+            'role' => 'user',
+            'province' => 'Groningen',
+            'email' => 'th.molit@gmail.com',
+            'password' => bcrypt('123')
+        ]);
+
 
         $faker = \Faker\Factory::create();
         for($i = 0;$i < 10; $i++) {
