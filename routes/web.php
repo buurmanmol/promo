@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/admin/factuur/{invoice}', [InvoiceController::class, 'details']);
     Route::get('/admin/factuur/{invoice}/pdf', [InvoiceController::class, 'details']);
 
+    Route::get('/user/facturen', [InvoiceController::class, 'userIndex']);
 
     Route::get('/admin/facturen/create', [InvoiceController::class, 'createIndex']);
     Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'updateIndex']);

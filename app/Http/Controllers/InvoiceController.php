@@ -123,9 +123,24 @@ class InvoiceController extends Controller
      * @version 1.0.0
      */
     public function getInvoices(){
-        $invoices = Invoice::join('users', 'users.id', '=', 'invoices.user_id')
+        return Invoice::join('users', 'users.id', '=', 'invoices.user_id')
         ->orderBy('invoices.id','DESC')
         ->get(['users.first_name', 'users.last_name', 'users.email', 'users.phone_number', 'invoices.id', 'invoices.invoice_name', 'invoices.created_at', 'invoices.price', 'invoices.created_at']);
-        return $invoices;
+        
+    }
+
+
+    //================= User part ===================//
+
+    /**
+     * returns userIndex
+     */
+    public function userIndex(){
+    
+       $invoices = Invoice::where('user_id', Auth::user()['id'])
+       ->orderBy('id','DESC')
+       ->get(['invoice_name', 'created_at', 'price']); 
+
+        return Inertia::render('User/Invoice/Index', ['invoices' => $invoices, 'user' => Auth::user()]);
     }
 }
