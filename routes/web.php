@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/admin/factuur/{invoice}', [InvoiceController::class, 'details']);
     Route::get('/admin/factuur/{invoice}/pdf', [InvoiceController::class, 'details']);
 
+
     Route::get('/admin/facturen/create', [InvoiceController::class, 'createIndex']);
     Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'updateIndex']);
 
@@ -96,7 +97,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/company/create', [CompanyController::class, 'create']);
 
     Route::post('/api/invoice/create', [InvoiceController::class, 'create']);
-    Route::post('/api/invoice/{invoice}/update', [InvoiceController::class, 'update']);
+    Route::put('/api/invoice/{invoice}/update', [InvoiceController::class, 'update']);
     Route::get('/api/invoice/{invoice}/pdf', [InvoiceController::class, 'generatePdf']);
+    Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
+    Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
+
+    
 
 });

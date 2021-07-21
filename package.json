@@ -45,9 +45,10 @@
         "@heroicons/vue": "^1.0.1",
         "@tailwindcss/forms": "^0.3.3",
         "@tailwindcss/typography": "^0.4.1",
-        "vue-pdf": "^4.3.0",
+        "moment": "^2.29.1",
         "sweetalert2": "^11.0.18",
         "vue-next-select": "^2.7.0",
+        "vue-pdf": "^4.3.0",
         "vue-select": "^3.11.2",
         "vue-sweetalert2": "^5.0.2"
     }

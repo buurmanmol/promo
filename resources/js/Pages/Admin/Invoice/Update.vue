@@ -18,9 +18,6 @@
                             factuur.
                         </p>
                     </div>
-                    {{ invoice }}
-
-                    {{ client }}
                     <div
                         class="
                             mt-6
@@ -34,7 +31,7 @@
                                 for="country"
                                 class="block text-sm font-medium text-gray-700"
                             >
-                                Voornaam
+                                Gebruiker
                             </label>
                             <div class="mt-1 flex flex-col">
                                 <input
@@ -111,7 +108,7 @@
                             </div>
                         </div>
 
-                        <div class="sm:col-span-6">
+                        <div class="sm:col-span-4">
                             <label
                                 for="invoice_name"
                                 class="block text-sm font-medium text-gray-700"
@@ -136,11 +133,95 @@
                                 />
                             </div>
                         </div>
+                        <div class="sm:col-span-2">
+                            <div>
+                                <label
+                                    for="price"
+                                    class="
+                                        block
+                                        text-sm
+                                        font-medium
+                                        text-gray-700
+                                    "
+                                    >Factuur prijs</label
+                                >
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div
+                                        class="
+                                            absolute
+                                            inset-y-0
+                                            left-0
+                                            pl-3
+                                            flex
+                                            items-center
+                                            pointer-events-none
+                                        "
+                                    >
+                                        <span class="text-gray-500 sm:text-sm">
+                                            €
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="price"
+                                        v-model="invoice.price"
+                                        id="price"
+                                        class="
+                                            focus:ring-indigo-500
+                                            focus:border-indigo-500
+                                            block
+                                            w-full
+                                            pl-7
+                                            pr-12
+                                            sm:text-sm
+                                            border-gray-300
+                                            rounded-md
+                                        "
+                                        placeholder="0,00"
+                                        aria-describedby="price-currency"
+                                    />
+                                    <div
+                                        class="
+                                            absolute
+                                            inset-y-0
+                                            right-0
+                                            pr-3
+                                            flex
+                                            items-center
+                                            pointer-events-none
+                                        "
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
 
                         <section class="sm:col-span-3">
-                            <iframe :src="pdfsrc"></iframe>
-
-                            <!-- <pdf src="invoice.invoice_path"></pdf> -->
+                            <a
+                                @click="downloadInvoice"
+                                type="button"
+                                class="
+                                    my-4
+                                    inline-flex
+                                    items-center
+                                    px-3
+                                    py-2
+                                    border border-transparent
+                                    text-sm
+                                    leading-4
+                                    font-medium
+                                    rounded-md
+                                    shadow-sm
+                                    text-white
+                                    bg-azure-radiance-600
+                                    hover:bg-azure-radiance-700
+                                    focus:outline-none
+                                    focus:ring-2
+                                    focus:ring-offset-2
+                                    focus:ring-azure-radiance-500
+                                "
+                            >
+                                Factuur downloaden
+                            </a>
                         </section>
                     </div>
                 </div>
@@ -202,48 +283,95 @@
 </template>
 
 <script>
-//import pdf from "vue-pdf";
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import { ref } from "vue";
+import { Switch } from "@headlessui/vue";
+import moment from "moment";
+
 export default {
     props: ["client", "invoice"],
     components: {
         AppLayoutAdmin,
-        // pdf,
+        Switch,
     },
 
     data: function () {
         return {
             fullname: "",
-            pdfsrc: this.invoice.invoice_path,
+            pdfsrc: "",
             errors: [],
         };
     },
     mounted() {
         this.fullname = this.client.first_name + " " + this.client.last_name;
-        this.getPDFPath();
     },
 
+    watch: {},
+
     methods: {
-        getPDFPath() {
-            return axios
-                .get("api/invoice/" + this.invoice.id + "/pdf", {
-                    invoice: this.invoice.invoice_path,
-                    responseType: "blob",
-                })
-                .then((response) => {
-                    console.log("Success", response);
-                    const blob = new Blob([response.data]);
-                    const objectUrl = URL.createObjectURL(blob);
-                    this.pdfsrc = objectUrl;
-                })
-                .catch(console.error); //
+        /**
+         * Downloads the invoice, sets the name to "invoice_dd/mm/yyyy.pdf"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        downloadInvoice() {
+            return axios({
+                url: "/api/invoice/" + this.invoice.id + "/pdf",
+                method: "GET",
+                responseType: "blob",
+            }).then((response) => {
+                const url = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute(
+                    "download",
+                    "invoice_" +
+                        this.formatDate(this.invoice.created_at) +
+                        ".pdf"
+                );
+                document.body.appendChild(link);
+                link.click();
+            });
         },
 
+        /**
+         * Formats the date from something like "2021-07-20T07:29:02.000000Z" to "20/07/2021"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        formatDate(value) {
+            if (value) {
+                return moment(String(value)).format("DD/MM/YYYY");
+            }
+        },
+
+        /**
+         * Checks if form is filled in
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         checkForm: function (e) {
             this.errors = [];
-            if (!this.invoice.userName) this.errors.push("Name required.");
-            if (!this.invoice.invoiceName)
+            if (!this.invoice.user_id) this.errors.push("User required.");
+            if (!this.invoice.invoice_name)
                 this.errors.push("Invoice name required.");
+
+            if (this.invoice.price.toString().includes(","))
+                this.errors.push("The price needs a Dot instead of a comma");
+
+            if (this.hasLetters(this.invoice.price))
+                this.errors.push("The price cannot contain letters");
+
+            if (!this.invoice.price)
+                this.errors.push("Invoice price required.");
 
             if (!this.errors.length) {
                 this.submit();
@@ -252,26 +380,47 @@ export default {
             e.preventDefault();
         },
 
+        /**
+         * Submits the update and reroutes to /admin/facturen
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
         submit() {
-            const formData = new FormData();
-            formData.set("userId", this.invoice.userId);
-            formData.set("invoiceName", this.invoice.invoiceName);
-            formData.set("file", this.invoice.file);
-
             axios
-                .post("/api/invoice/create", formData)
-                .then(function () {
-                    window.location = "/admin/facturen";
-                })
-                .catch(function (response) {
-                    console.log(response);
-                    console.log("FAILURE!!");
-                });
+                .put(
+                    "/api/invoice/" + this.invoice.id + "/update",
+                    this.invoice
+                )
+                .then(
+                    (response) => {
+                        window.location = "/admin/facturen";
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        },
+
+        /**
+         * Tests if string contains only letters, returns true or false
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        hasLetters(val) {
+            if (/[a-zA-Z]/.test(val)) return true;
+            return false;
         },
     },
 
     setup() {
-        return {};
+        const enabled = ref(false);
+        return {
+            enabled,
+        };
     },
 };
 </script>
