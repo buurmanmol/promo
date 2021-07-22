@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-user :user="user">
+    <app-layout-user :user="user" :company="company" :page="page">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -154,7 +154,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
 
 export default {
-    props: ["user", "invoices"],
+    props: ["user", "invoices", "company"],
     components: {
         AppLayoutUser,
         DownloadIcon,
@@ -162,6 +162,7 @@ export default {
     data: () => {
         return {
             invoices: "",
+            page: "facturen",
         };
     },
     mounted() {},

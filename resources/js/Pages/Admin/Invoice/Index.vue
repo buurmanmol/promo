@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" >
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -252,7 +252,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
 
 export default {
-    props: ["user"],
+    props: ["user", "company"],
     components: {
         AppLayoutAdmin,
         DownloadIcon,
