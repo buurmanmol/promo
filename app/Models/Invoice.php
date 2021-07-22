@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
-    
+
     protected $keyType = 'string';
     protected $table = 'invoices';
 
@@ -25,5 +25,8 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function repair()
+    {
+        return $this->belongsTo(Repair::class);
+    }
 }

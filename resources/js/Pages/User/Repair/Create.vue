@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="user" :company="company" :page="page">
+    <app-layout-admin :user="currentUser" :company="company" :page="page">
         <div style="min-height:60vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
             <div class="mx-4 p-4">
                 <div class="flex items-center">
@@ -42,13 +42,10 @@
                     <button v-if="selectedSlide > 0" @click="selectedSlide -= 1" type="button" class="mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Vorige
                     </button>
-                    <button  v-if="selectedSlide === 0" @click="validateSelect(user);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button  v-if="selectedSlide === 0" @click="validateSelect(device);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Volgende
                     </button>
-                    <button  v-if="selectedSlide === 1" @click="validateSelect(device);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Volgende
-                    </button>
-                    <button v-if="selectedSlide === 2" @click="validateSelect(productType);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button  v-if="selectedSlide === 1" @click="validateSelect(productType);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Volgende
                     </button>
                 </div>
@@ -77,7 +74,6 @@
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
                                     Brand
                                 </label>
-                                {{device}}
                                 <vue-select  @search:change="getDevices" searchable v-model="device" :options="devices" label-by="brands_models.model" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
                                     <template #dropdown-item="{ option }">
                                         <div>{{ option.brands_models.brand }} {{ option.brands_models.model }}</div>
@@ -138,11 +134,9 @@
                                         </p>
                                     </DisclosurePanel>
                                     <div class="my-4">
-                                        <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Andere klant</button>
+                                        <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Ander apparaat</button>
                                         <span class="mx-2"></span>
-                                        <button @click="selectedSlide = 1" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Ander apparaat</button>
-                                        <span class="mx-2"></span>
-                                        <button @click="selectedSlide = 2" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button>
+                                        <button @click="selectedSlide = 1" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button>
                                     </div>
                                 </Disclosure>
                             </div>
@@ -290,8 +284,11 @@ export default {
             this.getDevices();
         },
         productType() {
-            this.setRepair(this.user ,this.device, this.productType)
+            this.setRepair(this.currentUser ,this.device, this.productType)
         }
+    },
+    mounted() {
+        this.getDevices()
     },
     methods: {
         postRepairs() {
@@ -315,7 +312,7 @@ export default {
                 cancelButtonText:'Annuleren'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/api/repairs/'  + this.user.id + '/create', this.repairs)
+                    axios.post('/api/repairs/'  + this.currentUser.id + '/create', this.repairs)
                         .then((response) => {
                             console.log(response);
                         }, (error) => {
@@ -340,7 +337,7 @@ export default {
           }
         },
         getDevices() {
-            axios.get('/api/user/'  + this.user.id + '/devices/unique')
+            axios.get('/api/user/'  + this.currentUser.id + '/devices/unique')
                 .then((response) => {
                     console.log(response);
                     this.devices = response.data.data;
@@ -350,7 +347,6 @@ export default {
         },
         setRepair(user, device, productType) {
             this.repair = {
-                user:user,
                 device: device,
                 productType: productType,
             }
