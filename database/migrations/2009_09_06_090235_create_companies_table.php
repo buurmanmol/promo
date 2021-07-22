@@ -14,9 +14,10 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('name');
             $table->string('address');
+            $table->float('wallet')->default(0.00);
             $table->string('postal_code');
             $table->string('email');
             $table->string('phone_number');

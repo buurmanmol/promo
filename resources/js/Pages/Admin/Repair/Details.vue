@@ -24,7 +24,7 @@
                                 Application for
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900">
-                                <span v-if="user.company">{{ user.company[0].name }}
+                                <span v-if="user.company">{{ user.company.name }}
                                     </span>
                                 <span v-else>Geen bedrijf gevonden</span>
                             </dd>

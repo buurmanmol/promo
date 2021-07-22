@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 class Device extends Model
 {
@@ -18,6 +18,11 @@ class Device extends Model
     public function brandsModels()
     {
         return $this->belongsTo(BrandsModel::class);
+    }
+
+    public function repairs()
+    {
+        return $this->belongsToMany(Repair::class);
     }
 
     public function user()

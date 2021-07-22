@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        return Inertia::render('Dashboard', ['user' => Auth::user()]);
+        return Inertia::render('Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     public function index()
@@ -40,38 +40,41 @@ class UserController extends Controller
             'phone_number' => $request->get('phone_number'),
             'province' => $request->get('province'),
             'email' => $request->get('email'),
+            'company_id' => $request->get('company_id'),
             'password' => bcrypt($request->get('password'))
         ]);
-
-        $company = Company::where('id', $request->get('company'))->first();
-        $user->company()->attach($company);
 
         return ['user' => $user];
     }
 
     public function updateIndex(User $user, Request $request)
     {
-        $user = $user->with('company')->first();
+        $user->company = $user->company();
 
 //        $company = $user->company;
 //        $company->users()->attach($user);
-        return Inertia::render('Admin/User/Update',['user' => $user]);
+        return Inertia::render('Admin/User/Update',['user' => $user, 'currentUser' => Auth::user()]);
     }
 
     public function update(User $user, Request $request)
     {
-        $user->update($request->all());
-        $company = $request->get('company');
-        $selectedCompany = Company::where('id', $company)->first();
-        if(!empty($request->get('originalCompany'))) {
-//            dd($request->get('originalCompany'));
-            $user->company()->detach($request->get('originalCompany'));
-        }
+//        dd($request->get('company_id'));
+        $newUser = $user->update([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'address' => $request->get('address'),
+            'postal_code' => $request->get('postal_code'),
+            'city' => $request->get('city'),
+            'phone_number' => $request->get('phone_number'),
+            'province' => $request->get('province'),
+            'email' => $request->get('email'),
+            'company_id' => $request->get('company_id'),
+        ]);
+//        $company = $request->get('company');
 
-        $user->company()->attach($selectedCompany);
 //        $company->users()->attach($user);
 
-        return ['user' => $user];
+        return ['user' => $newUser];
     }
 
     public function delete(User $user)

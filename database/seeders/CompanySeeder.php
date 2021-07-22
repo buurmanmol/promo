@@ -15,18 +15,16 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
         $faker = \Faker\Factory::create();
 
-        foreach($users as $user){
-        $company = Company::create([
+        for($i =0; $i < 20; $i++){
+        Company::create([
            'name' =>  $faker->company,
             'address' => $faker->address,
             'postal_code' => $faker->postcode,
             'phone_number' => $faker->phoneNumber,
             'email' => $faker->email,
         ]);
-        $company->users()->attach($user);
         }
     }
 }

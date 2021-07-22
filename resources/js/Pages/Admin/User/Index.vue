@@ -54,9 +54,9 @@
 <!--                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-->
 <!--                                {{ person.postal_code }}-->
 <!--                            </td>-->
-                            <td v-if="person.company.length > 0" class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company[0].id">{{ person.company[0].name }}</a></div>
-                                <div class="text-sm text-gray-500">{{ person.company[0].phone_number }}</div>
+                            <td v-if="person.company" class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company.id">{{ person.company.name }}</a></div>
+                                <div class="text-sm text-gray-500">{{ person.company.phone_number }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a :href="'/admin/user/' + person.id + '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>

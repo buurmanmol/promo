@@ -31,6 +31,7 @@ class User extends Authenticatable
         'role',
         'city',
         'province',
+        'company_id',
         'email',
         'phone_number',
         'password',
@@ -68,7 +69,7 @@ class User extends Authenticatable
 
     public function company()
     {
-        return $this->belongsToMany(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function repairs()
