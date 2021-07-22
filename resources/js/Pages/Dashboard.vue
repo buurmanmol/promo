@@ -173,7 +173,7 @@ import {
 } from "@heroicons/vue/outline";
 
 export default {
-    props: ["user", 'company'],
+    props: ["user", "company"],
     components: {
         AppLayoutUser,
         Welcome,

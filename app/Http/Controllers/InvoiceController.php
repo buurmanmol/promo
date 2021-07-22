@@ -23,7 +23,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {   
-        return Inertia::render('Admin/Invoice/Index', ['user' => Auth::user()]);
+        return Inertia::render('Admin/Invoice/Index', ['user' => Auth::user(), 'company' => Auth::user()->company]);
 
     }
 
@@ -53,7 +53,7 @@ class InvoiceController extends Controller
             "last_name", 
             "email",
         );
-        return Inertia::render('Admin/Invoice/Create', ['usersList' => $usersList, 'user' => Auth::user()]);
+        return Inertia::render('Admin/Invoice/Create', ['usersList' => $usersList, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     /**
@@ -88,7 +88,7 @@ class InvoiceController extends Controller
     public function updateIndex(Invoice $invoice, Request $request)
     {
         $client = User::find($invoice['user_id']);
-        return Inertia::render('Admin/Invoice/Update',['invoice' => $invoice, 'client'=>$client, 'user' => Auth::user()]);
+        return Inertia::render('Admin/Invoice/Update',['invoice' => $invoice, 'client'=>$client, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     /**
@@ -141,6 +141,6 @@ class InvoiceController extends Controller
        ->orderBy('created_at','DESC')
        ->get(['id','invoice_name', 'created_at', 'price']); 
 
-        return Inertia::render('User/Invoice/Index', ['invoices' => $invoices, 'user' => Auth::user()]);
+        return Inertia::render('User/Invoice/Index', ['invoices' => $invoices, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 }
