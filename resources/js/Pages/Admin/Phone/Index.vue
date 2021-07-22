@@ -68,14 +68,13 @@
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import Pagination from "../../../Components/Pagination";
 export default {
-    props:['user'],
+    props:['phones', 'user'],
     components: {
         AppLayoutAdmin,
         Pagination
     },
     data(){
         return {
-            phones:[]
         }
     },
     methods: {
@@ -83,23 +82,22 @@ export default {
             axios.delete('/admin/api/phone/'+phone+'/delete')
                 .then((response) => {
                     console.log(response);
-                    this.getPhones();
+                    this.phones = this.index();
                 }, (error) => {
                     console.log(error);
                 });
         },
-        getPhones(){
-            axios.get('/admin/api/phones')
-                .then((response) => {
-                    console.log(response.data);
-                    this.phones = response.data;
-                }, (error) => {
-                    console.log(error);
-                });
-        }
+        // getPhones(){
+        //     axios.get('/admin/api/phones')
+        //         .then((response) => {
+        //             console.log(response.data);
+        //             this.phones = response.data;
+        //         }, (error) => {
+        //             console.log(error);
+        //         });
+        // }
     },
     mounted() {
-        this.getPhones();
     },
     setup() {
         // console.log(this.phones);
