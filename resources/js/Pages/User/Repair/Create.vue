@@ -1,5 +1,5 @@
 <template>
-    <app-layout-user :user="user">
+    <app-layout-admin :user="currentUser" :company="company" :page="page">
         <div style="min-height:60vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
             <div class="mx-4 p-4">
                 <div class="flex items-center">
@@ -10,7 +10,7 @@
                             </svg>
                         </div>
 
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Brand</div>
+                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Device</div>
                     </div>
                     <div :class="[selectedSlide >= 1 ? 'border-azure-radiance-600' : '']" class="flex-auto border-t-2 transition duration-500 ease-in-out"></div>
                     <div class="flex items-center text-white relative">
@@ -22,22 +22,12 @@
                                 <line x1="23" y1="11" x2="17" y2="11"></line>
                             </svg>
                         </div>
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Model</div>
+                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Schade</div>
                     </div>
                     <div :class="[selectedSlide >= 2 ? 'border-azure-radiance-600' : '']"  class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"></div>
-                    <div class="flex items-center text-gray-500 transition duration-500 relative">
-                        <div @click="selectedSlide = 2" :class="[selectedSlide >= 2 ? 'bg-azure-radiance-600' : '']" class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-auto w-full h-full" fill="none" viewBox="0 0 24 24"  :stroke="[selectedSlide >= 2 ? 'white' : 'gray']">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Product type</div>
-                    </div>
-                    <div :class="[selectedSlide >= 3 ? 'border-azure-radiance-600' : '']"  class="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300"></div>
                     <div class="flex items-center text-gray-500 relative">
-                        <div @click="selectedSlide = 3" :class="[selectedSlide >= 3 ? 'bg-azure-radiance-600' : '']"  class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300">
-                            <svg  xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" :stroke="[selectedSlide >= 3 ? 'white' : 'gray']" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database ">
+                        <div @click="selectedSlide = 2" :class="[selectedSlide >= 2 ? 'bg-azure-radiance-600' : '']"  class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300">
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" :stroke="[selectedSlide >= 2 ? 'white' : 'gray']" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database ">
                                 <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                 <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
                                 <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
@@ -52,13 +42,10 @@
                     <button v-if="selectedSlide > 0" @click="selectedSlide -= 1" type="button" class="mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Vorige
                     </button>
-                    <button  v-if="selectedSlide === 0" @click="validateSelect(brand);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button  v-if="selectedSlide === 0" @click="validateSelect(device);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Volgende
                     </button>
-                    <button  v-if="selectedSlide === 1" @click="validateSelect(model);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Volgende
-                    </button>
-                    <button v-if="selectedSlide === 2" @click="validateSelect(productType);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button  v-if="selectedSlide === 1" @click="validateSelect(productType);" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Volgende
                     </button>
                 </div>
@@ -87,7 +74,11 @@
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
                                     Brand
                                 </label>
-                                <vue-select  @search:change="brand = brand.name; getModels" searchable v-model="brand" :options="brands" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
+                                <vue-select  @search:change="getDevices" searchable v-model="device" :options="devices" label-by="brands_models.model" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                                    <template #dropdown-item="{ option }">
+                                        <div>{{ option.brands_models.brand }} {{ option.brands_models.model }}</div>
+                                    </template>
+                                </vue-select>
                                 <!--                                {{selectedSlide}} {{brand}}-->
                                 <errors v-if="errors.length > 0" :errors="errors"></errors>
                             </div>
@@ -95,38 +86,7 @@
                     </div>
                 </fade-transition>
                 <fade-transition>
-
-                    <div v-if="selectedSlide === 1" class="absolute left-4 top-10 bg-white">
-                        <div class="grid grid-cols-2">
-                        <div class="col-span-2 md:col-span-1">
-                            <Disclosure as="div" class="pt-6">
-                                <dt class="text-lg">
-                                    <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
-                                            <span class="font-medium text-gray-900">
-                                              Zoek het model van uw toestel
-                                            </span>
-                                    </DisclosureButton>
-                                </dt>
-                                <DisclosurePanel as="dd" class=" pr-12">
-                                    <p class="text-base text-gray-500 mt-2">
-                                        Hier kunt u het model van uw toestel zoeken. <br>
-                                        Klik op het gewenste model en klik daarna op de "volgende" knop.
-                                    </p>
-                                </DisclosurePanel>
-                            </Disclosure>
-                        </div>
-                        <div class="col-span-2 md:col-span-1">
-                            <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                Model
-                            </label>
-                            <vue-select searchable v-model="model" :options="models" label-by="model" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
-                            <errors v-if="errors.length > 0" :errors="errors"></errors>
-                        </div>
-                    </div>
-                    </div>
-                </fade-transition>
-                <fade-transition>
-                    <div v-if="selectedSlide === 2" class="absolute top-10 left-4 bg-white">
+                    <div v-if="selectedSlide === 1" class="absolute top-10 left-4 bg-white">
                         <div class="grid grid-cols-2">
                             <div class="col-span-2 md:col-span-1">
                                 <Disclosure as="div" class="pt-6">
@@ -156,7 +116,7 @@
                     </div>
                 </fade-transition>
                 <fade-transition>
-                    <div v-if="selectedSlide === 3" class="px-4 w-full bg-white">
+                    <div v-if="selectedSlide === 2" class="px-4 w-full bg-white">
                         <div class="grid grid-cols-2">
                             <div class="col-span-1 xs:col-span-2">
                                 <Disclosure as="div" class="pt-6">
@@ -174,9 +134,9 @@
                                         </p>
                                     </DisclosurePanel>
                                     <div class="my-4">
-                                        <button @click="selectedSlide = 2" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button>
+                                        <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Ander apparaat</button>
                                         <span class="mx-2"></span>
-                                        <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw toestel</button>
+                                        <button @click="selectedSlide = 1" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button>
                                     </div>
                                 </Disclosure>
                             </div>
@@ -212,12 +172,12 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{ repair.brand.name }}
+                                                            {{ repair.device.brands_models.brand }}
                                                         </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-500">
-                                                    {{ repair.model.model }}
+                                                    {{ repair.device.brands_models.model }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -247,12 +207,12 @@
                                         <tr v-for="(repair ,key ) in repairs" :key="key">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
-                                                    {{ repair.brand.name }}
+                                                    {{ repair.device.brands_models.brand }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-500">
-                                                    {{ repair.model.model }}
+                                                    {{ repair.device.brands_models.model }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -271,7 +231,7 @@
             </div>
             </div>
         </div>
-    </app-layout-user>
+    </app-layout-admin>
 </template>
 
 <script>
@@ -279,7 +239,7 @@ import { HashtagIcon, DeviceMobileIcon } from '@heroicons/vue/outline'
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 import FadeTransition from "../../../Components/FadeTransition";
-import AppLayoutUser from "../../../Layouts/AppLayoutUser";
+import AppLayoutAdmin from "../../../Layouts/AppLayoutUser";
 import VueNextSelect from 'vue-next-select';
 import Errors from "../../../Components/Errors";
 import Swal from 'sweetalert2'
@@ -287,28 +247,28 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 export default {
     name: "Create",
-    props: ['user', 'brands', 'productTypes'],
+    props: ['devices','company', 'currentUser', 'productTypes'],
     components: {
         FadeTransition,
         Swal,
         'vue-select': VueNextSelect,
-        AppLayoutUser,
+        AppLayoutAdmin,
         HashtagIcon,
         DeviceMobileIcon,
         Errors
     },
     data() {
         return {
+            page:'reparaties',
             selectedSlide: 0,
-            model:  null,
-            brand: null,
-            models: [],
+            device: '',
+            devices: [],
             repeats: null,
             comment: '',
+            user: null,
             productType: null,
             repair: {
-                model: null,
-                brand: null,
+                device: null,
                 productType: null,
             },
             errors: [],
@@ -320,12 +280,15 @@ export default {
         }
     },
     watch: {
-        brand() {
-            this.getModels();
+        user() {
+            this.getDevices();
         },
         productType() {
-            this.setRepair(this.brand, this.model, this.productType)
+            this.setRepair(this.currentUser ,this.device, this.productType)
         }
+    },
+    mounted() {
+        this.getDevices()
     },
     methods: {
         postRepairs() {
@@ -349,7 +312,7 @@ export default {
                 cancelButtonText:'Annuleren'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/api/repairs/'  + this.user.id + '/create', this.repairs)
+                    axios.post('/api/repairs/'  + this.currentUser.id + '/create', this.repairs)
                         .then((response) => {
                             console.log(response);
                         }, (error) => {
@@ -373,19 +336,18 @@ export default {
               this.errors = [];
           }
         },
-        getModels() {
-            axios.get('/api/brands/'  + this.brand.id + '/models')
+        getDevices() {
+            axios.get('/api/user/'  + this.currentUser.id + '/devices/unique')
                 .then((response) => {
                     console.log(response);
-                    this.models = response.data.data;
+                    this.devices = response.data.data;
                 }, (error) => {
                     console.log(error);
                 });
         },
-        setRepair(brand, model, productType) {
+        setRepair(user, device, productType) {
             this.repair = {
-                model: model,
-                brand: brand,
+                device: device,
                 productType: productType,
             }
             // this.addRepair(this.repair);

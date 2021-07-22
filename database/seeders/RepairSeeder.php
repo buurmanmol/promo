@@ -20,7 +20,7 @@ class RepairSeeder extends Seeder
         foreach($users as $user) {
             Repair::create([
                 'user_id' => $user->id,
-                'brands_models_id' => rand(1, 20),
+                'device_id' => rand(1, 10),
                 'product_type_id' => rand(1, 20),
             ]);
         }

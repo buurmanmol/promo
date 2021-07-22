@@ -19,7 +19,11 @@
                             <div class="mt-1">
                                 <select v-model="phone.brand"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                     <option v-for="brand in phones" :value="brand.name">{{brand.name}}</option>
+<<<<<<< HEAD
                                 </select>{{phone.brand}}
+=======
+                                </select>
+>>>>>>> 0858d85bb42a900012fc8df6bb9d4e948c235d4e
                             </div>
                         </div>
 
@@ -29,7 +33,11 @@
                             </label>
                             <div class="mt-1">
                                 <input v-model="phone.model" type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+<<<<<<< HEAD
                             </div>{{model}}
+=======
+                            </div>
+>>>>>>> 0858d85bb42a900012fc8df6bb9d4e948c235d4e
                         </div>
 
                     </div>

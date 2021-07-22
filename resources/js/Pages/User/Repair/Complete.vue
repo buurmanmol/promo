@@ -1,5 +1,5 @@
 <template>
-    <app-layout-user :user="user">
+    <app-layout-user :user="user" :company="company">
         <div class="py-16 bg-gray-50 lg:py-24">
             <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
                 <svg class="hidden lg:block absolute left-full transform -translate-x-1/2 -translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
@@ -85,14 +85,14 @@
                                                 <div class="min-w-0 flex-1 flex items-center">
                                                     <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                                         <div>
-                                                            <p class="text-sm font-medium text-indigo-600 truncate">{{repair.brands_models.brand}}</p>
+                                                            <p class="text-sm font-medium text-indigo-600 truncate">{{repair.device.brands_models.brand}}</p>
                                                             <p class="mt-2 flex items-center text-sm text-gray-500">
                                                                 <!-- Heroicon name: solid/mail -->
                                                                 <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                                                                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                                                 </svg>
-                                                                <span class="truncate">{{repair.brands_models.model}}</span>
+                                                                <span class="truncate">{{repair.device.brands_models.model}}</span>
                                                             </p>
                                                         </div>
                                                         <div class="hidden md:block">
@@ -127,9 +127,14 @@
 import AppLayoutUser from "../../../Layouts/AppLayoutUser";
 export default {
     name: "Complete",
-    props: ['user', 'repairs'],
+    props: ['user', 'repairs','company'],
     components: {
      AppLayoutUser
+    },
+    data: () =>{
+        return {
+            page:"reparaties",
+        }
     }
 }
 </script>

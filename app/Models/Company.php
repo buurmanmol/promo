@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
@@ -16,6 +16,7 @@ class Company extends Model
         'address',
         'postal_code',
         'phone_number',
+        'wallet'.
         'email'
     ];
     public function users()

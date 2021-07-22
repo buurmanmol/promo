@@ -17,17 +17,15 @@ class InvoiceSeeder extends Seeder
     {
         $users = User::all();
         $faker = \Faker\Factory::create();
+        
 
         foreach($users as $user){
         Invoice::create([
-            'name' =>  $faker->company,
-            'factuur_id' => $faker->randomDigit,
-            'aantal' => $faker->randomDigit,
-            'omschrijving' => $faker->text,
-            'bedrag'=> $faker->randomDigit,
+            'invoice_name' =>  $faker->company,
+            'invoice_path' => '/storage/' . implode('/', $faker->words($faker->numberBetween(0, 4))),
             'user_id' => $faker->randomDigit,
-            'company_id' => $faker->postcode
-        ]);
+            'price' => $faker->randomDigit,
+          ]);
         }
     }
 }

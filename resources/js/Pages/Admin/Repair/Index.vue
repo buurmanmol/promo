@@ -4,7 +4,7 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <a href="/user/repair/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
+                        <a href="/admin/repairs/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
                             Reparatie toevoegen +
                         </a>
                         <table class="min-w-full rounded-md divide-y divide-gray-200">
@@ -22,10 +22,16 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <template  v-for="(user, key) in users" :key="user.id">
+                            <template v-if="sortedUsers"  v-for="(user, key) in sortedUsers" :key="user.id">
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-bold text-gray-700">
@@ -35,7 +41,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-bold text-gray-700">
-                                            {{user.company[0].name}}
+                                            {{user.company.name}}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
@@ -43,7 +49,7 @@
                                         <button @click="repairAll(user)" class="ml-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-green-900 bg-green-200 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Repair all</button>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <Disclosure>
+                                        <Disclosure v-if="checkRepaired(user.repairs) < 1">
                                             <DisclosureButton
                                                 @click="selectDisclosure(key, selectedDisclosure)"
                                                 class="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
@@ -55,13 +61,25 @@
                                                 />
                                             </DisclosureButton>
                                         </Disclosure>
+                                        <div class="px-4 py-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" v-else>
+                                            <span>Alle apparaten gerepareerd</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
+                                        <BanIcon v-if="checkRepaired(user.repairs) < 1" class="text-red-600 text-md w-5 h-5 " />
+                                        <BadgeCheckIcon v-if="checkRepaired(user.repairs) > 0" class="text-green-600 w-5 h-5 text-md" />
+                                    </td>
+                                    <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
+                                        <a :href="'/admin/repair/' + user.id">
+                                            <EyeIcon class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                        </a>
                                     </td>
                                 </tr>
                                         <tr  v-if="key === selectedDisclosure">
-                                            <td colspan="4">
+                                            <td colspan="6">
                                                 <table class="min-w-full rounded-md divide-y divide-gray-200">
                                                     <tbody class="bg-white max-h-96 overflow-y-scroll divide-y divide-gray-200">
-                                                    <template  v-for="(repair, key) in user.repairs">
+                                                    <template v-if="checkRepaired(user.repairs) < 1" v-for="(repair, key) in user.repairs" >
                                                         <tr>
                                                             <td class="px-6 py-2 whitespace-nowrap">
                                                                 <div class="text-sm text-bold text-gray-500">
@@ -70,12 +88,12 @@
                                                             </td>
                                                             <td class="px-6 py-2 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-500">
-                                                                    {{repair.brands_models.brand}}
+                                                                    {{repair.device.brands_models.brand}}
                                                                 </div>
                                                             </td>
                                                             <td class="px-6 py-2 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-500">
-                                                                    {{repair.brands_models.model}}
+                                                                    {{repair.device.brands_models.model}}
                                                                 </div>
                                                             </td>
                                                             <td class="px-6 py-2 whitespace-nowrap">
@@ -85,7 +103,7 @@
                                                             </td>
                                                             <td class="px-6 py-2 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-500">
-                                                                    <button @click="selectRepairEdit(key, selectedRepairEdit, repair.brands_models.brand ,repair)">Edit</button>
+                                                                    <button @click="selectRepairEdit(key, selectedRepairEdit, repair.device.brands_models.brand ,repair)">Edit</button>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -106,10 +124,10 @@
                                                                     </div>
                                                                     <div class="flex-initial ml-4">
                                                                           <span v-if="repair.is_repaired" class="px-2 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                                            Repaired
+                                                                            Gerepareerd
                                                                           </span>
                                                                         <span v-else class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                                               Not repaired
+                                                                               In behandeling
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -147,6 +165,8 @@
 <script>
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import { ChevronUpIcon } from '@heroicons/vue/solid'
+import { EyeIcon, BadgeCheckIcon, BanIcon } from '@heroicons/vue/outline'
+
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Switch } from '@headlessui/vue'
 import VueNextSelect from 'vue-next-select';
@@ -160,7 +180,10 @@ export default {
         DisclosureButton,
         'vue-select': VueNextSelect,
         Switch,
+        EyeIcon,
         DisclosurePanel,
+        BanIcon,
+        BadgeCheckIcon,
         AppLayoutAdmin,
         ChevronUpIcon
     },
@@ -170,11 +193,15 @@ export default {
           model: null,
           productType: null,
           enabled: false,
+          sortedUsers: [],
           brand: null,
           models: [],
           selectedDisclosure: null,
           selectedRepairEdit: null,
       }
+    },
+    mounted() {
+      this.sortRepairs(this.users);
     },
     watch: {
         brand: function (val) {
@@ -182,7 +209,38 @@ export default {
           this.getModels(val.name);
         }
     },
+    computed: {
+
+    },
     methods: {
+        sortRepairs(users) {
+            let newArray = [];
+            users.forEach((user) => {
+                let repaired = 0;
+                user.repairs.forEach((repair) => {
+                    if(repair.is_repaired) {
+                        repaired++
+                    }
+                })
+                if(repaired < 1) {
+                    newArray.unshift(user);
+                } else {
+                    newArray.push(user);
+                }
+            })
+
+            this.sortedUsers = newArray;
+        },
+        checkRepaired: function(repairs) {
+            let i = 0;
+
+            repairs.forEach((repair) => {
+               if(repair.is_repaired) {
+                   i++;
+               }
+            });
+            return i
+        },
         selectDisclosure(key, selectedValue) {
             if(key === selectedValue) {
                 this.selectedDisclosure = null;
@@ -199,6 +257,7 @@ export default {
             }
             this.getModels(brand);
         },
+
         setRepairEdit(brand, model, productType) {
             this.model = model;
             this.brand = brand;

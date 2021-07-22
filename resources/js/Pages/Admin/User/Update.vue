@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="currentUser">
         <!--
           This example requires Tailwind CSS v2.0+
 
@@ -104,7 +104,8 @@
                                 Company
                             </label>
                             <div class="mt-1">
-                                <select v-model="selectedCompany" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+<!--                                {{user.company_id}}-->
+                                <select v-model="user.company_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
                                     <option v-for="company in companies" :value="company.id">{{company.name}}</option>
                                 </select>
                             </div>
@@ -128,7 +129,7 @@
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 export default {
     name:'UserUpdate',
-    props:['user'],
+    props:['user', 'currentUser'],
     components: {
         AppLayoutAdmin
     },
@@ -142,9 +143,6 @@ export default {
     },
     mounted() {
         this.getCompanies();
-        this.user.company = this.user.company[0];
-        this.selectedCompany = this.user.company.id;
-        this.user.originalCompany = this.user.company;
     },
     setup() {
 
@@ -162,9 +160,6 @@ export default {
                 });
         },
         updateUser(id){
-            if(this.selectedCompany.length > 1) {
-                this.user.company = this.selectedCompany
-            }
             axios.post('/api/user/' + id + '/update', this.user)
                 .then((response) => {
                     console.log(response);
