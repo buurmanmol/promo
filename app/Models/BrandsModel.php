@@ -9,6 +9,8 @@ class BrandsModel extends Model
 {
     use HasFactory;
 
+    protected $fillable=['brand','model'];
+
     public function repairs()
     {
         return $this->belongsToMany(Repair::class);
