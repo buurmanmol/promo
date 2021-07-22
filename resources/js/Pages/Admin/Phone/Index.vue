@@ -68,21 +68,19 @@
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import Pagination from "../../../Components/Pagination";
 export default {
-    props:['phones', 'user'],
+    props:['phones','user'],
     components: {
         AppLayoutAdmin,
         Pagination
     },
     data(){
-        return {
-        }
     },
     methods: {
         deletePhone(phone){
             axios.delete('/admin/api/phone/'+phone+'/delete')
                 .then((response) => {
                     console.log(response);
-                    this.phones = this.index();
+                    this.index();
                 }, (error) => {
                     console.log(error);
                 });
@@ -100,7 +98,6 @@ export default {
     mounted() {
     },
     setup() {
-        // console.log(this.phones);
         return {
         }
     },
