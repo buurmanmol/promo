@@ -19,7 +19,7 @@
                             <div class="mt-1">
                                 <select v-model="phone.brand"  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                     <option v-for="brand in phones" :value="brand.name">{{brand.name}}</option>
-                                </select>
+                                </select>{{phone.brand}}
                             </div>
                         </div>
 
@@ -29,7 +29,8 @@
                             </label>
                             <div class="mt-1">
                                 <input v-model="phone.model" type="text" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
-                            </div>
+
+                            </div>{{model}}
                         </div>
 
                     </div>
