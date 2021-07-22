@@ -130,6 +130,11 @@ export default {
     props: ['user', 'repairs','company'],
     components: {
      AppLayoutUser
+    },
+    data: () =>{
+        return {
+            page:"reparaties",
+        }
     }
 }
 </script>
