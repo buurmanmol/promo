@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-user :user="user">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -56,21 +56,7 @@
                                             tracking-wider
                                         "
                                     >
-                                        Gebruiker
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="
-                                            px-6
-                                            py-4
-                                            text-left text-xs
-                                            font-medium
-                                            text-gray-500
-                                            uppercase
-                                            tracking-wider
-                                        "
-                                    >
-                                        Telefoon nummer
+                                        Gemaakt op
                                     </th>
                                     <th
                                         scope="col"
@@ -108,37 +94,6 @@
                                                 >
                                                     {{ invoice.invoice_name }}
                                                 </div>
-                                                <div
-                                                    class="
-                                                        text-sm text-gray-500
-                                                    "
-                                                >
-                                                    {{ invoice.first_name }}
-                                                    {{ invoice.last_name }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="ml-4">
-                                                <div
-                                                    class="
-                                                        text-sm
-                                                        font-medium
-                                                        text-gray-900
-                                                    "
-                                                >
-                                                    {{ invoice.first_name }}
-                                                    {{ invoice.last_name }}
-                                                </div>
-                                                <div
-                                                    class="
-                                                        text-sm text-gray-500
-                                                    "
-                                                >
-                                                    {{ invoice.email }}
-                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -151,7 +106,7 @@
                                             text-sm text-gray-500
                                         "
                                     >
-                                        {{ invoice.phone_number }}
+                                        {{ formatDate(invoice.created_at) }}
                                     </td>
                                     <td
                                         class="
@@ -165,37 +120,20 @@
                                     </td>
 
                                     <td>
-                                        <button
+                                        <DownloadIcon
                                             @click="
                                                 downloadInvoice(
                                                     invoice.id,
                                                     invoice.created_at
                                                 )
                                             "
-                                            type="button"
                                             class="
-                                                my-4
-                                                inline-flex
-                                                items-center
-                                                px-3
-                                                py-2
-                                                border border-transparent
-                                                text-sm
-                                                leading-4
-                                                font-medium
-                                                rounded-md
-                                                shadow-sm
-                                                text-white
-                                                bg-azure-radiance-600
-                                                hover:bg-azure-radiance-700
-                                                focus:outline-none
-                                                focus:ring-2
-                                                focus:ring-offset-2
-                                                focus:ring-azure-radiance-500
+                                                text-azure-radiance-800
+                                                w-5
+                                                h-5
+                                                text-md
                                             "
-                                        >
-                                            Factuur downloaden
-                                        </button>
+                                        />
                                     </td>
                                 </tr>
                             </tbody>
@@ -204,11 +142,13 @@
                 </div>
             </div>
         </div>
-    </app-layout-admin>
+    </app-layout-user>
 </template>
 
 <script>
-import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import AppLayoutUser from "@/Layouts/AppLayoutUser";
+
+import { DownloadIcon } from "@heroicons/vue/outline";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
@@ -216,7 +156,8 @@ import moment from "moment";
 export default {
     props: ["user", "invoices"],
     components: {
-        AppLayoutAdmin,
+        AppLayoutUser,
+        DownloadIcon,
     },
     data: () => {
         return {
@@ -266,7 +207,7 @@ export default {
          */
         formatDate(value) {
             if (value) {
-                return moment(String(value)).format("DD/MM/YYYY");
+                return moment(String(value)).format("DD/MM/YYYY, h:mm:ss");
             }
         },
     },

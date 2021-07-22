@@ -96,7 +96,7 @@
                                             tracking-wider
                                         "
                                     >
-                                        Telefoon nummer
+                                        Gemaakt op
                                     </th>
                                     <th
                                         scope="col"
@@ -183,7 +183,7 @@
                                             text-sm text-gray-500
                                         "
                                     >
-                                        {{ invoice.phone_number }}
+                                        {{ formatDate(invoice.created_at) }}
                                     </td>
                                     <td
                                         class="
@@ -196,94 +196,42 @@
                                         €{{ invoice.price }}
                                     </td>
                                     <td>
-                                        <a
-                                            :href="
-                                                '/admin/factuur/' +
-                                                invoice.id +
-                                                '/update'
-                                            "
+                                        <PencilIcon
+                                            @click="editInvoice(invoice.id)"
                                             class="
-                                                my-4
-                                                inline-flex
-                                                items-center
-                                                px-3
-                                                py-2
-                                                border border-transparent
-                                                text-sm
-                                                leading-4
-                                                font-medium
-                                                rounded-md
-                                                shadow-sm
-                                                text-white
-                                                bg-azure-radiance-600
-                                                hover:bg-azure-radiance-700
-                                                focus:outline-none
-                                                focus:ring-2
-                                                focus:ring-offset-2
-                                                focus:ring-azure-radiance-500
+                                                text-azure-radiance-800
+                                                w-5
+                                                h-5
+                                                text-md
                                             "
-                                            >Edit</a
-                                        >
+                                        />
                                     </td>
                                     <td>
-                                        <button
+                                        <XIcon
                                             class="
-                                                my-4
-                                                inline-flex
-                                                items-center
-                                                px-3
-                                                py-2
-                                                border border-transparent
-                                                text-sm
-                                                leading-4
-                                                font-medium
-                                                rounded-md
-                                                shadow-sm
-                                                text-white
-                                                bg-azure-radiance-600
-                                                hover:bg-azure-radiance-700
-                                                focus:outline-none
-                                                focus:ring-2
-                                                focus:ring-offset-2
-                                                focus:ring-azure-radiance-500
+                                                text-azure-radiance-800
+                                                w-5
+                                                h-5
+                                                text-md
                                             "
                                             @click="deleteInvoice(invoice.id)"
-                                        >
-                                            Delete
-                                        </button>
+                                        />
                                     </td>
                                     <td>
-                                        <button
+                                        <DownloadIcon
                                             @click="
                                                 downloadInvoice(
                                                     invoice.id,
                                                     invoice.created_at
                                                 )
                                             "
-                                            type="button"
                                             class="
-                                                my-4
-                                                inline-flex
-                                                items-center
-                                                px-3
-                                                py-2
-                                                border border-transparent
-                                                text-sm
-                                                leading-4
-                                                font-medium
-                                                rounded-md
-                                                shadow-sm
-                                                text-white
-                                                bg-azure-radiance-600
-                                                hover:bg-azure-radiance-700
-                                                focus:outline-none
-                                                focus:ring-2
-                                                focus:ring-offset-2
-                                                focus:ring-azure-radiance-500
+                                                text-azure-radiance-800
+                                                w-5
+                                                h-5
+                                                text-md
                                             "
-                                        >
-                                            Factuur downloaden
-                                        </button>
+                                        />
                                     </td>
                                 </tr>
                             </tbody>
@@ -298,6 +246,8 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import Swal from "sweetalert2";
+import { DownloadIcon, XIcon, PencilIcon } from "@heroicons/vue/outline";
+
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
 
@@ -305,6 +255,9 @@ export default {
     props: ["user"],
     components: {
         AppLayoutAdmin,
+        DownloadIcon,
+        XIcon,
+        PencilIcon,
     },
     data: () => {
         return {
@@ -356,7 +309,7 @@ export default {
          */
         formatDate(value) {
             if (value) {
-                return moment(String(value)).format("DD/MM/YYYY");
+                return moment(String(value)).format("DD/MM/YYYY, h:mm:ss");
             }
         },
 
@@ -370,7 +323,7 @@ export default {
          */
         deleteInvoice(selected) {
             Swal.fire({
-                title: "Weet u het zeker?",
+                title: "Weet u zeker dat u dit factuur wilt verwijderen?",
                 text: "Hierdoor zal dit factuur verloren gaan!. ",
                 icon: "warning",
                 showCancelButton: true,
@@ -415,6 +368,10 @@ export default {
                     console.log(response);
                     console.log("FAILURE!");
                 });
+        },
+
+        editInvoice(invoice_id) {
+            window.location = "/admin/factuur/" + invoice_id + "/update";
         },
     },
     setup() {

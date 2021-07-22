@@ -9,303 +9,66 @@
         >
             <div class="space-y-8 divide-y divide-gray-200">
                 <div class="pt-8">
-                    <div>
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Factuur aanmaken
-                        </h3>
-                        <p class="mt-1 text-sm text-gray-500">
-                            Selecteer een gebruiker en upload een bijbehorend
-                            factuur.
-                        </p>
+                    <div class="sm:hidden">
+                        <label for="tabs" class="sr-only">Select a tab</label>
+                        <select
+                            v-model="selectedTab"
+                            id="tabs"
+                            name="tabs"
+                            class="
+                                block
+                                w-full
+                                focus:ring-azure-radiance-500
+                                focus:border-azure-radiance-500
+                                border-gray-300
+                                rounded-md
+                            "
+                        >
+                            <option :value="0" selected>Nieuwe factuur</option>
+                            <option :value="1">Upload factuur</option>
+                        </select>
                     </div>
-                    <div
-                        class="
-                            mt-6
-                            grid grid-cols-1
-                            gap-y-6 gap-x-4
-                            sm:grid-cols-6
-                        "
-                    >
-                        <div class="sm:col-span-6">
-                            <label
-                                for="country"
-                                class="block text-sm font-medium text-gray-700"
+                    <div class="hidden px-4 sm:block">
+                        <div class="border-b border-gray-200">
+                            <nav
+                                class="-mb-px flex space-x-8"
+                                aria-label="Tabs"
                             >
-                                Gebruiker
-                            </label>
-                            <div class="mt-1 flex flex-col">
-                                <td class="px-6 py-2 whitespace-nowrap">
-                                    <vue-select
-                                        searchable
-                                        v-model="userObject"
-                                        :options="usersList"
-                                        label-by="first_name"
-                                        :close-on-select="true"
-                                        class="
-                                            shadow-sm
-                                            z-30
-                                            focus:ring-azure-radiance-500
-                                            focus:border-azure-radiance-500
-                                            block
-                                            w-full
-                                            sm:text-sm
-                                            border-gray-300
-                                            rounded-md
-                                        "
-                                    >
-                                        <template #dropdown-item="{ option }">
-                                            <div @click="setUser(option)">
-                                                {{ option.first_name }}
-                                                {{ option.last_name }}
-                                            </div>
-                                        </template>
-                                    </vue-select>
-                                </td>
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4">
-                            <label
-                                for="email"
-                                class="block text-sm font-medium text-gray-700"
-                            >
-                                Email address
-                            </label>
-                            <div class="mt-1">
-                                <input
-                                    disabled
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    class="
-                                        shadow-sm
-                                        focus:ring-indigo-500
-                                        focus:border-indigo-500
-                                        block
-                                        w-full
-                                        sm:text-sm
-                                        border-gray-300
-                                        rounded-md
-                                    "
-                                    v-model="invoice.userEmail"
-                                />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label
-                                for="user_id"
-                                class="block text-sm font-medium text-gray-700"
-                            >
-                                User ID
-                            </label>
-                            <div class="mt-1">
-                                <input
-                                    disabled
-                                    id="user_id"
-                                    name="user_id"
-                                    type="text"
-                                    class="
-                                        shadow-sm
-                                        focus:ring-indigo-500
-                                        focus:border-indigo-500
-                                        block
-                                        w-full
-                                        sm:text-sm
-                                        border-gray-300
-                                        rounded-md
-                                    "
-                                    v-model="invoice.userId"
-                                />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-4">
-                            <label
-                                for="invoice_name"
-                                class="block text-sm font-medium text-gray-700"
-                                >Factuur naam</label
-                            >
-                            <div class="mt-1">
-                                <input
-                                    type="text"
-                                    name="invoice_name"
-                                    class="
-                                        shadow-sm
-                                        focus:ring-indigo-500
-                                        focus:border-indigo-500
-                                        block
-                                        w-full
-                                        sm:text-sm
-                                        border-gray-300
-                                        rounded-md
-                                    "
-                                    placeholder="F12345678"
-                                    v-model="invoice.invoiceName"
-                                />
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <div>
-                                <label
-                                    for="price"
-                                    class="
-                                        block
-                                        text-sm
-                                        font-medium
-                                        text-gray-700
-                                    "
-                                    >Factuur prijs</label
+                                <a
+                                    @click="setTab(0)"
+                                    :class="[
+                                        selectedTab === 0
+                                            ? 'border-azure-radiance-500 text-azure-radiance-600'
+                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                                        'group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm',
+                                    ]"
                                 >
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <div
-                                        class="
-                                            absolute
-                                            inset-y-0
-                                            left-0
-                                            pl-3
-                                            flex
-                                            items-center
-                                            pointer-events-none
-                                        "
-                                    >
-                                        <span class="text-gray-500 sm:text-sm">
-                                            €
-                                        </span>
-                                    </div>
-                                    <input
-                                        type="text"
-                                        name="price"
-                                        v-model="invoice.price"
-                                        id="price"
-                                        class="
-                                            focus:ring-indigo-500
-                                            focus:border-indigo-500
-                                            block
-                                            w-full
-                                            pl-7
-                                            pr-12
-                                            sm:text-sm
-                                            border-gray-300
-                                            rounded-md
-                                        "
-                                        placeholder="0,00"
-                                        aria-describedby="price-currency"
-                                    />
-                                    <div
-                                        class="
-                                            absolute
-                                            inset-y-0
-                                            right-0
-                                            pr-3
-                                            flex
-                                            items-center
-                                            pointer-events-none
-                                        "
-                                    ></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <section class="sm:col-span-3">
-                            <label
-                                for="cover_photo"
-                                class="block text-sm font-medium text-gray-700"
-                            >
-                                Factuur upload
-                            </label>
-                            <div
-                                class="
-                                    border-dashed border-2 border-gray-400
-                                    py-12
-                                    flex flex-col
-                                    justify-center
-                                    items-center
-                                "
-                            >
-                                <p
-                                    class="
-                                        mb-3
-                                        font-semibold
-                                        text-gray-900
-                                        flex flex-wrap
-                                        justify-center
-                                    "
+                                    <span>Nieuwe factuur</span>
+                                </a>
+                                <a
+                                    @click="setTab(1)"
+                                    :class="[
+                                        selectedTab === 1
+                                            ? 'border-azure-radiance-500 text-azure-radiance-600'
+                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                                        'group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm',
+                                    ]"
                                 >
-                                    <span
-                                        >Klik hier om een factuur te
-                                        uploaden</span
-                                    >
-                                </p>
-                                <input
-                                    type="file"
-                                    name="file"
-                                    v-on:change="handleFileUpload"
-                                    class="
-                                        mt-2
-                                        rounded-sm
-                                        px-3
-                                        py-1
-                                        bg-gray-200
-                                        hover:bg-gray-300
-                                        focus:shadow-outline focus:outline-none
-                                    "
-                                />
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-            <div v-if="errors.length" class="rounded-md bg-red-50 p-4">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <XCircleIcon
-                            class="h-5 w-5 text-red-400"
-                            aria-hidden="true"
-                        />
-                    </div>
-                    <div class="ml-3">
-                        <h3 class="text-sm font-medium text-red-800">
-                            There were {{ errors.length }} errors with your
-                            submission
-                        </h3>
-                        <div class="mt-2 text-sm text-red-700">
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li v-for="error in errors">
-                                    {{ error }}
-                                </li>
-                            </ul>
+                                    <span>Upload factuur</span>
+                                </a>
+                            </nav>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="pt-5">
-                <div class="flex justify-end">
-                    <button
-                        type="submit"
-                        class="
-                            ml-3
-                            inline-flex
-                            justify-center
-                            py-2
-                            px-4
-                            border border-transparent
-                            shadow-sm
-                            text-sm
-                            font-medium
-                            rounded-md
-                            text-white
-                            bg-indigo-600
-                            hover:bg-indigo-700
-                            focus:outline-none
-                            focus:ring-2
-                            focus:ring-offset-2
-                            focus:ring-indigo-500
-                        "
-                    >
-                        Save
-                    </button>
+                    <div class="grid-cols-1">
+                        <div v-if="selectedTab === 0" class="col">
+                            <uploadInvoice
+                                :usersList="usersList"
+                            ></uploadInvoice>
+                        </div>
+                        <div v-if="selectedTab === 1" class="col">
+                            <newInvoice :usersList="usersList"></newInvoice>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -314,131 +77,30 @@
 
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
-import VueNextSelect from "vue-next-select";
-import { ref } from "vue";
+import NewInvoice from "./NewInvoice";
+import UploadInvoice from "./UploadInvoice";
 
 export default {
+    name: "Create.vue",
     props: ["user", "usersList"],
 
     components: {
         AppLayoutAdmin,
-        "vue-select": VueNextSelect,
+        NewInvoice,
+        UploadInvoice,
     },
-
-    data: function () {
-        return {
-            invoice: {
-                userName: "",
-                userEmail: "",
-                userId: "",
-                invoiceName: "",
-                price: "",
-                file: "",
-            },
-            allUsers: ref(this.userList),
-            userObject: ref(null),
-            errors: [],
-        };
-    },
-
     mounted() {},
 
-    methods: {
-        /**
-         * Sets user variables in form in order to check if user is correct. (In case multiple peopleh ave the same name)
-         *
-         * @author Kevin
-         *
-         * @version 2.0.0
-         */
-        setUser(option) {
-            this.invoice = {
-                userName: option.first_name,
-                userEmail: option.email,
-                userId: option.id,
-            };
-        },
-
-        /**
-         * Handles the upload of a file.
-         *
-         * @author Kevin
-         *
-         * @version 1.0.0
-         */
-        handleFileUpload(e) {
-            this.invoice.file = e.target.files[0];
-        },
-
-        /**
-         * Checks if form is filled in correctly.
-         *
-         * @author Kevin
-         *
-         * @version 1.0.0
-         */
-        checkForm: function (e) {
-            this.errors = [];
-            if (!this.invoice.userName) this.errors.push("Name required.");
-            if (!this.invoice.invoiceName)
-                this.errors.push("Invoice name required.");
-            if (!this.invoice.file) this.errors.push("File required");
-
-            if (this.invoice.price.toString().includes(","))
-                this.errors.push("The price needs a Dot instead of a comma");
-
-            if (this.hasLetters(this.invoice.price))
-                this.errors.push("The price cannot contain letters");
-
-            if (!this.invoice.price)
-                this.errors.push("Invoice price required.");
-
-            if (!this.errors.length) {
-                this.submit();
-                return true;
-            }
-            e.preventDefault();
-        },
-
-        /**
-         * Submits data and posts it to api
-         *
-         * @author Kevin
-         *
-         * @version 1.0.0
-         */
-        submit() {
-            const formData = new FormData();
-            formData.set("userId", this.invoice.userId);
-            formData.set("invoiceName", this.invoice.invoiceName);
-            formData.set("price", this.invoice.price);
-            formData.set("file", this.invoice.file);
-
-            axios
-                .post("/api/invoice/create", formData)
-                .then(() => {
-                    window.location = "/admin/facturen";
-                })
-                .catch((response) => {
-                    console.log(response);
-                    console.log("FAILURE!!");
-                });
-        },
-
-        /**
-         * Tests if string contains only letters, returns true or false
-         *
-         * @author Kevin
-         *
-         * @version 1.0.0
-         */
-        hasLetters(val) {
-            if (/[a-zA-Z]/.test(val)) return true;
-            return false;
-        },
+    data: function () {
+        return { selectedTab: 0 };
     },
 
     watch: {},
+    methods: {
+        setTab(tab) {
+            this.selectedTab = tab;
+        },
+    },
 
     setup() {
         return {};
