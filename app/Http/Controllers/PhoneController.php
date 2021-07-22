@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\BrandsModel;
 use App\Models\Phone;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,28 +22,61 @@ class PhoneController extends Controller
 
     public function kk()
     {
-        $phone = Phone::all();
+        $phone = BrandsModel::all();
 
         return ['data' => $phone];
     }
 
     public function index()
     {
-        $phones = Phone::orderBy('name', 'asc')->paginate(20);
+        $phones = BrandsModel::orderBy('brand', 'asc')->paginate(20);
 
         return Inertia::render('Admin/Phone/Index', ['phones' => $phones, 'user' => Auth::user()]);
     }
 
-    public function create()
+    public function createIndex()
     {
-        $phones = Phone::all();
+        $phones = Brand::orderBy('name', 'asc')->get();
 
-        return Inertia::render('Admin/Phone/Create', ['phone'=>  Auth::user()]);
+        return Inertia::render('Admin/Phone/Create', ['phones' => $phones, 'user'=>  Auth::user()]);
     }
 
-    public function update(Phone $phones, Request $request)
+    public function update(BrandsModel $phone, Request $request)
     {
-        $phones->update($request->all());
-        return Inertia::render('Admin/Phone/Update', ['phone' => $phones]);
+        $phone->update($request->all());
+        return Inertia::render('Admin/Phone/Update', ['phone' => $phone, 'user'=>  Auth::user()]);
+    }
+
+    public function updateIndex(BrandsModel $phone, Request $request)
+    {
+        $phones = Brand::orderBy('name', 'asc')->get();
+
+        return Inertia::render('Admin/Phone/Update', ['phone' => $phone,'phones' => $phones, 'user'=>  Auth::user()]);
+    }
+
+    public function details(BrandsModel $phone)
+    {
+        return Inertia::render('Admin/Phone/Details', ['phone' => $phone]);
+
+    }
+    public function create(Request $request){
+        $brand = Brand::where('name', $request->get('brand'))->first();
+
+        $model = BrandsModel::create([
+            'brand'=> $brand->name,
+            'model'=> $request->get('model'),
+        ]);
+        return $model;
+    }
+
+    public function delete(BrandsModel $brandsModel){
+        $brandsModel->delete();
+        return $brandsModel;
+    }
+
+    public function getPhones()
+    {
+        $brandsModel =  BrandsModel::orderBy('brand', 'asc')->paginate(20);
+        return $brandsModel;
     }
 }
