@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
     Route::post('/api/users/create', [UserController::class, 'create']);
     Route::post('/api/user/{user}/update', [UserController::class, 'update']);
+    Route::get('/api/user/{user}/devices/unique', [DeviceController::class, 'getUniqueDevices']);
 
     Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
     Route::get('/api/user/brands/{brand}/models', [BrandsModelsController::class, 'getUserBrandModels']);
@@ -71,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/repairs/{user}/create', [RepairController::class, 'createRepairs']);
     Route::post('/api/repair/{repair}/update', [RepairController::class, 'update']);
     Route::post('/api/device/{user}/create', [DeviceController::class, 'createDevices']);
+
     Route::post('/api/device/{repair}/update', [DeviceController::class, 'update']);
     Route::post('/api/user/{user}/repair-all', [RepairController::class, 'repairAll']);
 
@@ -100,8 +102,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/company/{company}/update', [CompanyController::class, 'updateIndex']);
 
         Route::get('/admin/devices', [DeviceController::class, 'deviceIndexAdmin']);
-        Route::get('/admin/device/{repair}', [DeviceController::class, 'details']);
-        Route::post('/admin/device/create', [DeviceController::class, 'create']);
+//        Route::get('/admin/device/{repair}', [DeviceController::class, 'details']);
+        Route::get('/admin/device/create', [DeviceController::class, 'createIndex']);
+        Route::post('/api/device/create', [DeviceController::class, 'create']);
+
         Route::put('/admin/device/{device}/update', [DeviceController::class, 'update']);
 
         //Facturen
@@ -127,7 +131,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         //Repairs
         Route::get('/admin/repairs', [RepairController::class, 'repairIndexAdmin']);
         Route::get('/admin/repair/{user}', [RepairController::class, 'details']);
-        Route::post('/admin/repairs/create', [RepairController::class, 'create']);
+        Route::get('/admin/repairs/create', [RepairController::class, 'createIndexAdmin']);
+        Route::post('/api/repairs/create', [RepairController::class, 'create']);
         Route::put('/admin/repair/{repair}/update', [RepairController::class, 'update']);
     });
 });

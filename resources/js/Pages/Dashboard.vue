@@ -1,5 +1,5 @@
 <template>
-    <app-layout-user :user="user">
+    <app-layout-user :user="user" :company="company">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -173,7 +173,7 @@ import {
 } from "@heroicons/vue/outline";
 
 export default {
-    props: ["user"],
+    props: ["user", 'company'],
     components: {
         AppLayoutUser,
         Welcome,

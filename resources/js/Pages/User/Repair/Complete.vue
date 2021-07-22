@@ -1,5 +1,5 @@
 <template>
-    <app-layout-user :user="user">
+    <app-layout-user :user="user" :company="company">
         <div class="py-16 bg-gray-50 lg:py-24">
             <div class="relative max-w-xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
                 <svg class="hidden lg:block absolute left-full transform -translate-x-1/2 -translate-y-1/4" width="404" height="784" fill="none" viewBox="0 0 404 784" aria-hidden="true">
@@ -127,7 +127,7 @@
 import AppLayoutUser from "../../../Layouts/AppLayoutUser";
 export default {
     name: "Complete",
-    props: ['user', 'repairs'],
+    props: ['user', 'repairs','company'],
     components: {
      AppLayoutUser
     }

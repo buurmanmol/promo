@@ -227,20 +227,14 @@ import {
 } from '@headlessui/vue'
 import {
     BellIcon,
-    ClockIcon,
     CogIcon,
-    CreditCardIcon,
-    DocumentReportIcon,
-    HomeIcon,
     MenuAlt1Icon,
-    QuestionMarkCircleIcon,
+    DeviceTabletIcon,
     ScaleIcon,
-    ShieldCheckIcon,
     UserGroupIcon,
     XIcon,
     TicketIcon,
     DocumentSearchIcon,
-    DocumentTextIcon,
     DeviceMobileIcon,
 
 } from '@heroicons/vue/outline'
@@ -257,6 +251,7 @@ import {
 const navigation = [
     { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
     { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon },
+    { name: 'Apparaten', href: '/admin/devices', icon: DeviceTabletIcon },
     { name: 'Reparaties', href: '/admin/repairs', icon: TicketIcon },
 
     { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon },

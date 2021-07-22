@@ -167,11 +167,11 @@
                                 </div>
                             </div>
                             <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
+                                <h1 class="ml-3 inline-flex items-center text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
+                                   Saldo: € {{ formatPrice(company.wallet) }}
+                                </h1>
                                 <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                                    Add money
-                                </button>
-                                <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                                    Send money
+                                   Saldo toevoegen
                                 </button>
                             </div>
                         </div>
@@ -207,6 +207,7 @@
 
 <script>
 import { ref } from 'vue'
+import VueCurrencyFilter from 'vue-currency-filter'
 import { Link } from '@inertiajs/inertia-vue3'
 import {
     Dialog,
@@ -215,24 +216,17 @@ import {
     MenuButton,
     MenuItem,
     MenuItems,
+
     TransitionChild,
     TransitionRoot,
 } from '@headlessui/vue'
 import {
     BellIcon,
-    ClockIcon,
-    CogIcon,
-    CreditCardIcon,
-    DocumentReportIcon,
     HomeIcon,
     MenuAlt1Icon,
-    QuestionMarkCircleIcon,
     ScaleIcon,
-    ShieldCheckIcon,
-    UserGroupIcon,
     XIcon,
     TicketIcon,
-    DocumentSearchIcon,
     DocumentTextIcon,
     DeviceMobileIcon,
 
@@ -281,11 +275,20 @@ const statusStyles = {
 }
 
 export default {
-    props:['user'],
+    props:['user', 'company'],
     components: {
         Dialog,
         DialogOverlay,
         Menu,
+        VueCurrencyFilter: {
+            symbol : '$',
+            thousandsSeparator: '.',
+            fractionCount: 2,
+            fractionSeparator: ',',
+            symbolPosition: 'front',
+            symbolSpacing: true,
+            avoidEmptyDecimals: undefined,
+        },
         MenuButton,
         Link,
         MenuItem,
@@ -301,6 +304,15 @@ export default {
         SearchIcon,
         XIcon,
         OfficeBuildingIcon
+    },
+    methods: {
+        formatPrice(price) {
+            return price.toLocaleString('nl-NL')
+        }
+    },
+    filters: {
+      currency(price) {
+        }
     },
     setup() {
         const sidebarOpen = ref(false)

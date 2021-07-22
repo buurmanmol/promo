@@ -41,7 +41,7 @@ class RepairController extends Controller
         $repairs = Repair::where('user_id', $user->id)->get();
         $fullArr = [];
         foreach($repairs as $repair) {
-            $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'brandsModels') -> orderBy('created_at', 'desc')->get();
+            $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
 //            dd($sameDate);
             array_push($fullArr, $sameDate);
         }
@@ -58,17 +58,17 @@ class RepairController extends Controller
         $repairs = Repair::where('user_id', auth()->user()->id)->get();
         $fullArr = [];
         foreach($repairs as $repair) {
-            $sameDate = Repair::where('user_id', auth()->user()->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'brandsModels') -> orderBy('created_at', 'desc')->get();
+            $sameDate = Repair::where('user_id', auth()->user()->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
             array_push($fullArr, $sameDate);
         }
             $s = array_unique($fullArr, SORT_REGULAR);
 
-        return Inertia::render('User/Repair/Index', ['repairs' => $s, 'user' => Auth::user()]);
+        return Inertia::render('User/Repair/Index', ['repairs' => $s, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     public function repairIndexAdmin()
     {
-        $users = User::with(['repairs.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
+        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
         $q->orderBy('created_at', 'desc');
     }])->get();
 
@@ -78,13 +78,18 @@ class RepairController extends Controller
         return Inertia::render('Admin/Repair/Index', ['users' => $users, 'user' => Auth::user(),'brandsModels' => $brands_models, 'brands' => $brands, 'productTypes' => $product_types]);
     }
 
+    public function create()
+    {
+
+    }
+
     public function createRepairs(User $user, Request $request)
     {
         $repairs = $request->all();
         foreach($repairs as $repair) {
             Repair::create([
-                'brands_models_id' => $repair['model']['id'],
                 'comment' => $repair['comment'] || '',
+                'device_id' => $repair['device']['id'],
                 'product_type_id' => $repair['productType']['id'],
                 'user_id' => $user->id,
             ]);
@@ -94,8 +99,18 @@ class RepairController extends Controller
 
     public function completeIndex()
     {
-        $repairs = Repair::with('brandsModels', 'productType')->where('user_id', Auth::user()->id)->get();
-        return Inertia::render('User/Repair/Complete', ['user' => Auth::user(), 'repairs' => $repairs]);
+        $repairs = Repair::with('device.brandsModels', 'productType')->where('user_id', Auth::user()->id)->get();
+        return Inertia::render('User/Repair/Complete', ['user' => Auth::user(), 'company' => Auth::user()->company, 'repairs' => $repairs]);
+    }
+
+    public function createIndexAdmin()
+    {
+        $users= User::with('company','devices')->get();
+
+
+        $productTypes = ProductType::all();
+
+        return Inertia::render('Admin/Repair/Create', ['users' => $users, 'currentUser' => Auth::user(), 'productTypes' => $productTypes]);
     }
 
     public function createIndex()
@@ -116,6 +131,6 @@ class RepairController extends Controller
         $productTypes = ProductType::all();
         $models = BrandsModel::whereIn('model', $uModels)->get();
 
-        return Inertia::render('User/Repair/Create', ['user' => Auth::user(), 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        return Inertia::render('User/Repair/Create', ['devices' => $user->devices,'user' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 }

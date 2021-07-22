@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\BrandsModel;
 use App\Models\Device;
 use App\Models\ProductType;
+use App\Models\Repair;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,15 +38,14 @@ class DeviceController extends Controller
     {
         $devices = Device::with('brandsModels')->where('user_id', auth()->user()->id)->paginate(20);
 
-        return Inertia::render('User/Device/Index', ['devices' => $devices, 'user' => Auth::user()]);
+        return Inertia::render('User/Device/Index', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
     }
 
     public function deviceIndexAdmin()
     {
-        $users = User::with('devices.brandsModels','devices.productType', 'company')->get();
-        $brands_models = BrandsModel::all();
-        $brands = Brand::all();
-        return Inertia::render('Admin/Device/Index', ['users' => $users, 'user' => Auth::user(),'brandsModels' => $brands_models, 'brands' => $brands]);
+        $users = User::with('devices.brandsModels','devices.productType', 'company')->paginate(10);
+//        dd($users);
+        return Inertia::render('Admin/Device/Index', ['users' => $users, 'user' => Auth::user()]);
     }
 
     public function createDevices(User $user, Request $request)
@@ -63,7 +63,7 @@ class DeviceController extends Controller
     public function completeIndex()
     {
         $devices = Device::with('brandsModels')->where('user_id', Auth::user()->id)->get();
-        return Inertia::render('User/Device/Complete', ['user' => Auth::user(), 'devices' => $devices]);
+        return Inertia::render('User/Device/Complete', ['user' => Auth::user(), 'company' => Auth::user()->company, 'devices' => $devices]);
     }
 
     public function createIndex()
@@ -71,7 +71,34 @@ class DeviceController extends Controller
         $brands = Brand::all();
         $productTypes = ProductType::all();
         $models = BrandsModel::all();
+        $users = User::with('company')->get();
 
-        return Inertia::render('User/Device/Create', ['user' => Auth::user(), 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        return Inertia::render('Admin/Device/Create', ['currentUser' => Auth::user(),'users' => $users, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+    }
+
+    public function getUniqueDevices(User $user)
+    {
+     $devices = Device::where('user_id', $user->id)->with('brandsModels')->get();
+        $arr = [];
+     foreach($devices as $device) {
+         array_push($arr, $device);
+     }
+        $a = array_unique($arr);
+
+        return ['data' => $a];
+    }
+
+    public function create(Request $request)
+    {
+        $devices = $request->all();
+        foreach($devices as $device) {
+//            dd($device/**/);
+            Device::create([
+                'brands_models_id' => $device['model']['id'],
+                'user_id' => $device['user']['id'],
+                'is_repaired' => 0
+            ]);
+        }
+        return $devices;
     }
 }

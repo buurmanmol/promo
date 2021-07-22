@@ -44,12 +44,12 @@
                             <tr v-for="rep in repair">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-500">
-                                        {{ rep.brands_models.brand }}
+                                        {{ rep.device.brands_models.brand }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-500">
-                                        {{ rep.brands_models.model }}
+                                        {{ rep.device.brands_models.model }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

@@ -50,6 +50,7 @@
         "@vue-hero-icons/solid": "^1.7.2",
         "moment": "^2.29.1",
         "sweetalert2": "^11.0.18",
+        "vue-currency-filter": "^5.2.0",
         "vue-currency-input": "^2.0.0",
         "vue-next-select": "^2.7.0",
         "vue-pdf": "^4.3.0",

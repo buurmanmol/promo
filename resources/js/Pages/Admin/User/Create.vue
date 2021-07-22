@@ -112,7 +112,8 @@
                                 Company
                             </label>
                             <div class="mt-1">
-                                <select v-model="selectedCompany" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                {{user.company_id}}
+                                <select v-model="user.company_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
                                     <option v-for="company in companies" :value="company.id">{{company.name}}</option>
                                 </select>
                             </div>
@@ -175,9 +176,9 @@ export default {
               province: '',
               postal_code: '',
               phone_number: '',
+              company_id: '',
               email: '',
               password: '',
-              company: '',
           },
       }
     },
@@ -205,7 +206,7 @@ export default {
             if(!this.user.phone_number) this.errors.push("Phone number required.");
             if(!this.user.postal_code) this.errors.push("Postal Code required.");
             if(!this.user.password) this.errors.push("Password Code required.");
-            if(!this.selectedCompany) this.errors.push("Select a company.");
+            if(!this.user.company_id) this.errors.push("Select a company.");
 
             if (!this.errors.length) {
                 this.createUser()
@@ -214,7 +215,6 @@ export default {
             e.preventDefault();
         },
         createUser(){
-            this.user.company = this.selectedCompany;
             axios.post('/api/users/create', this.user)
                 .then((response) => {
                     console.log(response);
