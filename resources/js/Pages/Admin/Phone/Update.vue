@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user"  :company="company">
         <div class="p-4 bg-white space-y-8 divide-y divide-gray-200">
             <div class="space-y-8 divide-y divide-gray-200">
                 <div class="pt-8">
@@ -72,7 +72,7 @@
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import { XCircleIcon } from '@heroicons/vue/solid'
 export default {
-    props:['phone', 'user', 'phones'],
+    props:['phone', 'user', 'phones','company'],
 
     components: {
         AppLayoutAdmin,

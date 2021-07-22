@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :company="company">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -18,6 +18,12 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Edit
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Delete
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -56,7 +62,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <pagination v-if="phones.links" class="mt-6" :links="phones.links"></pagination>
+                        <pagination v-if="phones.links" class="mt-6" :links="phones.links" :data="phones.data" ></pagination>
                     </div>
                 </div>
             </div>
@@ -67,35 +73,58 @@
 <script>
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import Pagination from "../../../Components/Pagination";
+import Swal from "sweetalert2";
 export default {
-    props:['phones','user'],
+    props:['user','company'],
     components: {
         AppLayoutAdmin,
         Pagination
     },
-    data(){
+    data:() => {
+        return{
+            phones:'',
+        };
     },
     methods: {
         deletePhone(phone){
-            axios.delete('/admin/api/phone/'+phone+'/delete')
+            Swal.fire({
+                title: "Weet u zeker dat u dit toestel wilt verwijderen?",
+                text: "Hierdoor zal dit toestel verwijdert worden!. ",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ja, verwijder",
+                cancelButtonText: "Annuleren",
+            }).then((result) => {
+                    if (result.isConfirmed) {
+                        axios.delete('/admin/api/phone/' + phone + '/delete')
+                            .then(() => {
+                                this.getPhones();
+                            }).catch((response) => {
+                            console.log(response);
+                            console.log(error);
+                        });
+                        Swal.fire(
+                            "Succes!",
+                            "Dit toestel is verwijderd.",
+                            "Success"
+                        );
+                    }
+            });
+        },
+        getPhones(){
+            axios.get('/admin/api/phones')
                 .then((response) => {
-                    console.log(response);
-                    this.index();
+                    console.log(response.data);
+                    this.phones = response.data;
                 }, (error) => {
                     console.log(error);
                 });
         },
-        // getPhones(){
-        //     axios.get('/admin/api/phones')
-        //         .then((response) => {
-        //             console.log(response.data);
-        //             this.phones = response.data;
-        //         }, (error) => {
-        //             console.log(error);
-        //         });
-        // }
     },
     mounted() {
+        this.getPhones();
     },
     setup() {
         return {

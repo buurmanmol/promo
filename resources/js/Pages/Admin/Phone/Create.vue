@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user"  :company="company">
 
         <div class="p-4 bg-white space-y-8 divide-y divide-gray-200">
             <div class="space-y-8 divide-y divide-gray-200">
@@ -74,7 +74,7 @@
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import { XCircleIcon } from '@heroicons/vue/solid'
 export default {
-    props:['user', 'phones'],
+    props:['user', 'phones','company'],
     components: {
         AppLayoutAdmin,
         XCircleIcon

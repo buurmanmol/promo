@@ -82,7 +82,7 @@ import UploadInvoice from "./UploadInvoice";
 
 export default {
     name: "Create.vue",
-    props: ["user", "usersList"],
+    props: ["user", "usersList",'company'],
 
     components: {
         AppLayoutAdmin,
