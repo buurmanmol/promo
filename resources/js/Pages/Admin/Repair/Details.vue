@@ -1,13 +1,31 @@
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="currentUser">
             <div class="bg-white pb-4 shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        {{user.first_name}} {{user.last_name}} Reparatie & apparaat informatie
-                    </h3>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                        Alle aangemeldde reparaties en apparaten van de gebruiker {{user.email}}
-                    </p>
+                    <div class="grid-cols-2 sm:grid-cols-1">
+                        <div class="col">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                                {{user.first_name}} {{user.last_name}} Reparatie & apparaat informatie
+                            </h3>
+                            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                                Alle aangemeldde reparaties en apparaten van de gebruiker {{user.email}}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <button @click="showModal = true" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Create subscription</button>
+                            <dialog-modal :show="showModal" @close="showModal = false">
+                                <template #title>
+                                    Create subscription for: {{user.first_name}} {{user.last_name}}
+                                </template>
+                                <template #content>
+                                    <create-subscription></create-subscription>
+                                </template>
+                                <template class="display:none;" #footer>
+                                </template>
+                            </dialog-modal>
+                            </div>
+                    </div>
+
                 </div>
                 <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                     <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
@@ -95,19 +113,24 @@ import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import {DeviceMobileIcon, TicketIcon } from '@heroicons/vue/outline'
 import Repairs from "./Repairs";
 import Devices from "./Devices";
+import DialogModal from "../../../Jetstream/DialogModal";
+import CreateSubscription from "../Payment/CreateSubscription";
 
 export default {
     name: "Details.vue",
-    props:['user', 'repairs', 'devices'],
+    props:['currentUser','user', 'repairs', 'devices'],
     components: {
         Devices,
         AppLayoutAdmin,
+        CreateSubscription,
         DeviceMobileIcon,
+        DialogModal,
         TicketIcon,
         Repairs
     },
     data() {
         return {
+            showModal: false,
             selectedTab: 0,
         }
     }
