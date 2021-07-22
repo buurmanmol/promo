@@ -1,5 +1,5 @@
 <template>
-    <app-layout-user :user="user" :company="company">
+    <app-layout-user :user="user" :company="company" :page="page">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -139,14 +139,16 @@
                                     >
                                         <span
                                             :class="[
-                                                action.iconBackground,
-                                                action.iconForeground,
-                                                'rounded-lg inline-flex p-3 ring-4 ring-white',
+                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ring-white',
                                             ]"
                                         >
                                             <component
                                                 :is="action.icon"
-                                                class="h-20 w-20"
+                                                class="
+                                                    h-20
+                                                    w-20
+                                                    dark:bg-gray-800
+                                                "
                                                 aria-hidden="true"
                                             />
                                         </span>
@@ -166,9 +168,9 @@ import AppLayoutUser from "@/Layouts/AppLayoutUser";
 import Welcome from "@/Jetstream/Welcome";
 import {
     PhoneIcon,
-    XIcon,
     ClipboardListIcon,
     DeviceMobileIcon,
+    PlusCircleIcon,
     BookOpenIcon,
 } from "@heroicons/vue/outline";
 
@@ -180,11 +182,12 @@ export default {
         PhoneIcon,
         DeviceMobileIcon,
         BookOpenIcon,
-        XIcon,
+        PlusCircleIcon,
         ClipboardListIcon,
     },
     data: () => {
         return {
+            page: "dashboard",
             actions: [
                 {
                     name: "Mijn facturen",
@@ -200,7 +203,7 @@ export default {
                     message:
                         "Klik hier om een nieuwe reparatieaanvraag te doen!",
                     href: "/user/repair/create",
-                    icon: PhoneIcon,
+                    icon: PlusCircleIcon,
                 },
                 {
                     name: "Mijn apparaten",
@@ -208,7 +211,7 @@ export default {
                     message:
                         "Klik hier om naar de lijst te gaan met al uw apparaten.",
                     href: "/user/apparaten",
-                    icon: BookOpenIcon,
+                    icon: DeviceMobileIcon,
                 },
                 {
                     name: "Min reparaties",
@@ -216,7 +219,7 @@ export default {
                     message:
                         "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
                     href: "/user/reparaties",
-                    icon: DeviceMobileIcon,
+                    icon: BookOpenIcon,
                 },
             ],
         };

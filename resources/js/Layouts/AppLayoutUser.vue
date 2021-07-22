@@ -45,7 +45,7 @@
                         </div>
                         <nav class="mt-5 flex-shrink-0 h-full divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar">
                             <div class="px-2 space-y-1">
-                                <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-azure-radiance-800 text-white' : 'text-cyan-100 hover:text-white hover:bg-azure-radiance-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+                                <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[setCurrentPage(item.current) ? 'bg-azure-radiance-800 text-white' : 'text-cyan-100 hover:text-white hover:bg-azure-radiance-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']" :aria-current="setCurrentPage(item.current) ? 'page' : undefined">
                                     <component :is="item.icon" class="mr-4 h-6 w-6 text-cyan-200" aria-hidden="true" />
                                     {{ item.name }}
                                 </a>
@@ -77,7 +77,7 @@
                     </div>
                     <nav class="mt-5 flex-1 flex flex-col divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar">
                         <div class="px-2 space-y-1">
-                            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-azure-radiance-800 text-white' : 'text-cyan-100 hover:text-white hover:bg-azure-radiance-600', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+                            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[setCurrentPage(item.current) ? 'bg-azure-radiance-800 text-white' : 'text-cyan-100 hover:text-white hover:bg-azure-radiance-600', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']" :aria-current="setCurrentPage(item.current) ? 'page' : undefined">
                                 <component :is="item.icon" class="mr-4 h-6 w-6 text-cyan-200" aria-hidden="true" />
                                 {{ item.name }}
                             </a>
@@ -242,10 +242,10 @@ import {
 } from '@heroicons/vue/solid'
 
 const navigation = [
-    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: true },
-    { name: 'Mijn facturen', href: '/user/facturen', icon: DocumentTextIcon, current: false },
-    { name: 'Mijn apparaten', href: '/user/apparaten', icon: DeviceMobileIcon, current: false },
-    { name: 'Mijn reparaties', href: '/user/reparaties', icon: TicketIcon, current: false },
+    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: 'dashboard' },
+    { name: 'Mijn facturen', href: '/user/facturen', icon: DocumentTextIcon, current: 'facturen' },
+    { name: 'Mijn apparaten', href: '/user/apparaten', icon: DeviceMobileIcon, current: 'apparaten' },
+    { name: 'Mijn reparaties', href: '/user/reparaties', icon: TicketIcon, current: 'reparaties' },
 
 ]
 const secondaryNavigation = [
@@ -275,7 +275,7 @@ const statusStyles = {
 }
 
 export default {
-    props:['user', 'company'],
+    props:['user', 'company', 'page'],
     components: {
         Dialog,
         DialogOverlay,
@@ -305,10 +305,14 @@ export default {
         XIcon,
         OfficeBuildingIcon
     },
+    
     methods: {
         formatPrice(price) {
             return price.toLocaleString('nl-NL')
-        }
+        },
+        setCurrentPage(page){
+            return page === this.page ? true : false;
+        },
     },
     filters: {
       currency(price) {
