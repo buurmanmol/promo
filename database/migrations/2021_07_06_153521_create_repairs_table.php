@@ -18,12 +18,14 @@ class CreateRepairsTable extends Migration
             $table->BigInteger('device_id')->unsigned();
             $table->BigInteger('user_id')->unsigned();
             $table->BigInteger('product_type_id')->unsigned();
+            $table->BigInteger('invoice_id')->unsigned()->nullable();
             $table->text('comment')->nullable();
             $table->integer('price')->nullable();
             $table->boolean('is_repaired')->default(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
             $table->foreign('product_type_id')->references('id')->on('product_types')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
 
             $table->timestamps();
         });

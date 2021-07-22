@@ -63,7 +63,7 @@ class RepairController extends Controller
         }
             $s = array_unique($fullArr, SORT_REGULAR);
 
-        return Inertia::render('User/Repair/Index', ['repairs' => $s, 'user' => Auth::user(), 'company' => Auth::user()->company]);
+        return Inertia::render('User/Repair/Index', ['repairs' => $s, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     public function repairIndexAdmin()
@@ -131,6 +131,6 @@ class RepairController extends Controller
         $productTypes = ProductType::all();
         $models = BrandsModel::whereIn('model', $uModels)->get();
 
-        return Inertia::render('User/Repair/Create', ['devices' => $user->devices,'user' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        return Inertia::render('User/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 }
