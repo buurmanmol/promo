@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
             <div class="bg-white pb-4 shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -109,6 +109,7 @@ export default {
     data() {
         return {
             selectedTab: 0,
+            page:'repairs',
         }
     }
 }
