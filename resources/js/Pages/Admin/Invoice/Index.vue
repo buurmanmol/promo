@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user" >
+    <app-layout-admin :user="user">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -47,6 +47,10 @@
                         >
                             Factuur toevoegen +
                         </a>
+                        <!-- <CreateInvoice
+                            :invoice="invoiceName"
+                            :user="targetUser"
+                        /> -->
                         <table
                             class="
                                 min-w-full
@@ -186,6 +190,7 @@
                                         {{ formatDate(invoice.created_at) }}
                                     </td>
                                     <td
+                                        v-if="invoice.price !== null"
                                         class="
                                             px-6
                                             py-4
@@ -194,6 +199,17 @@
                                         "
                                     >
                                         €{{ invoice.price }}
+                                    </td>
+                                    <td
+                                        v-else
+                                        class="
+                                            px-6
+                                            py-4
+                                            whitespace-nowrap
+                                            text-sm text-gray-500
+                                        "
+                                    >
+                                        To be announced
                                     </td>
                                     <td>
                                         <PencilIcon
@@ -247,6 +263,7 @@
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import Swal from "sweetalert2";
 import { DownloadIcon, XIcon, PencilIcon } from "@heroicons/vue/outline";
+import CreateInvoice from "../../../Components/CreateInvoice";
 
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
@@ -257,11 +274,14 @@ export default {
         AppLayoutAdmin,
         DownloadIcon,
         XIcon,
+        CreateInvoice,
         PencilIcon,
     },
     data: () => {
         return {
             invoices: "",
+            invoiceName: "F1234101010101",
+            targetUser: "1",
         };
     },
     mounted() {

@@ -61,9 +61,7 @@
                     </div>
                     <div class="grid-cols-1">
                         <div v-if="selectedTab === 0" class="col">
-                            <uploadInvoice
-                                :usersList="usersList"
-                            ></uploadInvoice>
+                            <invoice :usersList="usersList"></invoice>
                         </div>
                         <div v-if="selectedTab === 1" class="col">
                             <newInvoice :usersList="usersList"></newInvoice>
@@ -78,7 +76,7 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import NewInvoice from "./NewInvoice";
-import UploadInvoice from "./UploadInvoice";
+import Invoice from "./Invoice";
 
 export default {
     name: "Create.vue",
@@ -87,12 +85,14 @@ export default {
     components: {
         AppLayoutAdmin,
         NewInvoice,
-        UploadInvoice,
+        Invoice,
     },
     mounted() {},
 
     data: function () {
-        return { selectedTab: 0 };
+        return {
+            selectedTab: 0,
+        };
     },
 
     watch: {},
