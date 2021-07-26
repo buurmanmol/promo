@@ -11,7 +11,7 @@
                 <div>
                     <img class="h-20 w-384" src="images/logo.png" alt="Workflow" />
                     <h2 class="mt-6 text-3xl text-center font-extrabold text-gray-900">
-                        Sign in to your account
+                        Log in uw account
                     </h2>
                 </div>
                     <div class="mt-8 text-center">
@@ -35,14 +35,14 @@
                                     <div class="flex items-center">
                                         <jet-checkbox name="remember" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"  v-model:checked="form.remember" />
                                         <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-                                            Remember me
+                                            Onthoud mij
                                         </label>
                                     </div>
 
                                     <div class="text-sm">
 
                                         <inertia-link v-if="canResetPassword" :href="route('password.request')" class="font-medium text-indigo-600 hover:text-indigo-500">
-                                            Forgot your password?
+                                            Wachtwoord vergeten?
                                         </inertia-link>
                                     </div>
                                 </div>

@@ -323,8 +323,8 @@ export default {
          */
         deleteInvoice(selected) {
             Swal.fire({
-                title: "Weet u zeker dat u dit factuur wilt verwijderen?",
-                text: "Hierdoor zal dit factuur verloren gaan!. ",
+                title: "Weet u zeker dat u deze factuur wilt verwijderen?",
+                text: "Hierdoor zal deze factuur verloren gaan!. ",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -344,7 +344,7 @@ export default {
                         });
                     Swal.fire(
                         "Poof!",
-                        "Dit factuur is nu verwijderd.",
+                        "Deze factuur is nu verwijderd.",
                         "Success"
                     );
                 }

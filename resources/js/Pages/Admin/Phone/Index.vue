@@ -11,7 +11,7 @@
                             <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-20 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Brand
+                                    Merk
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Model
@@ -20,10 +20,10 @@
                                     Status
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Edit
+                                    Aanpassen
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Delete
+                                    Verwijderen
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -53,10 +53,10 @@
                   </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a :href="'/admin/phone/' + phone.id +  '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>
+                                    <a :href="'/admin/phone/' + phone.id +  '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Aanpassen</a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button type="button" @click="deletePhone(phone.id)" class="text-red-700 hover:text-red-800">Delete</button>
+                                    <button type="button" @click="deletePhone(phone.id)" class="text-red-700 hover:text-red-800">Verwijderen</button>
                                 </td>
 
                             </tr>

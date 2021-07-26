@@ -57,7 +57,7 @@
                                 for="email"
                                 class="block text-sm font-medium text-gray-700"
                             >
-                                Email address
+                                E-mailadres
                             </label>
                             <div class="mt-1">
                                 <input
@@ -85,7 +85,7 @@
                                 for="user_id"
                                 class="block text-sm font-medium text-gray-700"
                             >
-                                User ID
+                                Gebruiker ID
                             </label>
                             <div class="mt-1">
                                 <input
@@ -236,8 +236,8 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-sm font-medium text-red-800">
-                            There were {{ errors.length }} errors with your
-                            submission
+                            <h1 v-if="errors.length== 1"> Er is 1 probleem gevonden.</h1>
+                            <h1 v-else>Er zijn {{ errors.length }} problemen gevonden.</h1>
                         </h3>
                         <div class="mt-2 text-sm text-red-700">
                             <ul class="list-disc pl-5 space-y-1">
@@ -360,18 +360,18 @@ export default {
          */
         checkForm: function (e) {
             this.errors = [];
-            if (!this.invoice.user_id) this.errors.push("User required.");
+            if (!this.invoice.user_id) this.errors.push("Gebruiker vereist.");
             if (!this.invoice.invoice_name)
-                this.errors.push("Invoice name required.");
+                this.errors.push("Factuur naam vereist");
 
             if (this.invoice.price.toString().includes(","))
-                this.errors.push("The price needs a Dot instead of a comma");
+                this.errors.push("De prijs moet een punt bevatten ipv een komma.");
 
             if (this.hasLetters(this.invoice.price))
-                this.errors.push("The price cannot contain letters");
+                this.errors.push("De prijs kan geen letters bevatten");
 
             if (!this.invoice.price)
-                this.errors.push("Invoice price required.");
+                this.errors.push("Factuur prijs vereist");
 
             if (!this.errors.length) {
                 this.submit();

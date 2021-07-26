@@ -73,7 +73,7 @@
                                     <dt class="text-lg">
                                         <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
                                             <span class="font-medium text-gray-900">
-                                              Zoek De user waar het device moet worden toegevoegd
+                                              Zoek de gebruiker waar het device moet worden toegevoegd
                                             </span>
                                         </DisclosureButton>
                                     </dt>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-span-2 px-4 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    User
+                                    Gebruiker
                                 </label>
                                 <vue-select searchable v-model="user" :options="users" label-by="first_name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
                                     <template #dropdown-item="{ option }">
@@ -122,7 +122,7 @@
                             </div>
                             <div class="col-span-2 px-4 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    Brand
+                                    Merk
                                 </label>
                                 <vue-select  @search:change="brand = brand.name; getModels" searchable v-model="brand" :options="brands" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
                                 <!--                                {{selectedSlide}} {{brand}}-->
@@ -220,7 +220,7 @@
                                             </td>
                                             <td>
                                                 <div>
-                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal Appareten van hetzelfde merk/toestel</label>
+                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal apparaten van hetzelfde merk/toestel.</label>
                                                     <div class="mt-1 flex rounded-md shadow-sm">
                                                         <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -329,7 +329,7 @@ export default {
     methods: {
         postsDevices() {
             Swal.fire({
-                title: 'Pas op! heeft u alle toestellen toegevoegd?',
+                title: 'Let op! Heeft u alle toestellen toegevoegd?',
                 text: "Deze inzending van reparaties is eenmalig.",
                 icon: 'warning',
                 showCancelButton: true,

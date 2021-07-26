@@ -24,19 +24,19 @@
                             <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Brand
+                                    Merk
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Model
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Part
+                                    Onderdeel
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Price
+                                    Prijs
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Repaired
+                                    Gerepareerd
                                 </th>
                             </tr>
                             </thead>
@@ -72,7 +72,7 @@
                                     :class="rep.is_repaired ? 'bg-green-600' : 'bg-red-600'"
                                     class="relative inline-flex items-center h-7 rounded-full w-14"
                                 >
-                                    <span class="sr-only">Enable notifications</span>
+                                    <span class="sr-only">Notificaties inschakelen</span>
                                     <span
                                         :class="rep.is_repaired ? 'translate-x-8' : 'translate-x-1'"
                                         class="inline-block transition duration-200 ease-in-out transform w-5 h-5 transform bg-white rounded-full"
