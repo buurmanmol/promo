@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrandsModelsController;
+use App\Http\Controllers\BuckarooController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PartController;
@@ -103,6 +104,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
 
     Route::middleware([\App\Http\Middleware\Admin::class])->group(function () {
+
+        Route::post('/api/buckaroo/create-subscription', [BuckarooController::class, 'createSubscription']);
 
         //Users
         Route::get('/admin/users', [UserController::class, 'index']);
