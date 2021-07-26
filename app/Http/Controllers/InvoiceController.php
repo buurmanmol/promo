@@ -66,13 +66,20 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
-        $pathToFile = $request->file('file')->store('invoices', 'public');
+        if($request->file('file') !== null){
+            $pathToFile = $request->file('file')->store('invoices', 'public');
+            $invoice = Invoice::create([
+                'invoice_name' => $request->get('invoiceName'),
+                'invoice_path' => $pathToFile,
+                'user_id' => $request->get('userId'),
+                'price' => $request->get('price'), 
+            ]);
+            return ['invoice' => $invoice];
+        }
         $invoice = Invoice::create([
             'invoice_name' => $request->get('invoiceName'),
-            'invoice_path' => $pathToFile,
             'user_id' => $request->get('userId'),
-            'price' => $request->get('price'), 
-        ]);
+        ]); 
 
         return ['invoice' => $invoice];
     }
@@ -99,8 +106,26 @@ class InvoiceController extends Controller
      * @version 1.0.0
      */
     public function update(Invoice $invoice, Request $request){
+        
         $invoice->update($request->all());
         return ['invoice' => $invoice];
+        
+    }
+
+    /**
+     * uploads PDF 
+     * 
+     * @author Kevin
+     * 
+     * @version 1.0.0
+     */
+    public function uploadPdf(Request $request){
+        $pathToFile = "File Not Found";
+        if($request->file('file') !== null){
+            $pathToFile = $request->file('file')->store('invoices', 'public');
+        }
+        return $pathToFile;
+        
     }
 
     /**

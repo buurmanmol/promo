@@ -82,10 +82,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/company/create', [CompanyController::class, 'create']);
 
     Route::post('/api/invoice/create', [InvoiceController::class, 'create']);
+    Route::post('/api/invoice/uploadPdf', [InvoiceController::class, 'uploadPdf']);
     Route::put('/api/invoice/{invoice}/update', [InvoiceController::class, 'update']);
+    Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
     Route::get('/api/invoice/{invoice}/pdf', [InvoiceController::class, 'generatePdf']);
     Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
-    Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
 
 
 

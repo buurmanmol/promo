@@ -335,7 +335,7 @@ export default {
 
     methods: {
         /**
-         * Sets user variables in form in order to check if user is correct. (In case multiple peopleh ave the same name)
+         * Sets user variables in form in order to check if user is correct. (In case multiple people have the same name)
          *
          * @author Kevin
          *
@@ -374,14 +374,12 @@ export default {
                 this.errors.push("Invoice name required.");
             if (!this.invoice.file) this.errors.push("File required");
 
-            if (this.invoice.price.toString().includes(","))
-                this.errors.push("The price needs a Dot instead of a comma");
-
-            if (this.hasLetters(this.invoice.price))
-                this.errors.push("The price cannot contain letters");
-
             if (!this.invoice.price)
                 this.errors.push("Invoice price required.");
+            if (this.hasLetters(this.invoice.price))
+                this.errors.push("The price cannot contain letters");
+            if (this.invoice.price.toString().includes(","))
+                this.errors.push("The price needs a Dot instead of a comma");
 
             if (!this.errors.length) {
                 this.submit();
