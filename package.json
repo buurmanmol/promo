@@ -48,6 +48,7 @@
         "@tailwindcss/typography": "^0.4.1",
         "@vue-hero-icons/outline": "^1.7.2",
         "@vue-hero-icons/solid": "^1.7.2",
+        "crypto-js": "^4.1.1",
         "moment": "^2.29.1",
         "sweetalert2": "^11.0.18",
         "vue-currency-filter": "^5.2.0",
