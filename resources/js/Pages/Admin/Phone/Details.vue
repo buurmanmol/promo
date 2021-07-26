@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin>
+    <app-layout-admin :user="user" :page="page">
 
     </app-layout-admin>
 </template>
@@ -8,6 +8,11 @@
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 export default {
     name: "Details",
+    data: () => {
+        return {
+            page:'phones'
+        }
+    },
     components: {
         AppLayoutAdmin
     },

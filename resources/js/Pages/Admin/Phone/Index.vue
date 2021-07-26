@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -77,6 +77,11 @@ export default {
     components: {
         AppLayoutAdmin,
         Pagination
+    },
+    data: () => {
+        return {
+            page:'phones'
+        }
     },
     setup() {
         // console.log(this.phones);

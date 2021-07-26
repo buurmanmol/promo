@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div
@@ -282,6 +282,7 @@ export default {
             invoices: "",
             invoiceName: "F1234101010101",
             targetUser: "1",
+            page:'invoices',
         };
     },
     mounted() {

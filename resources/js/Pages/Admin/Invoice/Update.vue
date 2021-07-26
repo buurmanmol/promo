@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
         <form
             class="p-4 bg-white space-y-8 divide-y divide-gray-200"
             @submit.prevent="checkForm"
@@ -352,6 +352,7 @@ export default {
             fullname: "",
             pdfsrc: "",
             errors: [],
+            page:'invoices',
         };
     },
     mounted() {

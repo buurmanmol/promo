@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
         <!--
           This example requires Tailwind CSS v2.0+
 
@@ -180,6 +180,7 @@ export default {
               email: '',
               password: '',
           },
+          page:'users',
       }
     },
     mounted() {
