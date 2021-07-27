@@ -298,37 +298,21 @@
         </div>
     </form>
 </template>
-
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
-import VueNextSelect from "vue-next-select";
-import { XCircleIcon } from "@heroicons/vue/outline";
-import { ref } from "vue";
+// import UploadInvoice from "../../../Components/UploadInvoice";
 
 export default {
     name: "NewInvoice",
     props: ["usersList"],
 
     components: {
+        // UploadInvoice,
         AppLayoutAdmin,
-        "vue-select": VueNextSelect,
-        XCircleIcon,
     },
 
     data: function () {
-        return {
-            invoice: {
-                userName: "",
-                userEmail: "",
-                userId: "",
-                invoiceName: "",
-                price: "",
-                file: "",
-            },
-            allUsers: ref(this.userList),
-            userObject: ref(null),
-            errors: [],
-        };
+        return {};
     },
 
     mounted() {},

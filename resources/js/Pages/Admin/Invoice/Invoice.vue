@@ -335,7 +335,7 @@ export default {
 
     methods: {
         /**
-         * Sets user variables in form in order to check if user is correct. (In case multiple peopleh ave the same name)
+         * Sets user variables in form in order to check if user is correct. (In case multiple people have the same name)
          *
          * @author Kevin
          *

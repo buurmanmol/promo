@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="currentUser">
+    <app-layout-admin :user="currentUser" :page="page">
         <div style="min-height:60vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
             <div class="mx-4 p-4">
                 <div class="flex items-center">
@@ -315,7 +315,8 @@ export default {
             options: [
                 'test1',
                 'test2'
-            ]
+            ],
+            page:'devices',
         }
     },
     watch: {

@@ -50,7 +50,7 @@ class RepairController extends Controller
 
         $user->company = $user->company()->get();
         $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
-        return Inertia::render('Admin/Repair/Details', ['repairs' => $s,'user' => $user, 'devices' => $devices]);
+        return Inertia::render('Admin/Repair/Details', ['repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
     public function repairIndex()

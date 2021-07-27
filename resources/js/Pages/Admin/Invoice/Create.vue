@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
         <form
             class="p-4 bg-white space-y-8 divide-y divide-gray-200"
             @submit.prevent="checkForm"
@@ -61,9 +61,7 @@
                     </div>
                     <div class="grid-cols-1">
                         <div v-if="selectedTab === 0" class="col">
-                            <uploadInvoice
-                                :usersList="usersList"
-                            ></uploadInvoice>
+                            <invoice :usersList="usersList"></invoice>
                         </div>
                         <div v-if="selectedTab === 1" class="col">
                             <newInvoice :usersList="usersList"></newInvoice>
@@ -78,7 +76,7 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import NewInvoice from "./NewInvoice";
-import UploadInvoice from "./UploadInvoice";
+import Invoice from "./Invoice";
 
 export default {
     name: "Create.vue",
@@ -87,12 +85,15 @@ export default {
     components: {
         AppLayoutAdmin,
         NewInvoice,
-        UploadInvoice,
+        Invoice,
     },
     mounted() {},
 
     data: function () {
-        return { selectedTab: 0 };
+        return {
+            selectedTab: 0,
+            page:'invoices',
+        };
     },
 
     watch: {},

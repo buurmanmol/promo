@@ -16,9 +16,9 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_name');
-            $table->string('invoice_path');
+            $table->string('invoice_path')->nullable();
             $table->integer('user_id');
-            $table->double('price' ,8 ,2);
+            $table->double('price' ,8 ,2)->nullable();
             $table->timestamps();
             
         });

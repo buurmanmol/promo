@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user">
+    <app-layout-admin :user="user" :page="page">
         <form
             class="p-4 bg-white space-y-8 divide-y divide-gray-200"
             @submit.prevent="checkForm"
@@ -195,7 +195,10 @@
                             </div>
                         </div>
 
-                        <section class="sm:col-span-3">
+                        <section
+                            v-if="invoice.invoice_path !== null"
+                            class="sm:col-span-3"
+                        >
                             <a
                                 @click="downloadInvoice"
                                 type="button"
@@ -222,6 +225,55 @@
                             >
                                 Factuur downloaden
                             </a>
+                        </section>
+                        <section v-else class="sm:col-span-3">
+                            <div>
+                                Er is nog geen factuur geupload voor deze klant!
+                            </div>
+                            <label
+                                for="cover_photo"
+                                class="block text-sm font-medium text-gray-700"
+                            >
+                                Factuur upload
+                            </label>
+                            <div
+                                class="
+                                    border-dashed border-2 border-gray-400
+                                    py-12
+                                    flex flex-col
+                                    justify-center
+                                    items-center
+                                "
+                            >
+                                <p
+                                    class="
+                                        mb-3
+                                        font-semibold
+                                        text-gray-900
+                                        flex flex-wrap
+                                        justify-center
+                                    "
+                                >
+                                    <span
+                                        >Klik hier om een factuur te
+                                        uploaden</span
+                                    >
+                                </p>
+                                <input
+                                    type="file"
+                                    name="file"
+                                    v-on:change="handleFileUpload"
+                                    class="
+                                        mt-2
+                                        rounded-sm
+                                        px-3
+                                        py-1
+                                        bg-gray-200
+                                        hover:bg-gray-300
+                                        focus:shadow-outline focus:outline-none
+                                    "
+                                />
+                            </div>
                         </section>
                     </div>
                 </div>
@@ -300,6 +352,7 @@ export default {
             fullname: "",
             pdfsrc: "",
             errors: [],
+            page:'invoices',
         };
     },
     mounted() {
@@ -356,7 +409,7 @@ export default {
          *
          * @author Kevin
          *
-         * @version 1.0.0
+         * @version 1.0.1
          */
         checkForm: function (e) {
             this.errors = [];
@@ -373,11 +426,37 @@ export default {
             if (!this.invoice.price)
                 this.errors.push("Factuur prijs vereist");
 
+
             if (!this.errors.length) {
-                this.submit();
+                if (this.invoice.file !== null) {
+                    this.uploadPdf();
+                } else {
+                    this.submit();
+                }
+
                 return true;
             }
             e.preventDefault();
+        },
+
+        /**
+         * Uploads a pdf;
+         */
+        uploadPdf() {
+            const formData = new FormData();
+            formData.set("file", this.invoice.file);
+
+            axios
+                .post("/api/invoice/uploadPdf", formData)
+                .then((response) => {
+                    this.invoice.invoice_path = response.data;
+                    this.submit();
+                    console.log("WIN");
+                })
+                .catch((response) => {
+                    console.log(response);
+                    console.log("FAILURE!!");
+                });
         },
 
         /**
@@ -388,6 +467,9 @@ export default {
          * @version 1.0.0
          */
         submit() {
+            const formData = new FormData();
+            formData.set("file", this.invoice.file);
+
             axios
                 .put(
                     "/api/invoice/" + this.invoice.id + "/update",
@@ -395,6 +477,7 @@ export default {
                 )
                 .then(
                     (response) => {
+                        console.log(response);
                         window.location = "/admin/facturen";
                     },
                     (error) => {
@@ -413,6 +496,18 @@ export default {
         hasLetters(val) {
             if (/[a-zA-Z]/.test(val)) return true;
             return false;
+        },
+
+        /**
+         * Handles the upload of a file.
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        handleFileUpload(e) {
+            this.invoice.file = e.target.files[0];
+            console.log(this.invoice.file);
         },
     },
 

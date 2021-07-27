@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="currentUser">
+    <app-layout-admin :user="currentUser" :page="page">
         <!--
           This example requires Tailwind CSS v2.0+
 
@@ -139,6 +139,7 @@ export default {
           errors: [],
           companies:[],
           selectedCompany: '',
+          page:'users',
       }
     },
     mounted() {
