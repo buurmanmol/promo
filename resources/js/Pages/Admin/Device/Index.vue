@@ -133,7 +133,7 @@ export default {
           models: [],
           selectedDisclosure: null,
           selectedRepairEdit: null,
-          page:'devices',
+          page:'devices'
       }
     },
     mounted() {
