@@ -146,6 +146,7 @@ class BuckarooController extends Controller
 
         $post = json_encode($postArray);
 //        dd($post);
+//        dd($post);
         $jsonArray = json_encode($postArray);
         $jsonerror = json_last_error_msg();
         $md5  = md5($post, true);
@@ -161,16 +162,16 @@ class BuckarooController extends Controller
         $hmac       = base64_encode($s);
 
         $output =  "hmac " . $websiteKey . ':' . $hmac . ':' . $nonce . ':' . $time;
-
+//        dd($post);
 
         $url = "https://testcheckout.buckaroo.nl/json/DataRequest";
 
-         $response = Http::withHeaders([
+         $response = Http::dd()->withHeaders([
             'Authorization' => $output,
              'Content-Type' => 'application/json'
-        ])->withOptions(['debug' => true])->post($url, [
-            $post
-         ]);
+        ])->withOptions(['debug' => true])->post($url,
+            [$post]
+         );
 
 
 
