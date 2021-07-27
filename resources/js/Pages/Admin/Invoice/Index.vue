@@ -47,10 +47,6 @@
                         >
                             Factuur toevoegen +
                         </a>
-                        <!-- <CreateInvoice
-                            :invoice="invoiceName"
-                            :user="targetUser"
-                        /> -->
                         <table
                             class="
                                 min-w-full
@@ -129,7 +125,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr
-                                    v-for="invoice in invoices"
+                                    v-for="invoice in invoiceList.data"
                                     :key="invoice.id"
                                 >
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -149,15 +145,17 @@
                                                         text-sm text-gray-500
                                                     "
                                                 >
-                                                    {{ invoice.first_name }}
-                                                    {{ invoice.last_name }}
+                                                    <!-- subtitle for name -->
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="ml-4">
+                                            <div
+                                                class="ml-4"
+                                                v-if="invoice.user"
+                                            >
                                                 <div
                                                     class="
                                                         text-sm
@@ -165,15 +163,17 @@
                                                         text-gray-900
                                                     "
                                                 >
-                                                    {{ invoice.first_name }}
-                                                    {{ invoice.last_name }}
+                                                    {{
+                                                        invoice.user.first_name
+                                                    }}
+                                                    {{ invoice.user.last_name }}
                                                 </div>
                                                 <div
                                                     class="
                                                         text-sm text-gray-500
                                                     "
                                                 >
-                                                    {{ invoice.email }}
+                                                    {{ invoice.user.email }}
                                                 </div>
                                             </div>
                                         </div>
@@ -252,6 +252,11 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <pagination
+                            v-if="invoiceList.data"
+                            :data="invoiceList.data"
+                            :links="invoiceList.links"
+                        ></pagination>
                     </div>
                 </div>
             </div>
@@ -264,31 +269,36 @@ import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import Swal from "sweetalert2";
 import { DownloadIcon, XIcon, PencilIcon } from "@heroicons/vue/outline";
 import CreateInvoice from "../../../Components/CreateInvoice";
+import Pagination from "../../../Components/Pagination";
 
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
 
 export default {
-    props: ["user", "company"],
+    props: ["invoices", "user", "company"],
     components: {
         AppLayoutAdmin,
         DownloadIcon,
         XIcon,
         CreateInvoice,
         PencilIcon,
+        Pagination,
     },
     data: () => {
         return {
-            invoices: "",
+            invoiceList: "",
             invoiceName: "F1234101010101",
             targetUser: "1",
-            page:'invoices',
+            page: "invoices",
         };
     },
     mounted() {
-        this.getInvoices();
+        this.setInvoiceList();
     },
     methods: {
+        setInvoiceList() {
+            this.invoiceList = this.invoices;
+        },
         /**
          * Downloads the invoice, sets the name to "invoice_dd/mm/yyyy.pdf"
          *
@@ -366,7 +376,7 @@ export default {
                     Swal.fire(
                         "Poof!",
                         "Dit factuur is nu verwijderd.",
-                        "Success"
+                        "success"
                     );
                 }
             });
@@ -383,7 +393,8 @@ export default {
             axios
                 .get("/api/invoice")
                 .then((response) => {
-                    this.invoices = response.data;
+                    console.log(response);
+                    this.invoiceList = response.data.invoices;
                 })
                 .catch((response) => {
                     console.log(response);
