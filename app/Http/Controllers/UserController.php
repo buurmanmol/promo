@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     public function dashboard()
     {
+       
         return Inertia::render('Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
