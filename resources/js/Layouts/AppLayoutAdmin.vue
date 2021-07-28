@@ -256,7 +256,7 @@ const navigation = [
 
     { name: 'Facturen', href: '/admin/facturen', icon: DocumentSearchIcon, current:"invoices" },
     { name: 'Telefoons', href: '/admin/phones', icon: DeviceMobileIcon, current:"phones" },
-    { name: 'Onderdelen', href: '/admin/onderdelen', icon: CogIcon, current:"parts" },
+    { name: 'Onderdelen', href: '/admin/parts', icon: CogIcon, current:"parts" },
 ]
 const secondaryNavigation = [
     // { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon },
