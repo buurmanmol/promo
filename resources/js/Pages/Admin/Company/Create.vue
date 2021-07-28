@@ -17,6 +17,11 @@
           }
           ```
         -->
+        <form
+            class="p-4 bg-white space-y-8 divide-y divide-gray-200"
+            @submit.prevent="checkForm"
+            method="POST"
+        >
         <div class="p-4 bg-white space-y-8 divide-y divide-gray-200">
             <div class="space-y-8 divide-y divide-gray-200">
                 <div class="pt-8">
@@ -99,12 +104,13 @@
 
             <div class="pt-5">
                 <div class="flex justify-end">
-                    <button @click="checkForm" type="button" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Opslaan
                     </button>
                 </div>
             </div>
         </div>
+        </form>
     </app-layout-admin>
 </template>
 

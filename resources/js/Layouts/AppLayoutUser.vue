@@ -107,11 +107,6 @@
                        <button class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" v-if="user.is_admin">Admin dashboard</button>
                     </div>
                     <div class="ml-4 flex items-center md:ml-6">
-                        <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                            <span class="sr-only">View notifications</span>
-                            <BellIcon class="h-6 w-6" aria-hidden="true" />
-                        </button>
-
                         <!-- Profile dropdown -->
                         <Menu as="div" class="ml-3 relative">
                             <div>
@@ -123,9 +118,6 @@
                             </div>
                             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                    <MenuItem v-slot="{ active }">
-                                        <a href="/user/profile" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your Profile</a>
-                                    </MenuItem>
                                     <MenuItem v-slot="{ active }">
                                         <Link  :class="[active ? 'bg-gray-100' : '', 'block px-4 w-full text-left py-2 text-sm text-gray-700']" href="/logout" method="post" as="button" type="button">Logout</Link>
                                     </MenuItem>
@@ -170,9 +162,7 @@
                                 <h1 class="ml-3 inline-flex items-center text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
                                    Saldo: € {{ formatPrice(company.wallet) }}
                                 </h1>
-                                <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                                   Saldo toevoegen
-                                </button>
+
                             </div>
                         </div>
                     </div>

@@ -165,6 +165,7 @@ export default {
                 .then((response) => {
                     console.log(response);
                     this.message = "Reservation updated";
+                    window.location = "/admin/users";
                 }, (error) => {
                     console.log(error);
                 });

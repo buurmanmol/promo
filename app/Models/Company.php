@@ -16,7 +16,7 @@ class Company extends Model
         'address',
         'postal_code',
         'phone_number',
-        'wallet'.
+        'wallet',
         'email'
     ];
     public function users()
