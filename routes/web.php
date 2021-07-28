@@ -87,10 +87,17 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
     Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
 
+    //PartController
+    Route::post('/api/part/create', [PartController::class, 'create']);
+    Route::delete('/api/part/{part}/delete', [PartController::class, 'delete']);
+    Route::get('/api/parts', [PartController::class, 'getParts']);
+
+    //PhonesController
     Route::get('/admin/api/phones', [PhoneController::class, 'getPhones']);
     Route::put('/admin/api/phone/{phone}/update', [PhoneController::class, 'update']);
     Route::post('/admin/api/phone/create', [PhoneController::class, 'create']);
     Route::delete('/admin/api/phone/{brandsModel}/delete', [PhoneController::class, 'delete']);
+
 
 
 //Admin page routes
@@ -130,9 +137,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
         //Parts
         Route::get('/admin/parts', [PartController::class, 'index']);
-        Route::get('/admin/part/{part}', [PartController::class, 'details']);
-        Route::post('/admin/parts/create', [PartController::class, 'create']);
-        Route::put('/admin/part/{part}/update', [PartController::class, 'update']);
+        Route::get('/admin/part/create', [PartController::class, 'createIndex']);
+        Route::get('/admin/part/{part}/update', [PartController::class, 'updateIndex']);
 
 
         //Repairs

@@ -301,7 +301,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="pt-5">
                 <div class="flex justify-end">
                     <button
@@ -428,7 +428,7 @@ export default {
 
 
             if (!this.errors.length) {
-                if (this.invoice.file !== null) {
+                if (this.invoice.file !== undefined) {
                     this.uploadPdf();
                 } else {
                     this.submit();
