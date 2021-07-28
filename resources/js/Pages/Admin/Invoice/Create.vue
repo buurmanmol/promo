@@ -7,7 +7,48 @@
             method="POST"
             enctype="multipart/form-data"
         >
-            <div class="space-y-8 divide-y divide-gray-200">
+            <invoice :usersList="usersList"></invoice> 
+        </form>
+    </app-layout-admin>
+</template>
+
+<script>
+import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import NewInvoice from "./NewInvoice";
+import Invoice from "./Invoice";
+
+export default {
+    name: "Create.vue",
+    props: ["user", "usersList",'company'],
+
+    components: {
+        AppLayoutAdmin,
+        NewInvoice,
+        Invoice,
+    },
+    mounted() {},
+
+    data: function () {
+        return {
+            selectedTab: 0,
+            page:'invoices',
+        };
+    },
+
+    watch: {},
+    methods: {
+        setTab(tab) {
+            this.selectedTab = tab;
+        },
+    },
+
+    setup() {
+        return {};
+    },
+
+    /**
+     * Hidden but maybe usable in the future. - Add to line 10 after form
+     * 
                 <div class="pt-8">
                     <div class="sm:hidden">
                         <label for="tabs" class="sr-only">Select a tab</label>
@@ -59,52 +100,19 @@
                             </nav>
                         </div>
                     </div>
+                    <div class="space-y-8 divide-y divide-gray-200">
+                    
                     <div class="grid-cols-1">
                         <div v-if="selectedTab === 0" class="col">
                             <invoice :usersList="usersList"></invoice>
                         </div>
-                        <div v-if="selectedTab === 1" class="col">
+                        <!-- <div v-if="selectedTab === 1" class="col">
                             <newInvoice :usersList="usersList"></newInvoice>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
-        </form>
-    </app-layout-admin>
-</template>
+     */
 
-<script>
-import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
-import NewInvoice from "./NewInvoice";
-import Invoice from "./Invoice";
-
-export default {
-    name: "Create.vue",
-    props: ["user", "usersList",'company'],
-
-    components: {
-        AppLayoutAdmin,
-        NewInvoice,
-        Invoice,
-    },
-    mounted() {},
-
-    data: function () {
-        return {
-            selectedTab: 0,
-            page:'invoices',
-        };
-    },
-
-    watch: {},
-    methods: {
-        setTab(tab) {
-            this.selectedTab = tab;
-        },
-    },
-
-    setup() {
-        return {};
-    },
 };
 </script>
