@@ -19,11 +19,14 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Aanpassen
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Verwijderen
+                                <!--                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">-->
+                                <!--                                    Aanpassen-->
+                                <!--                                </th>-->
+                                <!--                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">-->
+                                <!--                                    Verwijderen-->
+                                <!--                                </th>-->
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Edit</span>
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -31,7 +34,7 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="phone in phones.data" >
+                            <tr v-for="phone in phonesList.data" >
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-10 w-10">
@@ -52,17 +55,21 @@
                     Active
                   </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a :href="'/admin/phone/' + phone.id +  '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Aanpassen</a>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button type="button" @click="deletePhone(phone.id)" class="text-red-700 hover:text-red-800">Verwijderen</button>
+                                <!--                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">-->
+                                <td>
+                                    <PencilIcon @click="editPhone(phone.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                    <!--                                    <a :href="'/admin/phone/' + phone.id +  '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Aanpassen</a>-->
                                 </td>
 
+                                <!--                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">-->
+                                <td>
+                                    <XIcon @click="deletePhone(phone.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                    <!--                                    <button type="button" @click="deletePhone(phone.id)" class="text-red-700 hover:text-red-800">Verwijderen</button>-->
+                                </td>
                             </tr>
                             </tbody>
                         </table>
-                        <pagination v-if="phones.links" class="mt-6" :links="phones.links" :data="phones.data" ></pagination>
+                        <pagination v-if="phonesList.links" class="mt-6" :links="phonesList.links" :data="phonesList.data" ></pagination>
                     </div>
                 </div>
             </div>
@@ -74,19 +81,25 @@
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import Pagination from "../../../Components/Pagination";
 import Swal from "sweetalert2";
+import { XIcon, PencilIcon } from "@heroicons/vue/outline";
 export default {
-    props:['user','company'],
+    props:['phones','user','company'],
     components: {
         AppLayoutAdmin,
-        Pagination
+        Pagination,
+        XIcon,
+        PencilIcon,
     },
     data:() => {
         return{
-            phones:'' ,
+            phonesList: '',
             page: 'phones'
-    }
+        }
     },
     methods: {
+        setPhonesList(){
+            this.phonesList = this.phones;
+        },
         deletePhone(phone){
             Swal.fire({
                 title: "Weet u zeker dat u dit toestel wilt verwijderen?",
@@ -98,34 +111,37 @@ export default {
                 confirmButtonText: "Ja, verwijder",
                 cancelButtonText: "Annuleren",
             }).then((result) => {
-                    if (result.isConfirmed) {
-                        axios.delete('/admin/api/phone/' + phone + '/delete')
-                            .then(() => {
-                                this.getPhones();
-                            }).catch((response) => {
-                            console.log(response);
-                            console.log(error);
-                        });
-                        Swal.fire(
-                            "Succes!",
-                            "Dit toestel is verwijderd.",
-                            "Success"
-                        );
-                    }
+                if (result.isConfirmed) {
+                    axios.delete('/admin/api/phone/' + phone + '/delete')
+                        .then(() => {
+                            this.phones = this.getPhones();
+                        }).catch((response) => {
+                        console.log(response);
+                        console.log(error);
+                    });
+                    Swal.fire(
+                        "Succes!",
+                        "Dit toestel is verwijderd.",
+                        "Success"
+                    );
+                }
             });
         },
         getPhones(){
             axios.get('/admin/api/phones')
                 .then((response) => {
                     console.log(response.data);
-                    this.phones = response.data;
+                    this.phonesList = response.data;
                 }, (error) => {
                     console.log(error);
                 });
         },
+        editPhone(phone){
+            window.location = '/admin/phone/' + phone +  '/update';
+        }
     },
     mounted() {
-        this.getPhones();
+        this.setPhonesList();
     },
     setup() {
         return {
