@@ -13,7 +13,10 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-       
+        if(Auth::user()->role === "admin"){
+            $users = User::with('company')->get();
+            return Inertia::render('Admin/User/Index', ['users' => $users, 'currentUser' => Auth::user()]);
+        }
         return Inertia::render('Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
