@@ -393,7 +393,7 @@ export default {
             axios
                 .get("/api/invoice")
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     this.invoiceList = response.data.invoices;
                 })
                 .catch((response) => {
