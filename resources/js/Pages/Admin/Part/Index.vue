@@ -143,8 +143,8 @@
                         </table>
                         <pagination
                             v-if="partList.data"
-                            :data="partList.data"
-                            :links="partList.links"
+                            :data="parts.data"
+                            :links="parts.links"
                         ></pagination>
                     </div>
                 </div>
@@ -242,8 +242,10 @@ export default {
          * @version 1.0.1
          */
         getParts() {
+            const formData = new FormData();
+            formData.set('page', this.parts.current_page);
             axios
-                .get("/api/parts")
+                .post("/api/parts", formData)
                 .then((response) => {
                     // console.log(response);
                     this.partList = response.data.parts;

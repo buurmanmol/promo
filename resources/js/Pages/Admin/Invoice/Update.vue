@@ -467,9 +467,6 @@ export default {
          * @version 1.0.0
          */
         submit() {
-            const formData = new FormData();
-            formData.set("file", this.invoice.file);
-
             axios
                 .put(
                     "/api/invoice/" + this.invoice.id + "/update",

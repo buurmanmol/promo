@@ -22,7 +22,7 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <template  v-for="(user, key) in users.data" :key="user.id">
+                            <template  v-for="(user, key) in userList.data" :key="user.id">
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-bold text-gray-700">
@@ -73,9 +73,7 @@
                                                             </td>
                                                             <td class="px-6 py-2 whitespace-nowrap">
                                                                 <div class="text-sm text-gray-500">
-                                                                    <a :href="'/admin/device/' + device.id">
-                                                                        <EyeIcon class="text-azure-radiance-800 w-5 h-5 text-md" />
-                                                                    </a>
+                                                                     <XIcon @click="deleteDevice(device.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -87,7 +85,7 @@
                             </template>
                             </tbody>
                         </table>
-                        <pagination :data="users.data" :links="users.links"></pagination>
+                        <pagination v-if="userList.links" :data="users.data" :links="users.links"></pagination>
                     </div>
                 </div>
             </div>
@@ -98,7 +96,7 @@
 <script>
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import { ChevronUpIcon } from '@heroicons/vue/solid'
-import { EyeIcon, BadgeCheckIcon, BanIcon } from '@heroicons/vue/outline'
+import { EyeIcon, XIcon, BadgeCheckIcon, BanIcon } from '@heroicons/vue/outline'
 
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Switch } from '@headlessui/vue'
@@ -115,6 +113,7 @@ export default {
         'vue-select': VueNextSelect,
         Switch,
         EyeIcon,
+        XIcon,
         DisclosurePanel,
         Pagination,
         BanIcon,
@@ -133,10 +132,13 @@ export default {
           models: [],
           selectedDisclosure: null,
           selectedRepairEdit: null,
-          page:'devices'
+          page:'devices',
+          userList: '',
+         
       }
     },
     mounted() {
+        this.setUserList();
     },
     watch: {
         brand: function (val) {
@@ -145,9 +147,12 @@ export default {
         }
     },
     computed: {
-
+        
     },
     methods: {
+        setUserList(){
+            this.userList = this.users;
+        },
         selectDisclosure(key, selectedValue) {
             if(key === selectedValue) {
                 this.selectedDisclosure = null;
@@ -207,6 +212,35 @@ export default {
             })
 
         },
+       deleteDevice(id) {
+            Swal.fire({
+                title: 'Weet u het zeker?',
+                text: "Hierdoor zal dit apparaat verwijderd worden van de gebruiker!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ja, verwijder het!',
+                cancelButtonText:'Annuleren'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/api/device/' + id + '/delete')
+                        .then((response) => {
+                            console.log(response);
+                            this.getDevices();
+                            // this.models = response.data.data;
+                        }, (error) => {
+                            console.log(error);
+                        });
+                    Swal.fire(
+                        'Poof!',
+                        'Het apparaat is nu verwijderd!',
+                        'success'
+                    )
+                }
+            })
+
+        }, 
         getModels(brand) {
             let newBrand = {'brand': brand}
             console.log(brand)
@@ -217,6 +251,21 @@ export default {
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
+                });
+        },
+        getDevices() {
+            const formData = new FormData();
+            formData.set("page", this.users.current_page);
+            axios
+                .post("/api/devices", formData)
+                .then((response) => {
+
+                    this.userList = response.data;
+                    
+                })
+                .catch((response) => {
+                    console.log(response);
+                    console.log("FAILURE!");
                 });
         },
     }

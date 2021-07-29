@@ -343,15 +343,15 @@ export default {
                     axios.post('/api/device/create', this.devices)
                         .then((response) => {
                             console.log(response);
+                            Swal.fire(
+                                'Apparaat aangemaakt!',
+                                'Uw apparaat(en) is/zijn aangemaakt.',
+                                'success'
+                            );
+                            window.location = '/admin/devices';
                         }, (error) => {
                             console.log(error);
                         });
-                    Swal.fire(
-                        'Reparatie aangemaakt!',
-                        'Uw reparatie(s) is/zijn aangemaakt.',
-                        'success'
-                    )
-                    window.location = '/admin/devices'
                 }
             })
 
@@ -367,7 +367,7 @@ export default {
         getModels() {
             axios.get('/api/brands/'  + this.brand.id + '/models')
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
@@ -379,7 +379,7 @@ export default {
                 brand: brand,
                 model: model,
             }
-            // this.addRepair(this.repair);
+            this.addDevice(this.device);
             this.selectedSlide += 1;
         },
         duplicateDevice(device, repeats) {
