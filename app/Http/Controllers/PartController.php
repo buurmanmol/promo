@@ -80,10 +80,10 @@ class PartController extends Controller
      * 
      * @version 1.0.0
      */
-    public function getParts(){
+    public function getParts(Request $request){
        
         $parts = ProductType::orderBy('created_at', 'DESC')
-        ->paginate(10);
+        ->paginate(10, ['*'], 'page', $request->get('page'));
         return ['parts' => $parts ];
  
     }

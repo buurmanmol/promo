@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     //DeviceController
     Route::get('/api/user/{user}/devices/unique', [DeviceController::class, 'getUniqueDevices']);
     Route::post('/api/device/create', [DeviceController::class, 'create']);
+    Route::delete('/api/device/{device}/delete', [DeviceController::class, 'delete']);
+    Route::post('/api/devices', [DeviceController::class, 'getDevices']);
 
     //CompanyController
     Route::get('/api/companies', [CompanyController::class, 'getCompanies']);
@@ -85,12 +87,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
     Route::get('/api/invoice/{invoice}/pdf', [InvoiceController::class, 'generatePdf']);
     Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
-    Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
+    Route::post('/api/invoice', [InvoiceController::class, 'getInvoices']);
 
     //PartController
     Route::post('/api/part/create', [PartController::class, 'create']);
     Route::delete('/api/part/{part}/delete', [PartController::class, 'delete']);
-    Route::get('/api/parts', [PartController::class, 'getParts']);
+    Route::post('/api/parts', [PartController::class, 'getParts']);
 
     //PhonesController
     Route::get('/admin/api/phones', [PhoneController::class, 'getPhones']);
@@ -118,7 +120,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
         //Devices
         Route::get('/admin/devices', [DeviceController::class, 'deviceIndexAdmin']);
-//        Route::get('/admin/device/{repair}', [DeviceController::class, 'details']);
+    //    Route::get('/admin/device/{repair}', [DeviceController::class, 'details']);
         Route::get('/admin/device/create', [DeviceController::class, 'createIndex']);
         Route::put('/admin/device/{device}/update', [DeviceController::class, 'update']);
 
