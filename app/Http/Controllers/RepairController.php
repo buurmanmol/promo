@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\BrandsModel;
+use App\Models\Company;
 use App\Models\Device;
 use App\Models\Model;
 use App\Models\ProductType;
@@ -132,5 +133,70 @@ class RepairController extends Controller
         $models = BrandsModel::whereIn('model', $uModels)->get();
 
         return Inertia::render('User/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+    }
+
+    public function indexManager()
+    {
+        $user = Auth::user();
+
+        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($user) {
+            $q->where('manager_id', $user->id);
+        }])->get();
+
+
+        return Inertia::render('Manager/Repair/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
+    }
+
+    public function detailsCompany(User $user)
+    {
+        $repairs = Repair::where('user_id', $user->id)->get();
+        $fullArr = [];
+        foreach($repairs as $repair) {
+            $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
+//            dd($sameDate);
+            array_push($fullArr, $sameDate);
+        }
+        $s = array_unique($fullArr, SORT_REGULAR);
+//        dd($user['id'], auth()->user()->id);
+
+        $user->company = $user->company()->get();
+        $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
+        return Inertia::render('Company/Repair/Details', ['company' => $user->company()->get(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
+    }
+
+    public function detailsManager(User $user)
+    {
+        $repairs = Repair::where('user_id', $user->id)->get();
+        $fullArr = [];
+        foreach($repairs as $repair) {
+            $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
+//            dd($sameDate);
+            array_push($fullArr, $sameDate);
+        }
+        $s = array_unique($fullArr, SORT_REGULAR);
+//        dd($user['id'], auth()->user()->id);
+
+        $user->company = $user->company()->get();
+        $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
+        return Inertia::render('Manager/Repair/Details', ['company' => $user->company()->get(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
+    }
+
+
+    public function indexCompany()
+    {
+        $users = User::where('company_id', Auth::user()->company->id)->get();
+        $managerArray = [];
+        foreach ($users as $user) {
+            if ($user->role === 'manager') {
+                array_push($managerArray, $user);
+            }
+        }
+        foreach($managerArray as $manager) {
+            $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($manager) {
+                $q->where('manager_id', $manager->id);
+            }])->get();
+            $manager->users = $users;
+        }
+        return Inertia::render('Company/Repair/Index', ['currentUser' => Auth::user(),'managers' => $managerArray, 'company' => Auth::user()->company]);
     }
 }

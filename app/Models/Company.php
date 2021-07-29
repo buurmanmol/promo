@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    use HasFactory;
-    protected $keyType = 'string';
-    public $incrementing = false;
-
     protected $fillable = [
         'name',
         'address',
@@ -21,7 +16,15 @@ class Company extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(User::class);
     }
-
+    public function managers() {
+        $managers = User::where('company_id', $this->id)->where('role', 'manager')->get();
+        dd($managers);
+        return $managers;
+    }
+    public function repairs()
+    {
+        return $this->hasMany(Repair::class);
+    }
 }

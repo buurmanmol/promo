@@ -33,9 +33,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/kktelefoons', [PhoneController::class, 'kk']);
-
-
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/dashboard', [UserController::class, 'dashboard']);
 // Page routes
@@ -88,7 +85,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
     Route::get('/api/invoice', [InvoiceController::class, 'getInvoices']);
 
-
+    Route::middleware([\App\Http\Middleware\Manager::class])->group(function () {
+        Route::get('/manager/repairs', [RepairController::class, 'indexManager']);
+        Route::get('/manager/user/{user}', [RepairController::class, 'detailsManager']);
+        Route::get('/manager/{user}/repairs', [UserController::class, 'indexCompanyManager']);
+    });
+    Route::middleware([\App\Http\Middleware\Company::class])->group(function () {
+        Route::get('/company/repairs', [RepairController::class, 'indexCompany']);
+        Route::get('/company/user/{user}', [RepairController::class, 'detailsCompany']);
+    });
 
     Route::middleware([\App\Http\Middleware\Admin::class])->group(function () {
 
