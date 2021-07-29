@@ -337,6 +337,7 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import { ref } from "vue";
+import Swal from "sweetalert2";
 import { Switch } from "@headlessui/vue";
 import moment from "moment";
 
@@ -388,6 +389,10 @@ export default {
                 );
                 document.body.appendChild(link);
                 link.click();
+            })
+            .catch((response) => {
+                Swal.fire("Dit factuur kan niet worden gevonden!");
+                this.invoice.invoice_path = null;
             });
         },
 

@@ -136,9 +136,12 @@ export default {
         };
     },
 
-    mounted() {},
+    mounted() {
+    },
 
     methods: {
+
+        
         /**
          * Checks if form is filled in correctly.
          *
@@ -159,12 +162,14 @@ export default {
         },
 
         checkIfExists(name) {
-            this.parts.forEach((part) => {
-                if (name.includes(part)) {
-                    return true;
+            const partlist = this.parts;
+            let check = false;
+            Object.keys(partlist).forEach(function(key){
+                if(name === partlist[key].name){
+                    check = true;
                 }
             });
-            return false;
+            return check;
         },
 
         /**
