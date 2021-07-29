@@ -22,6 +22,15 @@ class RepairSeeder extends Seeder
                 'user_id' => $user->id,
                 'device_id' => rand(1, 10),
                 'product_type_id' => rand(1, 20),
+                'company_id' => 2,
+                'manager_id' => 2,
+            ]);
+            Repair::create([
+                'user_id' => $user->id,
+                'device_id' => rand(1, 10),
+                'product_type_id' => rand(1, 20),
+                'company_id' => 1,
+                'manager_id' => 1,
             ]);
         }
     }

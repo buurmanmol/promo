@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Repair extends Model
 {
     use HasFactory;
-    protected $fillable = ['price','invoice_id','device_id', 'product_type_id', 'user_id', 'comment', 'is_repaired'];
+    protected $fillable = ['price','invoice_id','manager_id', 'company_id','device_id', 'product_type_id', 'user_id', 'comment', 'is_repaired'];
 
     public function productType()
     {
@@ -19,6 +19,18 @@ class Repair extends Model
     {
         return $this->belongsTo(Device::class);
     }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
 
     public function user()
     {

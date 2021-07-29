@@ -20,6 +20,16 @@ class UserController extends Controller
         return Inertia::render('Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
+    public function indexCompanyManager(User $user)
+    {
+        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($user) {
+            $q->where('manager_id', $user->id);
+        }])->get();
+
+
+        return Inertia::render('Manager/Repair/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
+    }
+
     public function index()
     {
         $users = User::with('company')->get();
