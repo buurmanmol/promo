@@ -160,6 +160,30 @@ class InvoiceController extends Controller
  
     }
 
+    //================= Company part ===================//
+    /**
+     * returns managerIndex
+     */
+    public function companyIndex(){
+        
+        
+        $users = User::where('company_id', Auth::user()->company->id)->get();
+        $managerArray = [];
+        foreach ($users as $user) {
+            if ($user->role === 'manager') {
+                array_push($managerArray, $user);
+            }
+        }
+        foreach($managerArray as $manager) {
+            $users = User::with('invoices')
+            ->where('manager_id', $manager->id)
+            ->get();
+            $manager->users = $users;
+        }
+
+        return Inertia::render('Company/Invoice/Index', ['managers' => $managerArray, 'user' => Auth::user(), 'company' => Auth::user()->company]);
+     } 
+
     //================= Manager part ===================//
     /**
      * returns managerIndex
@@ -168,6 +192,7 @@ class InvoiceController extends Controller
         
         $staff = User::with('invoices')
         ->where('company_id', Auth::user()->company_id)
+        ->where('manager_id', Auth::user()->id)
         ->paginate(10);
  
          return Inertia::render('Manager/Invoice/Index', ['staff' => $staff, 'user' => Auth::user(), 'company' => Auth::user()->company]);

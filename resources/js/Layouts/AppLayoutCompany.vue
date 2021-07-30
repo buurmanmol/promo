@@ -243,6 +243,7 @@ import {
 
 const navigation = [
     { name: 'Home', href: '/dashboard', icon: HomeIcon, current: 'dashboard' },
+    { name: 'Facturen', href: '/company/facturen', icon: DocumentTextIcon, current: 'facturen' },
     { name: 'Reparaties', href: '/company/repairs', icon: TicketIcon, current: 'reparaties' },
 ]
 

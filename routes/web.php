@@ -114,6 +114,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     });
 
     Route::middleware([\App\Http\Middleware\Company::class])->group(function () {
+        Route::get('/company/facturen', [InvoiceController::class, 'companyIndex']);
+
         Route::get('/company/repairs', [RepairController::class, 'indexCompany']);
         Route::get('/company/user/{user}', [RepairController::class, 'detailsCompany']);
     });

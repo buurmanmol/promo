@@ -95,5 +95,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Invoice::class)->orderBy('created_at', 'DESC');
     }
-
+   
 }
