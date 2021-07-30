@@ -151,11 +151,11 @@ class InvoiceController extends Controller
      * 
      * @version 1.0.0
      */
-    public function getInvoices(){
+    public function getInvoices(Request $request){
        
         $invoices = Invoice::with('user')
         ->orderBy('created_at', 'DESC')
-        ->paginate(10);
+        ->paginate(10, ['*'], 'page', $request->get('page'));
         return ['invoices' => $invoices ];
  
     }

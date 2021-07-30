@@ -21,6 +21,16 @@ class DeviceController extends Controller
         return $device;
     }
 
+    public function delete(Device $device){
+        $device->delete();
+        return ['device' => $device];
+    }
+ 
+    public function getDevices(Request $request){
+        return User::with('devices.brandsModels','devices.productType', 'company')->paginate(10, ['*'], 'page', $request->get('page'));
+        // return Inertia::render('Admin/Device/Index', ['users' => $users, 'user' => Auth::user()]);
+    }
+     
     public function deviceAll(User $user)
     {
         $devices = Device::where('user_id', $user->id)->get();
@@ -44,7 +54,6 @@ class DeviceController extends Controller
     public function deviceIndexAdmin()
     {
         $users = User::with('devices.brandsModels','devices.productType', 'company')->paginate(10);
-//        dd($users);
         return Inertia::render('Admin/Device/Index', ['users' => $users, 'user' => Auth::user()]);
     }
 
@@ -92,7 +101,6 @@ class DeviceController extends Controller
     {
         $devices = $request->all();
         foreach($devices as $device) {
-//            dd($device/**/);
             Device::create([
                 'brands_models_id' => $device['model']['id'],
                 'user_id' => $device['user']['id'],

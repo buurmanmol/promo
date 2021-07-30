@@ -67,6 +67,14 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function isManager() {
+        if ($this->role === "manager") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);

@@ -254,8 +254,8 @@
                         </table>
                         <pagination
                             v-if="invoiceList.data"
-                            :data="invoiceList.data"
-                            :links="invoiceList.links"
+                            :data="invoices.data"
+                            :links="invoices.links"
                         ></pagination>
                     </div>
                 </div>
@@ -390,10 +390,12 @@ export default {
          * @version 1.0.0
          */
         getInvoices() {
+            const formData = new FormData();
+            formData.set("page", this.invoices.current_page);
             axios
-                .get("/api/invoice")
+                .post("/api/invoice", formData)
                 .then((response) => {
-                    // console.log(response);
+                    console.log(response);
                     this.invoiceList = response.data.invoices;
                 })
                 .catch((response) => {
