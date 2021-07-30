@@ -112,9 +112,30 @@
                                 Bedrijf
                             </label>
                             <div class="mt-1">
-                                {{user.company_id}}
-                                <select v-model="user.company_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
-                                    <option v-for="company in companies" :value="company.id">{{company.name}}</option>
+                                <vue-select @change="getManagers" searchable v-model="user.company_id" :options="companies" value-by="id" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">
+                                Gebruikers rol
+                            </label>
+                            <div class="mt-1">
+<!--                                {{user.company_id}}-->
+                                <select v-model="user.role" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                    <option value="user">User</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="company">Company</option>
+                                    <option value="admin">Administrator</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div v-if="managers.length > 0" class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">
+                                Manager
+                            </label>
+                            <div class="mt-1">
+                                <select v-model="user.manager_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                    <option v-for="manager in managers" :value="manager.id">{{manager.first_name}} {{manager.last_name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -158,16 +179,19 @@
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import { XCircleIcon } from '@heroicons/vue/solid'
+import VueNextSelect from 'vue-next-select';
 export default {
     props:['user'],
     components: {
         AppLayoutAdmin,
+        'vue-select': VueNextSelect,
         XCircleIcon
     },
     data() {
       return {
           errors: [],
           selectedCompany: [],
+          managers: [],
           companies: [],
           user: {
               first_name: '',
@@ -176,7 +200,9 @@ export default {
               address:'',
               province: '',
               postal_code: '',
+              role:'',
               phone_number: '',
+              manager_id: '',
               company_id: '',
               email: '',
               password: '',
@@ -186,6 +212,11 @@ export default {
     },
     mounted() {
       this.getCompanies();
+    },
+    watch: {
+        'user.company_id': function (newVal, oldVal){
+            this.getManagers();
+        },
     },
     methods: {
         getCompanies() {
@@ -197,8 +228,18 @@ export default {
                     console.log(error);
                 });
         },
+        getManagers() {
+            axios.get('/api/company/' + this.user.company_id + '/managers')
+                .then((response) => {
+                    console.log(response);
+                    this.managers = response.data.managers;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         checkForm:function(e) {
             this.errors = [];
+            if(!this.user.manager_id) this.user.manager_id = this.user.id;
             if(!this.user.first_name) this.errors.push("Voornaam vereist.");
             if(!this.user.last_name) this.errors.push("Achternaam vereist.");
             if(!this.user.city) this.errors.push("Stad vereist.");
@@ -209,6 +250,7 @@ export default {
             if(!this.user.postal_code) this.errors.push("Postcode vereist.");
             if(!this.user.password) this.errors.push("Wachtwoord vereist.");
             if(!this.user.company_id) this.errors.push("Selecteer een bedrijf.");
+            if(!this.user.role) this.errors.push("Selecteer een bedrijf.");
 
             if (!this.errors.length) {
                 this.createUser()
