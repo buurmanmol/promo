@@ -148,6 +148,7 @@ export default {
           enabled: false,
           sortedUsers: [],
           brand: null,
+          search: null,
           models: [],
           selectedDisclosure: null,
           selectedRepairEdit: null,
@@ -165,6 +166,7 @@ export default {
 
     },
     methods: {
+
         sortRepairs(users) {
             let newArray = [];
             users.forEach((user) => {
