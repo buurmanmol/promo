@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('province');
             $table->string('email')->unique();
             $table->BigInteger('company_id')->unsigned();
+            $table->BigInteger('manager_id')->unsigned()->nullable();
             $table->string('phone_number')->unique();
 
             $table->timestamp('email_verified_at')->nullable();

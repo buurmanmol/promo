@@ -32,6 +32,7 @@ class User extends Authenticatable
         'city',
         'province',
         'company_id',
+        'manager_id',
         'email',
         'phone_number',
         'password',

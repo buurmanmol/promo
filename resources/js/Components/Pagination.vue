@@ -48,9 +48,9 @@ export default {
     },
     mounted() {
         this.links.forEach((link) => {
-            console.log(link);
+            // console.log(link);
         })
-        console.log(this.links.length)
+        // console.log(this.links.length)
     }
 }
 
