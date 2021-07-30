@@ -206,7 +206,6 @@ import {
     MenuButton,
     MenuItem,
     MenuItems,
-
     TransitionChild,
     TransitionRoot,
 } from '@headlessui/vue'
@@ -295,7 +294,7 @@ export default {
         XIcon,
         OfficeBuildingIcon
     },
-    
+
     methods: {
         formatPrice(price) {
             return price.toLocaleString('nl-NL')
