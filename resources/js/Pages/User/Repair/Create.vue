@@ -349,6 +349,7 @@ export default {
             this.repair = {
                 device: device,
                 productType: productType,
+                company: this.company
             }
             // this.addRepair(this.repair);
             this.selectedSlide += 1;

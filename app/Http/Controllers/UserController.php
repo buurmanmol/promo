@@ -43,9 +43,18 @@ class UserController extends Controller
         return Inertia::render('Manager/Repair/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
+    public function searchUser(Request $request)
+    {
+        $users = User::with('company')->where(function ($query) use($request) {
+            $query->where('first_name', 'like', '%' . $request->get('search') . '%')
+                ->orWhere('last_name', 'like', '%' . $request->get('search') . '%');
+        })->paginate(10)->setPath('/admin/companies');//        dd($companies);
+        return ['users' => $users];
+    }
+
     public function index()
     {
-        $users = User::with('company')->get();
+        $users = User::with('company')->paginate(10);
         return Inertia::render('Admin/User/Index', ['users' => $users, 'currentUser' => Auth::user()]);
     }
 
