@@ -242,7 +242,7 @@ import {
 } from '@heroicons/vue/solid'
 
 const navigation = [
-    { name: 'Home', href: '/manager/dashboard', icon: HomeIcon, current: 'dashboard' },
+    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: 'dashboard' },
     { name: 'Werknemers', href: '/manager/facturen', icon: DocumentTextIcon, current: 'facturen' },
     { name: 'Reparaties', href: '/manager/repairs', icon: TicketIcon, current: 'reparaties' },
 

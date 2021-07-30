@@ -13,11 +13,20 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        if(Auth::user()->role === "admin"){
-            $users = User::with('company')->get();
-            return Inertia::render('Admin/User/Index', ['users' => $users, 'currentUser' => Auth::user()]);
+        switch(Auth::user()->role){
+            case "admin": 
+                return Inertia::render('Admin/Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
+                break;
+            case "company":
+                return Inertia::render('Company/Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
+                break;
+            case "manager":
+                return Inertia::render('Manager/Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
+                break;
+            default:
+                return Inertia::render('User/Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
+                break;
         }
-        return Inertia::render('Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     public function indexCompanyManager(User $user)

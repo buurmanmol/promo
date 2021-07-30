@@ -101,10 +101,15 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/admin/api/phone/{brandsModel}/delete', [PhoneController::class, 'delete']);
 
     Route::middleware([\App\Http\Middleware\Manager::class])->group(function () {
+
+
+        Route::get('/manager/facturen', [InvoiceController::class, 'managerIndex']);
+            
         Route::get('/manager/repairs', [RepairController::class, 'indexManager']);
         Route::get('/manager/user/{user}', [RepairController::class, 'detailsManager']);
         Route::get('/manager/{user}/repairs', [UserController::class, 'indexCompanyManager']);
     });
+
     Route::middleware([\App\Http\Middleware\Company::class])->group(function () {
         Route::get('/company/repairs', [RepairController::class, 'indexCompany']);
         Route::get('/company/user/{user}', [RepairController::class, 'detailsCompany']);

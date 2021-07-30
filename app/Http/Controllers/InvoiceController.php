@@ -160,6 +160,18 @@ class InvoiceController extends Controller
  
     }
 
+    //================= Manager part ===================//
+    /**
+     * returns managerIndex
+     */
+    public function managerIndex(){
+        
+        $staff = User::with('invoices')
+        ->where('company_id', Auth::user()->company_id)
+        ->paginate(10);
+ 
+         return Inertia::render('Manager/Invoice/Index', ['staff' => $staff, 'user' => Auth::user(), 'company' => Auth::user()->company]);
+     } 
 
     //================= User part ===================//
 
