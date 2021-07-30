@@ -33,6 +33,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/offerte', function () {
+    return Inertia::render('Offerte');
+});
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/dashboard', [UserController::class, 'dashboard']);

@@ -39,7 +39,7 @@
                                 </a>
                                 <div class="-mr-2 flex items-center md:hidden">
                                     <PopoverButton class="bg-gray-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus-ring-inset focus:ring-white">
-                                        <span class="sr-only">Open main menu</span>
+                                        <span class="sr-only">Menu openen</span>
                                         <MenuIcon class="h-6 w-6" aria-hidden="true" />
                                     </PopoverButton>
                                 </div>
@@ -52,7 +52,7 @@
                             <a href="/login" class="text-base font-medium text-white hover:text-gray-300">
                                 Inloggen
                             </a>
-                            <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
+                            <a href="/offerte" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
                                 Offerte Aanvragen
                             </a>
                         </div>
@@ -67,7 +67,7 @@
                                     <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-teal-500-cyan-600.svg" alt="" />
                                 </div>
                                 <div class="-mr-2">
-                                    <PopoverButton class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-600">
+                                    <PopoverButton class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-azure-radiance-600">
                                         <span class="sr-only">Close menu</span>
                                         <XIcon class="h-6 w-6" aria-hidden="true" />
                                     </PopoverButton>
@@ -168,7 +168,7 @@
                                     <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
                                         <div class="-mt-6">
                                             <div>
-                        <span class="inline-flex items-center justify-center p-3 bg-cyan-500 rounded-md shadow-lg">
+                        <span class="inline-flex items-center justify-center p-3 bg-azure-radiance-500 rounded-md shadow-lg">
                           <component :is="feature.icon" class="h-6 w-6 text-white" aria-hidden="true" />
                         </span>
                                             </div>
