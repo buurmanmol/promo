@@ -31,7 +31,7 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <template v-if="sortedUsers"  v-for="(user, key) in sortedUsers" :key="user.id">
+                            <template v-if="users"  v-for="(user, key) in sortedUsers.data || users.data" :key="user.id">
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-bold text-gray-700">
@@ -49,7 +49,7 @@
                                         <button @click="repairAll(user)" class="ml-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-green-900 bg-green-200 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Repair all</button>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <Disclosure v-if="checkRepaired(user.repairs) < 1">
+                                        <Disclosure v-if="checkRepaired(user.repairs) < user.repairs.length">
                                             <DisclosureButton
                                                 @click="selectDisclosure(key, selectedDisclosure)"
                                                 class="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
@@ -66,7 +66,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
-                                        <BanIcon v-if="checkRepaired(user.repairs) < 1" class="text-red-600 text-md w-5 h-5 " />
+                                        <BanIcon v-if="checkRepaired(user.repairs) < user.repairs.length" class="text-red-600 text-md w-5 h-5 " />
                                         <BadgeCheckIcon v-if="checkRepaired(user.repairs) > 0" class="text-green-600 w-5 h-5 text-md" />
                                     </td>
                                     <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
@@ -79,7 +79,7 @@
                                             <td colspan="6">
                                                 <table class="min-w-full rounded-md divide-y divide-gray-200">
                                                     <tbody class="bg-white max-h-96 overflow-y-scroll divide-y divide-gray-200">
-                                                    <template v-if="checkRepaired(user.repairs) < 1" v-for="(repair, key) in user.repairs" >
+                                                    <template v-if="checkRepaired(user.repairs) < user.repairs.length" v-for="(repair, key) in user.repairs" >
                                                         <tr>
                                                             <td class="px-6 py-2 whitespace-nowrap">
                                                                 <div class="text-sm text-bold text-gray-500">
@@ -155,6 +155,7 @@
                             </template>
                             </tbody>
                         </table>
+                        <pagination v-if="users" :links="sortedUsers.links || users.links" :data="sortedUsers || users"></pagination>
                     </div>
                 </div>
             </div>
@@ -166,7 +167,7 @@
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import { ChevronUpIcon } from '@heroicons/vue/solid'
 import { EyeIcon, BadgeCheckIcon, BanIcon } from '@heroicons/vue/outline'
-
+import Pagination from "../../../Components/Pagination";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Switch } from '@headlessui/vue'
 import VueNextSelect from 'vue-next-select';
@@ -180,6 +181,7 @@ export default {
         DisclosureButton,
         'vue-select': VueNextSelect,
         Switch,
+        Pagination,
         EyeIcon,
         DisclosurePanel,
         BanIcon,
@@ -202,7 +204,7 @@ export default {
       }
     },
     mounted() {
-      this.sortRepairs(this.users);
+      this.sortRepairs(this.users.data);
     },
     watch: {
         brand: function (val) {
@@ -216,6 +218,7 @@ export default {
     methods: {
         sortRepairs(users) {
             let newArray = [];
+            this.sortedUsers = this.users
             users.forEach((user) => {
                 let repaired = 0;
                 user.repairs.forEach((repair) => {
@@ -230,15 +233,16 @@ export default {
                 }
             })
 
-            this.sortedUsers = newArray;
+            this.sortedUsers.data = newArray;
         },
         checkRepaired: function(repairs) {
-            let i = 0;
+            var i = 0;
 
             repairs.forEach((repair) => {
-               if(repair.is_repaired) {
+               if(repair.is_repaired === true) {
                    i++;
                }
+                console.log(i);
             });
             return i
         },

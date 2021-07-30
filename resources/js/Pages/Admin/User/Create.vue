@@ -112,7 +112,7 @@
                                 Bedrijf
                             </label>
                             <div class="mt-1">
-                                <vue-select @change="getManagers" searchable v-model="user.company_id" :options="companies" value-by="id" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
+                                <vue-select @change="getManagers" searchable v-model="user.company_id" :options="companiesJson" value-by="id" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
                             </div>
                         </div>
                         <div class="sm:col-span-2">
@@ -208,10 +208,11 @@ export default {
               password: '',
           },
           page:'users',
+          companiesJson: [],
       }
     },
     mounted() {
-      this.getCompanies();
+        this.getCompaniesJson();
     },
     watch: {
         'user.company_id': function (newVal, oldVal){
@@ -219,11 +220,11 @@ export default {
         },
     },
     methods: {
-        getCompanies() {
-            axios.get('/api/companies')
+        getCompaniesJson() {
+            axios.get('/api/companies/json')
                 .then((response) => {
                     console.log(response);
-                    this.companies = response.data.companies;
+                    this.companiesJson = response.data.companies;
                 }, (error) => {
                     console.log(error);
                 });

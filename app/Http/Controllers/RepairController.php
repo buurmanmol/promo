@@ -70,8 +70,8 @@ class RepairController extends Controller
     public function repairIndexAdmin()
     {
         $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
-        $q->orderBy('created_at', 'desc');
-    }])->get();
+            $q->orderBy('created_at', 'desc');
+        }])->paginate(10)->setPath('/admin/repairs');
 
         $brands_models = BrandsModel::all();
         $brands = Brand::all();
@@ -92,6 +92,8 @@ class RepairController extends Controller
                 'comment' => $repair['comment'] || '',
                 'device_id' => $repair['device']['id'],
                 'product_type_id' => $repair['productType']['id'],
+                'manager_id' => $user->manager_id,
+                'company_id' => $repair['company']['id'],
                 'user_id' => $user->id,
             ]);
         }
@@ -117,7 +119,7 @@ class RepairController extends Controller
     public function createIndex()
     {
 
-        $user = User::where('id', Auth::user()->id)->with('devices.brandsModels')->firstOrFail();
+        $user = User::where('id', Auth::user()->id)->with('devices.brandsModels', 'company')->firstOrFail();
         $brandsNames = [];
         $modelNames = [];
 

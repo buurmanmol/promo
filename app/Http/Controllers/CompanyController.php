@@ -19,6 +19,13 @@ class CompanyController extends Controller
         return ['companies' => $companies];
     }
 
+    public function getCompaniesJson()
+    {
+        $companies = Company::all();
+
+        return ['companies' => $companies];
+    }
+
     public function searchCompany(Request $request)
     {
         $companies = Company::where('name', 'LIKE','%'. $request->get('search') . '%')->paginate(10)->setPath('/admin/companies');

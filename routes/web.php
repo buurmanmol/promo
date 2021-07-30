@@ -130,9 +130,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/users', [UserController::class, 'index']);
         Route::get('/admin/users/create', [UserController::class, 'createIndex']);
         Route::get('/admin/user/{user}/update', [UserController::class, 'updateIndex']);
+        Route::post('/api/users/search', [UserController::class, 'searchUser']);
 
         //Companies
         Route::get('/admin/companies', [CompanyController::class, 'index']);
+        Route::get('/api/companies/json', [CompanyController::class, 'getCompaniesJson']);
         Route::get('/admin/company/create', [CompanyController::class, 'createIndex']);
         Route::get('/admin/company/{company}/update', [CompanyController::class, 'updateIndex']);
 
