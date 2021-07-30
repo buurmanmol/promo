@@ -33,6 +33,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/offerte', function () {
+    return Inertia::render('Offerte');
+});
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/dashboard', [UserController::class, 'dashboard']);
@@ -120,6 +123,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::middleware([\App\Http\Middleware\Admin::class])->group(function () {
 
         Route::post('/api/buckaroo/create-subscription', [BuckarooController::class, 'createSubscription']);
+        Route::get('/api/company/{company}/managers', [UserController::class, 'getManagers']);
+        Route::post('/api/companies/search', [CompanyController::class, 'searchCompany']);
 
         //Users
         Route::get('/admin/users', [UserController::class, 'index']);
