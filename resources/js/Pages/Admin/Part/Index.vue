@@ -143,7 +143,7 @@
                         </table>
                         <pagination
                             v-if="partList.data"
-                            :data="parts.data"
+                            :data="parts"
                             :links="parts.links"
                         ></pagination>
                     </div>

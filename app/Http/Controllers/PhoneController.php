@@ -29,6 +29,12 @@ class PhoneController extends Controller
         return Inertia::render('Admin/Phone/Create', ['phones' => $phones, 'user'=>  Auth::user(),'company' => Auth::user()->company
         ]);
     }
+    public function searchModel(Request $request)
+    {
+        $phones = BrandsModel::where('model', 'LIKE','%'. $request->get('search') . '%')->paginate(20)->setPath('/admin/phones');
+
+        return ['phones' => $phones];
+    }
 
     public function update(BrandsModel $phone, Request $request)
     {

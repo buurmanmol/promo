@@ -102,6 +102,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::put('/admin/api/phone/{phone}/update', [PhoneController::class, 'update']);
     Route::post('/admin/api/phone/create', [PhoneController::class, 'create']);
     Route::delete('/admin/api/phone/{brandsModel}/delete', [PhoneController::class, 'delete']);
+    Route::post('/admin/api/phones/search', [PhoneController::class, 'searchModel']);
 
     Route::middleware([\App\Http\Middleware\Manager::class])->group(function () {
         Route::get('/manager/repairs', [RepairController::class, 'indexManager']);
