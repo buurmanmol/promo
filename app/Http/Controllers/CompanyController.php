@@ -14,13 +14,21 @@ class CompanyController extends Controller
 
     public function getCompanies()
     {
-        $companies = Company::all();
+        $companies = Company::paginate(10)->setPath('/admin/companies');
 
         return ['companies' => $companies];
     }
+
+    public function searchCompany(Request $request)
+    {
+        $companies = Company::where('name', 'LIKE','%'. $request->get('search') . '%')->paginate(10)->setPath('/admin/companies');
+//        dd($companies);
+        return ['companies' => $companies];
+    }
+
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::paginate(10);
 
         return Inertia::render('Admin/Company/Index', ['companies' => $companies, 'user' => Auth::user()]);
     }
@@ -40,6 +48,7 @@ class CompanyController extends Controller
             'name' => $request->get('name'),
             'address' => $request->get('address'),
             'postal_code' => $request->get('postal_code'),
+            'wallet' => $request->get('wallet'),
             'phone_number' => $request->get('phone_number'),
             'email' => $request->get('email'),
         ]);

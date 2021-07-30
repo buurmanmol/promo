@@ -20,6 +20,29 @@ class UserController extends Controller
         return Inertia::render('Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
+    public function getManagers(Company $company)
+    {
+        $users = User::where('company_id', $company->id)->get();
+        $managerArray = [];
+        foreach ($users as $user) {
+            if ($user->role === 'manager') {
+                array_push($managerArray, $user);
+            }
+        }
+
+        return ['managers' => $managerArray];
+    }
+
+    public function indexCompanyManager(User $user)
+    {
+        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($user) {
+            $q->where('manager_id', $user->id);
+        }])->get();
+
+
+        return Inertia::render('Manager/Repair/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
+    }
+
     public function index()
     {
         $users = User::with('company')->get();
@@ -45,6 +68,8 @@ class UserController extends Controller
             'province' => $request->get('province'),
             'email' => $request->get('email'),
             'company_id' => $request->get('company_id'),
+            'role' => $request->get('role'),
+            'manager_id' => $request->get('manager_id'),
             'password' => bcrypt($request->get('password'))
         ]);
 

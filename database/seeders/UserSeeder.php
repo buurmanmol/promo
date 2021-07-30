@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'phone_number' => '+31 6 31 67 33 18',
             'city' => 'Groningen',
             'role' => 'admin',
-            'company_id' => rand(1, 10),
+            'company_id' => 1,
             'province' => 'Groningen',
             'email' => 'wouter.moelker@hotmail.com',
             'password' => bcrypt('123')
@@ -38,13 +38,26 @@ class UserSeeder extends Seeder
             'postal_code' => '9123 LS',
             'phone_number' => '+31 6 31 67 23 18',
             'city' => 'Groningen',
-            'role' => 'user',
+            'role' => 'manager',
             'province' => 'Groningen',
-            'company_id' => rand(1, 10),
+            'company_id' => 1,
             'email' => 'th.molit@gmail.com',
             'password' => bcrypt('123')
         ]);
 
+        User::create([
+            'first_name' => 'Anton',
+            'last_name' => 'Dolghanov',
+            'address' => 'Wassenberhjstraat 32',
+            'postal_code' => '9718 LS',
+            'phone_number' => '+31 6 31 32 23 18',
+            'city' => 'Groningen',
+            'role' => 'user',
+            'province' => 'Groningen',
+            'company_id' => 1,
+            'email' => 'adolganov@outlook.nl',
+            'password' => bcrypt('123')
+        ]);
 
         $faker = \Faker\Factory::create();
         for($i = 0;$i < 10; $i++) {
