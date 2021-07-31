@@ -81,6 +81,48 @@ class RepairController extends Controller
         return Inertia::render('User/Repair/Index', ['repairs' => $s, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
+    public function searchRepairIndexAdmin(Request $request)
+    {
+        $newUsers = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
+            $q->orderBy('created_at', 'desc');
+        }])->where(function ($query) use($request) {
+                $query->where('first_name', 'like', '%' . $request->get('search') . '%')
+                    ->orWhere('last_name', 'like', '%' . $request->get('search') . '%');
+            })->get();
+
+        $array = [];
+        foreach ($newUsers as $user) {
+            $count = 0;
+            foreach ($user->repairs as $repair) {
+                if($repair->is_repaired === true){
+                    $count++;
+                }
+            }
+            if ($count < count($user->repairs)) {
+                array_push($array, $user);
+            }
+        }
+        foreach ($newUsers as $user) {
+            $count = 0;
+
+            foreach ($user->repairs as $repair) {
+
+                if($repair->is_repaired === true){
+                    $count++;
+                }
+            }
+            if($count === count($user->repairs)) {
+                array_push($array, $user);
+            }
+        }
+
+//        dd($array);
+        $data = $this->paginate($array);
+
+        return ['users' => $data];
+    }
+
+
     public function repairIndexAdmin()
     {
         $newUsers = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) {

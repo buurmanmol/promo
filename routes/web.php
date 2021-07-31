@@ -170,6 +170,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/part/{part}/update', [PartController::class, 'updateIndex']);
 
         //Repairs
+        Route::post('/api/repairs/search', [RepairController::class, 'searchRepairIndexAdmin']);
         Route::get('/admin/repairs', [RepairController::class, 'repairIndexAdmin']);
         Route::get('/admin/repair/{user}', [RepairController::class, 'details']);
         Route::get('/admin/repairs/create', [RepairController::class, 'createIndexAdmin']);

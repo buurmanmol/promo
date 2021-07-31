@@ -4,9 +4,12 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <a href="/admin/repairs/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
-                            Reparatie toevoegen +
-                        </a>
+                        <div class="flex">
+                            <a href="/admin/repairs/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
+                                Reparatie toevoegen +
+                            </a>
+                            <input @input="searchRepairs" v-model="search" type="text" placeholder="Reparatie zoeken..." class="h-10 my-4 items-center nline-flex ml-8 shadow-sm focus:ring-indigo-500 align-middle focus:border-indigo-500 block max-w-md sm:text-sm border-gray-300 rounded-md">
+                        </div>
                         <table class="min-w-full rounded-md divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                             <tr>
@@ -31,7 +34,7 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <template v-if="users"  v-for="(user, key) in sortedUsers.data || users.data" :key="user.id">
+                            <template v-if="users"  v-for="(user, key) in newRepairs.data || users.data" :key="user.id">
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-bold text-gray-700">
@@ -195,6 +198,8 @@ export default {
           model: null,
           productType: null,
           enabled: false,
+          search:null,
+          newRepairs: [],
           sortedUsers: [],
           brand: null,
           models: [],
@@ -204,7 +209,7 @@ export default {
       }
     },
     mounted() {
-      this.sortRepairs(this.users.data);
+      // this.sortRepairs(this.users.data);
     },
     watch: {
         brand: function (val) {
@@ -216,6 +221,16 @@ export default {
 
     },
     methods: {
+        searchRepairs() {
+            axios.post('/api/repairs/search',
+                {search: this.search})
+                .then((response) => {
+                    console.log(response);
+                    this.newRepairs = response.data.users;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         sortRepairs(users) {
             let newArray = [];
             this.sortedUsers = this.users
