@@ -38,17 +38,13 @@ class RepairController extends Controller
         return $repair;
     }
 
-    public function repairAll(User $user)
+    public function repairItem(Repair $repair)
     {
-        $repairs = Repair::where('user_id', $user->id)->get();
+        $repair->update([
+            'is_repaired' => true
+        ]);
 
-        foreach($repairs as $repair) {
-            Repair::where('id', $repair->id)->update([
-                'is_repaired' => 1,
-            ]);
-        }
-
-        return $repairs;
+        return $repair;
     }
 
     public function details(User $user)

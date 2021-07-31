@@ -301,6 +301,16 @@ export default {
                     console.log(error);
                 });
         },
+        repairItem(repair, brand, model){
+            axios.post('/api/repairs/' + repair.id + '/repair-all')
+                .then((response) => {
+                    console.log(response);
+
+                    this.models = response.data.data;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         repairAll(user) {
             Swal.fire({
                 title: 'Weet u het zeker?',
@@ -313,13 +323,10 @@ export default {
                 cancelButtonText:'Annuleren'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/api/user/' + this.user.id + '/repair-all', user.repairs)
-                        .then((response) => {
-                            console.log(response);
-                            this.models = response.data.data;
-                        }, (error) => {
-                            console.log(error);
-                        });
+                     user.repairs.forEach((repair) => {
+                        this.repairItem(repair)
+                     });
+                     this.searchRepairs();
                     Swal.fire(
                         'Poof!',
                         'Alle reperaties van deze user zijn op \" Gerepareerd \" gezet.',
