@@ -56,6 +56,7 @@ class InvoiceController extends Controller
             "first_name", 
             "last_name", 
             "email",
+            "company_id",
         );
         return Inertia::render('Admin/Invoice/Create', ['usersList' => $usersList, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
@@ -86,6 +87,15 @@ class InvoiceController extends Controller
         ]); 
 
         return ['invoice' => $invoice];
+    }
+
+    public function updateWallet(Company $company, Request $request){
+        $price = $request->get('price');
+        $newWallet = $company->wallet - $request->get('price');
+
+        $company->update(['wallet' => $newWallet]);
+
+        return ['company' => $company];
     }
     
     /**
