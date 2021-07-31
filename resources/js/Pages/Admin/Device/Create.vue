@@ -1,6 +1,6 @@
 <template>
     <app-layout-admin :user="currentUser" :page="page">
-        <div style="min-height:60vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
+        <div style="min-height:70vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
             <div class="mx-4 p-4">
                 <div class="flex items-center">
                     <div class="flex items-center text-azure-radiance-600 relative">

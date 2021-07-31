@@ -63,7 +63,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::with('company')->paginate(10);
+        $users = User::orderBy('first_name', 'asc')->with('company')->paginate(10);
         return Inertia::render('Admin/User/Index', ['users' => $users, 'currentUser' => Auth::user()]);
     }
 

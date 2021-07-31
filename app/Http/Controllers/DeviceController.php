@@ -25,12 +25,12 @@ class DeviceController extends Controller
         $device->delete();
         return ['device' => $device];
     }
- 
+
     public function getDevices(Request $request){
         return User::with('devices.brandsModels','devices.productType', 'company')->paginate(10, ['*'], 'page', $request->get('page'));
         // return Inertia::render('Admin/Device/Index', ['users' => $users, 'user' => Auth::user()]);
     }
-     
+
     public function deviceAll(User $user)
     {
         $devices = Device::where('user_id', $user->id)->get();

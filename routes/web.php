@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/device/create', [DeviceController::class, 'create']);
     Route::delete('/api/device/{device}/delete', [DeviceController::class, 'delete']);
     Route::post('/api/devices', [DeviceController::class, 'getDevices']);
+    Route::post('/api/devices/search', [DeviceController::class, 'searchUser']);
 
     //CompanyController
     Route::get('/api/companies', [CompanyController::class, 'getCompanies']);
@@ -149,6 +150,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     //    Route::get('/admin/device/{repair}', [DeviceController::class, 'details']);
         Route::get('/admin/device/create', [DeviceController::class, 'createIndex']);
         Route::put('/admin/device/{device}/update', [DeviceController::class, 'update']);
+
 
         //Facturen
         Route::get('/admin/facturen', [InvoiceController::class, 'index']);

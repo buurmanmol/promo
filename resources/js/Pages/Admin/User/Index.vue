@@ -9,7 +9,7 @@
                     <a href="/admin/users/create" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
                         Gebruiker toevoegen +
                     </a>
-                        <input @input="searchUsers" v-model="search" type="text" placeholder="Bedrijf zoeken..." class="h-10 my-4 items-center nline-flex ml-8 shadow-sm focus:ring-indigo-500 align-middle focus:border-indigo-500 block max-w-md sm:text-sm border-gray-300 rounded-md">
+                        <input @input="searchUsers" v-model="search" type="text" placeholder="Gebruiker zoeken..." class="h-10 my-4 items-center nline-flex ml-8 shadow-sm focus:ring-indigo-500 align-middle focus:border-indigo-500 block max-w-md sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <table class="min-w-full rounded-md divide-y divide-gray-200">
                         <thead class="bg-gray-50">

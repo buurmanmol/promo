@@ -134,7 +134,7 @@ export default {
           selectedRepairEdit: null,
           page:'devices',
           userList: '',
-         
+
       }
     },
     mounted() {
@@ -147,7 +147,7 @@ export default {
         }
     },
     computed: {
-        
+
     },
     methods: {
         setUserList(){
@@ -240,7 +240,7 @@ export default {
                 }
             })
 
-        }, 
+        },
         getModels(brand) {
             let newBrand = {'brand': brand}
             console.log(brand)
@@ -261,7 +261,7 @@ export default {
                 .then((response) => {
 
                     this.userList = response.data;
-                    
+
                 })
                 .catch((response) => {
                     console.log(response);
