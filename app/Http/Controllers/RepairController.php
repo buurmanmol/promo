@@ -92,7 +92,7 @@ class RepairController extends Controller
                 'comment' => $repair['comment'] || '',
                 'device_id' => $repair['device']['id'],
                 'product_type_id' => $repair['productType']['id'],
-                'manager_id' => $user->manager_id,
+                'manager_id' => $repair['manager'],
                 'company_id' => $repair['company']['id'],
                 'user_id' => $user->id,
             ]);

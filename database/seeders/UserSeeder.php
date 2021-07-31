@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
             'city' => 'Groningen',
             'role' => 'admin',
             'company_id' => 1,
+            'manager_id' => 1,
             'province' => 'Groningen',
             'email' => 'wouter.moelker@hotmail.com',
             'password' => bcrypt('123')
@@ -39,6 +40,7 @@ class UserSeeder extends Seeder
             'phone_number' => '+31 6 31 67 23 18',
             'city' => 'Groningen',
             'role' => 'manager',
+//            'manager_id' => 1,
             'province' => 'Groningen',
             'company_id' => 1,
             'email' => 'th.molit@gmail.com',
@@ -54,8 +56,24 @@ class UserSeeder extends Seeder
             'city' => 'Groningen',
             'role' => 'user',
             'province' => 'Groningen',
+            'manager_id' => 2,
             'company_id' => 1,
             'email' => 'adolganov@outlook.nl',
+            'password' => bcrypt('123')
+        ]);
+
+        User::create([
+            'first_name' => 'Kevin',
+            'last_name' => 'Houkema',
+            'address' => 'Boeitmentweg 32',
+            'postal_code' => '2222 LS',
+            'phone_number' => '+31 63232 3232 ',
+            'city' => 'Groningen',
+            'role' => 'company',
+            'province' => 'Groningen',
+            'manager_id' => 2,
+            'company_id' => 1,
+            'email' => 'kevin-houkema@hotmail.com',
             'password' => bcrypt('123')
         ]);
 
@@ -68,6 +86,8 @@ class UserSeeder extends Seeder
                 'postal_code' => $faker->postcode,
                 'city' => $faker->city,
                 'company_id' => rand(1, 10),
+                'manager_id' => 2,
+
                 'phone_number' => $faker->phoneNumber,
                 'province' => $faker->state,
                 'email' => $faker->email,

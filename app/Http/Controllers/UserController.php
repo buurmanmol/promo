@@ -14,7 +14,7 @@ class UserController extends Controller
     public function dashboard()
     {
         switch(Auth::user()->role){
-            case "admin": 
+            case "admin":
                 return Inertia::render('Admin/Dashboard', ['user' => Auth::user(), 'company' => Auth::user()->company]);
                 break;
             case "company":
@@ -71,7 +71,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return Inertia::render('Admin/User/Create', ['user' => Auth::user()]);
+        return Inertia::render('Admin/User/Create', ['currentUser' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
     public function create(Request $request)

@@ -81,6 +81,11 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class);
     }
 
+    public function manager()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function repairs()
     {
         return $this->hasMany(Repair::class);

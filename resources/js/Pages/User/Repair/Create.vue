@@ -348,6 +348,7 @@ export default {
         setRepair(user, device, productType) {
             this.repair = {
                 device: device,
+                manager: this.currentUser.manager_id,
                 productType: productType,
                 company: this.company
             }

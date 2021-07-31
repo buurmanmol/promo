@@ -49,14 +49,9 @@
                                 </div>
                             </td>
                             <td class="px-6 text-sm text-gray-900 max-w-sm overflow-x-scroll py-4 whitespace-nowrap">
-                                {{person.address}}
-<!--                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">-->
-<!--                    Active-->
-<!--                  </span>-->
+                                <div class="text-sm text-gray-900">{{ person.address }}</div>
+                                <div class="text-sm text-gray-500">{{ person.role }}</div>
                             </td>
-<!--                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-->
-<!--                                {{ person.postal_code }}-->
-<!--                            </td>-->
                             <td v-if="person.company" class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company.id">{{ person.company.name }}</a></div>
                                 <div class="text-sm text-gray-500">{{ person.company.phone_number }}</div>

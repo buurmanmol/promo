@@ -33,6 +33,19 @@ class CompanyController extends Controller
         return ['companies' => $companies];
     }
 
+    public function getCompanyUser(Company $company)
+    {
+        $users = User::where('company_id', $company->id)->get();
+        $companyArray = [];
+        foreach ($users as $user) {
+            if ($user->role === 'company') {
+                array_push($companyArray, $user);
+            }
+        }
+
+        return ['company' => $companyArray];
+    }
+
     public function index()
     {
         $companies = Company::paginate(10);
