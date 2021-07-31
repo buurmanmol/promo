@@ -110,7 +110,7 @@
                                                                 <div class="flex content-center flex-wrap">
                                                                     <div class="flex-initial">
                                                                         <Switch
-                                                                            @click="postRepair(repair)"
+                                                                            @click="postIsRepaired(repair)"
                                                                             v-model="repair.is_repaired"
                                                                             :class="repair.is_repaired ? 'bg-green-600' : 'bg-red-600'"
                                                                             class="relative inline-flex items-center h-7 rounded-full w-14"
@@ -219,21 +219,21 @@ export default {
         sortRepairs(users) {
             let newArray = [];
             this.sortedUsers = this.users
-            users.forEach((user) => {
-                let repaired = 0;
-                user.repairs.forEach((repair) => {
-                    if(repair.is_repaired) {
-                        repaired++
-                    }
-                })
-                if(repaired < 1) {
-                    newArray.unshift(user);
-                } else {
-                    newArray.push(user);
-                }
-            })
+            // users.forEach((user) => {
+            //     let repaired = 0;
+            //     user.repairs.forEach((repair) => {
+            //         if(repair.is_repaired) {
+            //             repaired++
+            //         }
+            //     })
+            //     if(repaired < 1) {
+            //         newArray.unshift(user);
+            //     } else {
+            //         newArray.push(user);
+            //     }
+            // })
 
-            this.sortedUsers.data = newArray;
+            // this.sortedUsers.data = newArray;
         },
         checkRepaired: function(repairs) {
             var i = 0;
@@ -270,6 +270,15 @@ export default {
         },
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
+                .then((response) => {
+                    console.log(response);
+                    this.models = response.data.data;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        postIsRepaired(repair, brand, model){
+            axios.post('/api/repair/' + repair.id + '/is-repaired' , repair)
                 .then((response) => {
                     console.log(response);
                     this.models = response.data.data;

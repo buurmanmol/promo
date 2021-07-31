@@ -168,11 +168,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/part/create', [PartController::class, 'createIndex']);
         Route::get('/admin/part/{part}/update', [PartController::class, 'updateIndex']);
 
-
         //Repairs
         Route::get('/admin/repairs', [RepairController::class, 'repairIndexAdmin']);
         Route::get('/admin/repair/{user}', [RepairController::class, 'details']);
         Route::get('/admin/repairs/create', [RepairController::class, 'createIndexAdmin']);
         Route::put('/admin/repair/{repair}/update', [RepairController::class, 'update']);
+        Route::post('/api/repair/{repair}/is-repaired', [RepairController::class, 'updateIsRepaired']);
     });
 });

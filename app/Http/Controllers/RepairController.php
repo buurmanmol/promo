@@ -13,16 +13,29 @@ use App\Models\Invoice;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class RepairController extends Controller
 {
+
     public function update(Repair $repair, Request $request)
     {
-     $repair->update($request->all());
+     $updated = $repair->update($request->all());
+     return $updated . $repair;
+    }
 
-     return $repair;
+    public function updateIsRepaired(Repair $repair, Request $request)
+    {
+        $repair->update([
+            'is_repaired' => $request->get('is_repaired')
+        ]);
+
+        return $repair;
     }
 
     public function repairAll(User $user)
@@ -70,14 +83,50 @@ class RepairController extends Controller
 
     public function repairIndexAdmin()
     {
-        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
+        $newUsers = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) {
             $q->orderBy('created_at', 'desc');
-        }])->paginate(10)->setPath('/admin/repairs');
+        }])->get();
 
+        $array = [];
+        foreach ($newUsers as $user) {
+            $count = 0;
+            foreach ($user->repairs as $repair) {
+                if($repair->is_repaired === true){
+                    $count++;
+                }
+            }
+            if ($count < count($user->repairs)) {
+                array_push($array, $user);
+            }
+        }
+        foreach ($newUsers as $user) {
+            $count = 0;
+
+            foreach ($user->repairs as $repair) {
+
+                if($repair->is_repaired === true){
+                    $count++;
+                }
+            }
+            if($count === count($user->repairs)) {
+                array_push($array, $user);
+            }
+        }
+
+//        dd($array);
+        $data = $this->paginate($array);
         $brands_models = BrandsModel::all();
         $brands = Brand::all();
         $product_types = ProductType::all();
-        return Inertia::render('Admin/Repair/Index', ['users' => $users, 'user' => Auth::user(),'brandsModels' => $brands_models, 'brands' => $brands, 'productTypes' => $product_types]);
+        return Inertia::render('Admin/Repair/Index', ['users' => $data, 'user' => Auth::user(),'brandsModels' => $brands_models, 'brands' => $brands, 'productTypes' => $product_types]);
+    }
+    public function paginate($items, $perPage = 10, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+       $pagination = new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+       $pagination->setPath('/admin/repairs') ;
+       return $pagination;
     }
 
     public function create()
