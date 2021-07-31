@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
 
         Route::get('/manager/facturen', [InvoiceController::class, 'managerIndex']);
-            
+
         Route::get('/manager/repairs', [RepairController::class, 'indexManager']);
         Route::get('/manager/user/{user}', [RepairController::class, 'detailsManager']);
         Route::get('/manager/{user}/repairs', [UserController::class, 'indexCompanyManager']);
@@ -128,6 +128,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::post('/api/buckaroo/create-subscription', [BuckarooController::class, 'createSubscription']);
         Route::get('/api/company/{company}/managers', [UserController::class, 'getManagers']);
         Route::post('/api/companies/search', [CompanyController::class, 'searchCompany']);
+        Route::get('/api/company/{company}/company-user', [CompanyController::class, 'getCompanyUser']);
+
+
 
         //Users
         Route::get('/admin/users', [UserController::class, 'index']);

@@ -297,7 +297,7 @@ export default {
 
     methods: {
         formatPrice(price) {
-            return price.toLocaleString('nl-NL')
+            return price
         },
         setCurrentPage(page){
             return page === this.page ? true : false;

@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-    <app-layout-admin :user="user" :page="page">
+    <app-layout-admin :company="company" :user="user" :page="page">
         <!--
           This example requires Tailwind CSS v2.0+
 
@@ -124,7 +124,7 @@
                                 <select v-model="user.role" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
                                     <option value="user">User</option>
                                     <option value="manager">Manager</option>
-                                    <option value="company">Company</option>
+                                    <option v-if="companyUser.length < 1" value="company">Company</option>
                                     <option value="admin">Administrator</option>
                                 </select>
                             </div>
@@ -181,7 +181,7 @@ import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import { XCircleIcon } from '@heroicons/vue/solid'
 import VueNextSelect from 'vue-next-select';
 export default {
-    props:['user'],
+    props:['currentUser', 'company'],
     components: {
         AppLayoutAdmin,
         'vue-select': VueNextSelect,
@@ -209,6 +209,7 @@ export default {
           },
           page:'users',
           companiesJson: [],
+          companyUser:[],
       }
     },
     mounted() {
@@ -217,9 +218,21 @@ export default {
     watch: {
         'user.company_id': function (newVal, oldVal){
             this.getManagers();
+            this.getCompanyUser();
         },
+
     },
+
     methods: {
+        getCompanyUser() {
+            axios.get('/api/company/' + this.user.company_id + '/company-user')
+                .then((response) => {
+                    console.log(response);
+                    this.companyUser = response.data.company;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         getCompaniesJson() {
             axios.get('/api/companies/json')
                 .then((response) => {
