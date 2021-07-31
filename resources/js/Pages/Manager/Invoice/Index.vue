@@ -56,7 +56,7 @@
                                             tracking-wider
                                         "
                                     >
-                                        Bedrijf
+                                        Totale prijs
                                     </th>
                                     <th
                                         scope="col"
@@ -100,7 +100,7 @@
                                                     text-gray-700
                                                 "
                                             >
-                                                <!-- {{ user.company.name }} -->
+                                                €{{ getTotalPrice(user.invoices)}}
                                             </div>
                                         </td>
                                         <td
@@ -440,6 +440,24 @@ export default {
                 return moment(String(value)).format("DD/MM/YYYY, h:mm:ss");
             }
         },
+
+        getTotalPrice(invoiceList){
+            let totalPrice = 0;
+            Object.keys(invoiceList).forEach(function(key) {
+                totalPrice+= invoiceList[key].price;
+            });
+            return totalPrice;
+        },
+        getTotalManagerPrice(userList){
+            let totalPrice = 0;
+            Object.keys(userList).forEach(function(key) {
+               Object.keys(userList[key].invoices).forEach(function(key2) {
+                    totalPrice+= userList[key].invoices[key2].price;
+                }); 
+            });
+            return totalPrice;
+        },
+
     },
     setup() {
         return {};

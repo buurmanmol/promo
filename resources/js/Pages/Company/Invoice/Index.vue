@@ -101,7 +101,7 @@
                                                     text-gray-700
                                                 "
                                             >
-                                                <!-- {{ user.company.name }} -->
+                                                €{{ getTotalManagerPrice(manager.users) }}
                                             </div>
                                         </td>
                                         <td
@@ -337,6 +337,16 @@ export default {
             let totalPrice = 0;
             Object.keys(invoiceList).forEach(function(key) {
                 totalPrice+= invoiceList[key].price;
+            });
+            return totalPrice;
+        },
+
+        getTotalManagerPrice(userList){
+            let totalPrice = 0;
+            Object.keys(userList).forEach(function(key) {
+               Object.keys(userList[key].invoices).forEach(function(key2) {
+                    totalPrice+= userList[key].invoices[key2].price;
+                }); 
             });
             return totalPrice;
         },

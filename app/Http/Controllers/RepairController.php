@@ -9,6 +9,7 @@ use App\Models\Device;
 use App\Models\Model;
 use App\Models\ProductType;
 use App\Models\Repair;
+use App\Models\Invoice;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -163,7 +164,11 @@ class RepairController extends Controller
 
         $user->company = $user->company()->get();
         $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
-        return Inertia::render('Company/Repair/Details', ['company' => $user->company()->get(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
+        $invoices = Invoice::where('user_id', $user->id)
+        ->orderBy('created_at','DESC')
+        ->paginate(20);
+
+        return Inertia::render('Company/Repair/Details', ['invoices' => $invoices, 'company' => $user->company()->get(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
     public function detailsManager(User $user)

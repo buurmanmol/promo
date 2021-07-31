@@ -81,6 +81,10 @@
                             <DeviceMobileIcon :class="[selectedTab === 1 ? 'text-azure-radiance-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-0.5 mr-2 h-5 w-5']" aria-hidden="true" />
                             <span>Apparaten</span>
                         </a>
+                        <a @click="selectedTab = 2" :class="[selectedTab === 2 ? 'border-azure-radiance-500 text-azure-radiance-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300', 'group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm']" >
+                            <DocumentTextIcon :class="[selectedTab === 2 ? 'text-azure-radiance-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-0.5 mr-2 h-5 w-5']" aria-hidden="true" />
+                            <span>Facturen</span>
+                        </a>
                     </nav>
                 </div>
             </div>
@@ -91,6 +95,9 @@
                 <div v-if="selectedTab === 1" class="col">
                     <devices :devices="devices"></devices>
                 </div>
+                <div v-if="selectedTab === 2" class="col">
+                    <invoices :invoices="invoices"></invoices>
+                </div>
             </div>
         </div>
         <div>
@@ -100,21 +107,24 @@
 
 <script>
 import AppLayoutCompany from "../../../Layouts/AppLayoutCompany";
-import {DeviceMobileIcon, TicketIcon } from '@heroicons/vue/outline'
+import {DeviceMobileIcon, TicketIcon, DocumentTextIcon } from '@heroicons/vue/outline'
 import Repairs from "../../Manager/Repair/Repairs";
 import Devices from "../../Admin/Repair/Devices";
+import Invoices from "../../Company/Invoice/Invoices"
 import DialogModal from "../../../Jetstream/DialogModal";
 
 export default {
     name: "Details.vue",
-    props:['currentUser','user', 'repairs', 'devices', 'company'],
+    props:['currentUser','user', 'repairs', 'devices', 'invoices', 'company'],
     components: {
         Devices,
         AppLayoutCompany,
         DeviceMobileIcon,
+        DocumentTextIcon,
         DialogModal,
         TicketIcon,
-        Repairs
+        Repairs,
+        Invoices
     },
     data() {
         return {
