@@ -239,7 +239,7 @@ export default {
             var i = 0;
 
             repairs.forEach((repair) => {
-               if(repair.is_repaired === true) {
+               if(repair.is_repaired) {
                    i++;
                }
                 console.log(i);

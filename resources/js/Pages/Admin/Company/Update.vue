@@ -71,6 +71,17 @@
                                 <input v-model="company.postal_code" type="text" name="zip" id="zip" autocomplete="postal-code" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                             </div>
                         </div>
+                        <div class="sm:col-span-2">
+                            <label for="wallet" class="block text-sm font-medium text-gray-700">
+                                Wallet
+                                <p class="mt-1 text-sm text-gray-500">
+                                    Het startbedrag van dit bedrijf.
+                                </p>
+                            </label>
+                            <div class="mt-1">
+                                <input v-model="company.wallet" type="number" name="wallet" id="wallet" autocomplete="wallet" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -145,6 +156,7 @@ export default {
             if(!this.company.address) this.errors.push("Adres vereist.");
             if(!this.company.phone_number) this.errors.push("Telefoonnummer vereist.");
             if(!this.company.postal_code) this.errors.push("Postcode vereist.");
+            if(!this.company.wallet) this.errors.push("Wallet vereist.");
 
 
             if (!this.errors.length) {

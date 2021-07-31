@@ -142,11 +142,7 @@ class RepairController extends Controller
     {
         $user = Auth::user();
 
-        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($user) {
-            $q->where('manager_id', $user->id);
-        }])->get();
-
-
+        $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs'])->where('manager_id', $user->id)->get();
         return Inertia::render('Manager/Repair/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
@@ -199,11 +195,10 @@ class RepairController extends Controller
             }
         }
         foreach($managerArray as $manager) {
-            $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($manager) {
-                $q->where('manager_id', $manager->id);
-            }])->get();
+            $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs'])->where('manager_id', $manager->id)->get();
             $manager->users = $users;
         }
+//        dd($managerArray);
         return Inertia::render('Company/Repair/Index', ['currentUser' => Auth::user(),'managers' => $managerArray, 'company' => Auth::user()->company]);
     }
 }

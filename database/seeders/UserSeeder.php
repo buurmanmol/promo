@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\User;
 use Faker\Core\File;
 use Faker\Factory;
@@ -16,7 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-
+        $companies = Company::all();
         User::create([
             'first_name' => 'Wouter',
             'last_name' => 'Moelker',
@@ -40,7 +41,7 @@ class UserSeeder extends Seeder
             'phone_number' => '+31 6 31 67 23 18',
             'city' => 'Groningen',
             'role' => 'manager',
-//            'manager_id' => 1,
+            'manager_id' => 1,
             'province' => 'Groningen',
             'company_id' => 1,
             'email' => 'th.molit@gmail.com',
@@ -78,21 +79,57 @@ class UserSeeder extends Seeder
         ]);
 
         $faker = \Faker\Factory::create();
-        for($i = 0;$i < 10; $i++) {
-            User::create([
+        foreach ($companies as $company) {
+            $manager = User::create([
+            'first_name' => $faker->firstName,
+            'last_name' => $faker->lastName,
+            'address' => $faker->address,
+            'postal_code' => $faker->postcode,
+            'city' => $faker->city,
+            'company_id' => $company->id,
+            'manager_id' => null,
+            'role' => 'manager',
+            'phone_number' => $faker->phoneNumber,
+            'province' => $faker->state,
+            'email' => $faker->email,
+            'password' => bcrypt('123'),
+        ]);
+            $manager->update([
+                'manager_id' => $manager->id
+            ]);
+            $companyUser = User::create([
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'address' => $faker->address,
                 'postal_code' => $faker->postcode,
                 'city' => $faker->city,
-                'company_id' => rand(1, 10),
-                'manager_id' => 2,
-
+                'company_id' => $company->id,
+                'manager_id' => $manager->manager_id,
+                'role' => 'company',
                 'phone_number' => $faker->phoneNumber,
                 'province' => $faker->state,
                 'email' => $faker->email,
                 'password' => bcrypt('123'),
             ]);
+
+            for ($i = 0; $i < 5; $i++) {
+
+
+                User::create([
+                    'first_name' => $faker->firstName,
+                    'last_name' => $faker->lastName,
+                    'address' => $faker->address,
+                    'postal_code' => $faker->postcode,
+                    'city' => $faker->city,
+                    'company_id' => $company->id,
+                    'manager_id' => $manager->manager_id,
+                    'role' => 'user',
+                    'phone_number' => $faker->phoneNumber,
+                    'province' => $faker->state,
+                    'email' => $faker->email,
+                    'password' => bcrypt('123'),
+                ]);
+            }
         }
     }
 }

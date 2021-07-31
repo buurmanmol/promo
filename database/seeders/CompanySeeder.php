@@ -17,14 +17,14 @@ class CompanySeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for($i =0; $i < 20; $i++){
-        Company::create([
-           'name' =>  $faker->company,
-            'address' => $faker->address,
-            'postal_code' => $faker->postcode,
-            'phone_number' => $faker->phoneNumber,
-            'email' => $faker->email,
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            Company::create([
+                'name' => $faker->company,
+                'address' => $faker->address,
+                'postal_code' => $faker->postcode,
+                'phone_number' => $faker->phoneNumber,
+                'email' => $faker->email,
+            ]);
         }
     }
 }

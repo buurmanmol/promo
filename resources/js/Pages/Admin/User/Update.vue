@@ -101,16 +101,36 @@
                         </div>
                         <div class="sm:col-span-2">
                             <label for="zip" class="block text-sm font-medium text-gray-700">
-                                Bedrijf
+                                Bedrijf : <span class="font-bold">{{company.name}}</span>
                             </label>
                             <div class="mt-1">
-<!--                                {{user.company_id}}-->
-                                <select v-model="user.company_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
-                                    <option v-for="company in companies" :value="company.id">{{company.name}}</option>
+                                <vue-select @change="getManagers" searchable v-model="user.company_id" :options="companiesJson" value-by="id" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">
+                                Gebruikers rol
+                            </label>
+                            <div class="mt-1">
+                                <!--                                {{user.company_id}}-->
+                                <select v-model="user.role" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                    <option value="user">User</option>
+                                    <option value="manager">Manager</option>
+                                    <option v-if="companyUser.length < 1" value="company">Company</option>
+                                    <option value="admin">Administrator</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
+                        <div v-if="managers.length > 0" class="sm:col-span-2">
+                            <label for="zip" class="block text-sm font-medium text-gray-700">
+                                Manager
+                            </label>
+                            <div class="mt-1">
+                                <select v-model="user.manager_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
+                                    <option v-for="manager in managers" :value="manager.id">{{manager.first_name}} {{manager.last_name}}</option>
+                                </select>
+                            </div>
+                        </div>                    </div>
                 </div>
             </div>
 
@@ -127,11 +147,14 @@
 
 <script>
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
+import VueNextSelect from 'vue-next-select';
+
 export default {
     name:'UserUpdate',
-    props:['user', 'currentUser'],
+    props:['user', 'currentUser', 'company'],
     components: {
-        AppLayoutAdmin
+        AppLayoutAdmin,
+        'vue-select': VueNextSelect,
     },
     data() {
       return {
@@ -140,22 +163,47 @@ export default {
           companies:[],
           selectedCompany: '',
           page:'users',
+          companiesJson: [],
+          companyUser:[],
+          managers: [],
       }
     },
     mounted() {
         this.getCompanies();
-    },
-    setup() {
+        this.getManagers();
 
-        return {
-        }
+    },
+    watch: {
+        'user.company_id': function (newVal, oldVal){
+            this.getManagers();
+            this.getCompanyUser();
+        },
+
     },
     methods: {
-        getCompanies() {
-            axios.get('/api/companies')
+        getCompanyUser() {
+            axios.get('/api/company/' + this.user.company_id + '/company-user')
                 .then((response) => {
                     console.log(response);
-                   this.companies = response.data.companies;
+                    this.companyUser = response.data.company;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        getCompanies() {
+            axios.get('/api/companies/json')
+                .then((response) => {
+                    console.log(response);
+                   this.companiesJson = response.data.companies;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        getManagers() {
+            axios.get('/api/company/' + this.user.company_id + '/managers')
+                .then((response) => {
+                    console.log(response);
+                    this.managers = response.data.managers;
                 }, (error) => {
                     console.log(error);
                 });

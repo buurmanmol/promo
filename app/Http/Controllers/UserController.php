@@ -96,11 +96,10 @@ class UserController extends Controller
 
     public function updateIndex(User $user, Request $request)
     {
-        $user->company = $user->company();
-
+            $company = Company::where('id', $user->company_id)->firstOrFail();
 //        $company = $user->company;
 //        $company->users()->attach($user);
-        return Inertia::render('Admin/User/Update',['user' => $user, 'currentUser' => Auth::user()]);
+        return Inertia::render('Admin/User/Update',['company' => $company,'user' => $user, 'currentUser' => Auth::user()]);
     }
 
     public function update(User $user, Request $request)
