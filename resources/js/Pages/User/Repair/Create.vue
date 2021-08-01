@@ -141,6 +141,16 @@
                                 </Disclosure>
                             </div>
                             <div class="col-span-1 xs:col-span-2">
+                            <div class="col mt-4">
+                                <label for="comment" class="block text-sm font-medium text-gray-700">
+                                    Plan de reparatie in
+                                </label>
+                                <div class="mt-1">
+                                    <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
+                                </div>
+                                <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
+                            </div>
+                                <div class="col">
                                     <label for="comment" class="block text-sm font-medium text-gray-700">
                                         Opmerkingen
                                     </label>
@@ -148,62 +158,55 @@
                                         <textarea v-model="comment" id="comment" name="comment" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
+                                </div>
+
+                                <div class="col">
+                                    <errors v-if="errors.length > 0" :errors="errors"></errors>
+                                </div>
+                                <div class="col">
+                                    <button @click="postRepairs" class="mt-4 float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Versturen</button>
+                                </div>
                             </div>
-                            <div class="relative lg:mt-4 col-span-2" aria-hidden="true">
+                            <div class="relative lg:mt-6 col-span-2" aria-hidden="true">
                                 <div class="grid grid-cols-2">
                                     <div class="col-span-1">
                                         <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">
                                             Reparaties overzicht
                                         </h3>
                                     </div>
-                                    <div class="col-span-1">
-                                        <button @click="postRepairs" class="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Versturen</button>
+                                </div>
+                                <div v-if="repairDate" class="max-w-xs">
+                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal reparaties van ditzelfde toestel</label>
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                           <button class="relative flex items-stretch flex-grow mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="duplicateRepairs(repair)">
+
+                                              +  Dupliceer deze reparatie
+                                           </button>
                                     </div>
                                 </div>
-
-
                                 <table class="mt-10 max-h-96 space-y-10 min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Merk
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Model
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Onderdeel
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Reparatie datum
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                        </th>
+                                    </tr>
+                                    </thead>
                                     <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <h2 class="font-bold"># 1</h2>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ repair.device.brands_models.brand }}
-                                                        </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-500">
-                                                    {{ repair.device.brands_models.model }}
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {{ repair.productType.name }}
-                                                  </span>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal reparaties van ditzelfde toestel</label>
-                                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                                        <div class="relative flex items-stretch flex-grow focus-within:z-10">
-                                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                                <HashtagIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                            </div>
-                                                            <input type="number" v-model="repeats" name="repeats" id="repeats" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md pl-10 sm:text-sm border-gray-300" placeholder="Bijv: 10" />
-                                                        </div>
-                                                        <button @click="duplicateRepairs(repair, repeats)" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
-                                                            <DeviceMobileIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                            <span>{{ repeats || '' }} keer</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <template  v-if="repairs.length > 1">
+
+                                    <template v-if="repairs">
                                         <tr v-for="(repair ,key ) in repairs" :key="key">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
@@ -220,6 +223,16 @@
                                             {{ repair.productType.name }}
                                           </span>
                                             </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                          <span v-if="repair.repair_date" class="px-2 inline-flex text-xs leading-5 font-semibold ">
+                                            {{ formatDate(repair.repair_date) }}
+                                          </span>
+                                            </td>
+                                            <td>
+                                                <button class="p-2" @click="removeRepair(key)">
+                                                    <TrashIcon class="w-5 h-5 text-red-600" />
+                                                </button>
+                                            </td>
                                         </tr>
                                     </template>
                                     </tbody>
@@ -235,23 +248,29 @@
 </template>
 
 <script>
-import { HashtagIcon, DeviceMobileIcon } from '@heroicons/vue/outline'
+import { HashtagIcon, DeviceMobileIcon, CalendarIcon, TrashIcon } from '@heroicons/vue/outline'
 import 'sweetalert2/dist/sweetalert2.min.css';
-
+import DialogModal from "../../../Jetstream/DialogModal";
 import FadeTransition from "../../../Components/FadeTransition";
 import AppLayoutAdmin from "../../../Layouts/AppLayoutUser";
+import Datepicker from "vue3-datepicker";
 import VueNextSelect from 'vue-next-select';
 import Errors from "../../../Components/Errors";
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import moment from "moment";
 
 export default {
     name: "Create",
     props: ['devices','company', 'currentUser', 'productTypes'],
     components: {
         FadeTransition,
+        CalendarIcon,
+        DialogModal,
         Swal,
         'vue-select': VueNextSelect,
+        TrashIcon,
+        Datepicker,
         AppLayoutAdmin,
         HashtagIcon,
         DeviceMobileIcon,
@@ -262,6 +281,8 @@ export default {
             page:'reparaties',
             selectedSlide: 0,
             device: '',
+            toggleDate: false,
+            repairDate: null,
             devices: [],
             repeats: null,
             comment: '',
@@ -270,6 +291,7 @@ export default {
             repair: {
                 device: null,
                 productType: null,
+                repair_date: null,
             },
             errors: [],
             repairs: [],
@@ -280,6 +302,9 @@ export default {
         }
     },
     watch: {
+        repairDate() {
+            this.setRepairData(this.currentUser ,this.device, this.productType)
+        },
         user() {
             this.getDevices();
         },
@@ -291,13 +316,27 @@ export default {
         this.getDevices()
     },
     methods: {
+        formatDate(date) {
+            let formatted = moment(date)
+            return formatted.format('DD-MM-YYYY')
+        },
         postRepairs() {
+            if(!this.repairDate) {
+                this.errors.push('Geen reparatie datum geselecteerd!')
+                return
+            }
+            if(!this.comment) {
+                this.errors.push('Probleem niet beschreven!')
+                return
+            }
             if(this.repairs.length < 1) {
+                this.repair.repair_date = this.repairDate
                 this.repair.comment = this.comment;
                 this.repairs.push(this.repair)
             } else {
                 this.repairs.forEach((item) => {
                     item.comment = this.comment;
+                    item.repair_date = this.repairDate
                 });
             }
 
@@ -350,15 +389,28 @@ export default {
                 device: device,
                 manager: this.currentUser.manager_id,
                 productType: productType,
-                company: this.company
+                company: this.company,
+                repair_date: this.repairDate || ''
             }
+            this.repairs = [this.repair]
             // this.addRepair(this.repair);
             this.selectedSlide += 1;
         },
+        setRepairData(user, device, productType) {
+            this.repairs.forEach((repair) => {
+                    repair.device =  device
+                    repair.manager = this.currentUser.manager_id
+                    repair.productType = productType
+                    repair.company = this.company
+                    repair.repair_date = this.repairDate
+            });
+            // this.addRepair(this.repair);
+        },
         duplicateRepairs(repair, repeats) {
-            for(let i = 0; i < repeats; i++ ) {
-                this.addRepair(repair);
-            }
+          this.repairs.push(repair);
+        },
+        removeRepair(index) {
+            if (index !== -1) this.repairs.splice(index, 1);
         },
         addRepair(repair) {
           this.repairs.push(repair);

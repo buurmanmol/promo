@@ -21,6 +21,7 @@ class CreateRepairsTable extends Migration
             $table->BigInteger('invoice_id')->unsigned()->nullable();
             $table->BigInteger('manager_id')->unsigned()->nullable();
             $table->BigInteger('company_id')->unsigned()->nullable();
+            $table->date('repair_date')->nullable();
 
             $table->text('comment')->nullable();
             $table->integer('price')->nullable();

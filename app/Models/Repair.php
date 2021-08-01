@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Repair extends Model
 {
     use HasFactory;
-    protected $fillable = ['price','invoice_id','manager_id', 'company_id','device_id', 'product_type_id', 'user_id', 'comment', 'is_repaired'];
+    protected $fillable = ['repair_date', 'price','invoice_id','manager_id', 'company_id','device_id', 'product_type_id', 'user_id', 'comment', 'is_repaired'];
     protected $casts = [
-        'is_repaired' => 'boolean'
+        'is_repaired' => 'boolean',
+        'repair_date' => 'date'
     ];
     public function productType()
     {

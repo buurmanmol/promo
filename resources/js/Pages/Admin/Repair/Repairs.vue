@@ -38,6 +38,15 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Gerepareerd
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Reparatie datum
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
+                                </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -79,6 +88,38 @@
                                     />
                                 </Switch>
                                 </td>
+                                <td >
+                                    <div v-if="rep.repair_date" class="text-sm text-gray-500">
+                                        {{formatDateNormal(rep.repair_date)}}
+                                    </div>
+                                    <div v-else class=" py-1 inline-flex text-xs leading-5 font-semibold text-red-800">
+                                        Geen reparatiedatum
+                                    </div>
+                                </td>
+                                <td class="relative">
+                                    <button class="mr-6"  @click="setDateToggle(rep)">
+                                        <calendar-icon class="w-6 h-6 mt-1 text-azure-radiance-600" />
+                                    </button>
+                                    <dialog-modal :show="toggleDate === rep.id" @close="toggleDate = null">
+                                        <template #title>
+                                            Plan de reparatie in
+                                        </template>
+                                        <template #content>
+                                            <div>
+                                                <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="rep.repair_date" />
+                                            </div>
+                                            <button @click="postDate(rep); setDateToggle(rep)" class="-ml-px mt-4 relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-green-900 bg-green-300 hover:bg-green-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                                                Save
+                                            </button>
+                                        </template>
+                                    </dialog-modal>
+                                    <!--                                                                <date-planner :repair="repair"></date-planner>-->
+                                </td>
+                                <td>
+                                    <button @click="deleteRepair(rep)">
+                                        <TrashIcon class="w-5 h-5 text-red-600" />
+                                    </button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -96,28 +137,94 @@ import {Disclosure, DisclosureButton, DisclosurePanel} from "@headlessui/vue";
 import {ChevronUpIcon} from "@heroicons/vue/solid/esm";
 import { Switch } from '@headlessui/vue'
 // import VueCurrencyInput from 'vue-currency-input'
+import { TrashIcon, CalendarIcon } from '@heroicons/vue/outline'
+import DialogModal from "../../../Jetstream/DialogModal";
 import CurrencyInput from "../../../Components/VueCurrency";
+import Datepicker from "vue3-datepicker";
+import Swal from "sweetalert2";
 export default {
     name: "Repairs",
     props: ['repairs'],
     components: {
         AppLayoutUser,
+        Datepicker,
+        DialogModal,
+        CalendarIcon,
         Disclosure,
         CurrencyInput,
         DisclosureButton,
+        TrashIcon,
         DisclosurePanel,
         Switch,
         ChevronUpIcon,
     },
     data() {
         return {
-            value: 1234
+            value: 1234,
+            toggleDate: null,
         }
     },
     methods: {
+        setDateToggle(repair) {
+            if(repair.id === this.toggleDate) {
+                this.toggleDate = null;
+            } else {
+                this.toggleDate = repair.id
+            }
+        },
+        postDate(repair) {
+            let date = moment(repair.repair_date)
+            date.add(1, 'd');
+            console.log(repair.repair_date)
+            axios.post('/api/repair/' + repair.id + '/plan' , {repair_date: date})
+                .then((response) => {
+                    console.log(response);
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Datum van reparatie staat ingeplanned.'
+                    })
+
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        getRepairs(user) {
+            axios.get('/api/repairs/' + user)
+                .then((response) => {
+                    console.log(response);
+                    this.newRepairs = response.data.data
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        deleteRepair(repair) {
+            axios.delete('/api/repair/' + repair.id + '/delete')
+                .then((response) => {
+                    console.log(response);
+                    this.getRepairs(repair.user_id);
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         formatDate(date) {
             moment.locale('nl');
             return moment(date).format('dddd DD MMMM Y')
+        },
+        formatDateNormal(date) {
+            moment.locale('nl');
+            return moment(date).format('DD-MM-YYYY')
         },
         postBatch(repairs) {
             axios.post('/api/repairs/invoice/' + repair.id + '/batch' , repair)
