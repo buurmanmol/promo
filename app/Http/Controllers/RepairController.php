@@ -23,6 +23,19 @@ use Inertia\Inertia;
 class RepairController extends Controller
 {
 
+    public function planRepair(Repair $repair, Request $request)
+    {
+        $date = Carbon::create($request->get('repair_date'));
+//        dd($request->get('repair_date'), $date);
+
+//        dd($date);
+        $repair->update([
+           'repair_date' => $date
+        ]);
+
+        return $repair;
+    }
+
     public function update(Repair $repair, Request $request)
     {
      $updated = $repair->update($request->all());
@@ -36,6 +49,12 @@ class RepairController extends Controller
         ]);
 
         return $repair;
+    }
+
+    public function delete(Repair $repair)
+    {
+        $repair->delete();
+        return "deleted";
     }
 
     public function repairItem(Repair $repair)
@@ -62,6 +81,17 @@ class RepairController extends Controller
         $user->company = $user->company()->get();
         $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
         return Inertia::render('Admin/Repair/Details', ['repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
+    }
+
+    public function getRepairsPerUser(User $user) {
+        $repairs = Repair::where('user_id', $user->id)->get();
+        $fullArr = [];
+        foreach($repairs as $repair) {
+            $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
+//            dd($sameDate);
+            array_push($fullArr, $sameDate);
+        }
+        $s = array_unique($fullArr, SORT_REGULAR);
     }
 
     public function repairIndex()
@@ -182,6 +212,7 @@ class RepairController extends Controller
                 'product_type_id' => $repair['productType']['id'],
                 'manager_id' => $repair['manager'],
                 'company_id' => $repair['company']['id'],
+                'repair_date' => $repair['repair_date'],
                 'user_id' => $user->id,
             ]);
         }

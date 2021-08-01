@@ -109,6 +109,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/admin/api/phone/{brandsModel}/delete', [PhoneController::class, 'delete']);
     Route::post('/admin/api/phones/search', [PhoneController::class, 'searchModel']);
 
+    Route::post('/api/repair/{repair}/plan', [RepairController::class, 'planRepair']);
+
     Route::middleware([\App\Http\Middleware\Manager::class])->group(function () {
 
 
@@ -179,6 +181,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/repairs', [RepairController::class, 'repairIndexAdmin']);
         Route::get('/admin/repair/{user}', [RepairController::class, 'details']);
         Route::get('/admin/repairs/create', [RepairController::class, 'createIndexAdmin']);
+        Route::delete('/api/repair/{repair}/delete', [RepairController::class, 'delete']);
+        Route::get('/api/repairs/{user}', [RepairController::class, 'getRepairsPerUser']);
+
         Route::put('/admin/repair/{repair}/update', [RepairController::class, 'update']);
         Route::post('/api/repair/{repair}/is-repaired', [RepairController::class, 'updateIsRepaired']);
     });
