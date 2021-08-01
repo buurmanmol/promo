@@ -112,6 +112,7 @@
                                 v-model="invoice.userId"
                             />
                         </div>
+                        <input hidden id="companyId" name="companyId" v-model="invoice.companyId" /> 
                     </div>
 
                     <div class="sm:col-span-4">
@@ -322,6 +323,7 @@ export default {
                 userName: "",
                 userEmail: "",
                 userId: "",
+                companyId: "",
                 invoiceName: "",
                 price: "",
                 file: "",
@@ -347,6 +349,7 @@ export default {
                 userName: option.first_name,
                 userEmail: option.email,
                 userId: option.id,
+                companyId: option.company_id,
             };
         },
 
@@ -408,7 +411,15 @@ export default {
             axios
                 .post("/api/invoice/create", formData)
                 .then(() => {
-                    window.location = "/admin/facturen";
+                    axios.put("/api/invoice/" + this.invoice.companyId + "/wallet", this.invoice)
+                    .then((response) => {
+                        window.location = "/admin/facturen";
+                        console.log(response)
+                    })
+                    .catch((response) => {
+                        console.log(response);
+                        console.log("FAILURE!!");
+                    });
                 })
                 .catch((response) => {
                     console.log(response);

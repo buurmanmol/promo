@@ -57,7 +57,7 @@
                         </div>
                         <div class="sm:col-span-4">
                             <label for="email" class="block text-sm font-medium text-gray-700">
-                                E-mailadres
+                                Telefoonnummer
                             </label>
                             <div class="mt-1">
                                 <input v-model="user.phone_number" id="phone_number" name="phone_number" type="text" autocomplete="telephone" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
@@ -130,13 +130,36 @@
                                     <option v-for="manager in managers" :value="manager.id">{{manager.first_name}} {{manager.last_name}}</option>
                                 </select>
                             </div>
-                        </div>                    </div>
+                        </div>                    
+                    </div>
                 </div>
             </div>
 
+            <div v-if="errors.length" class="rounded-md bg-red-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800">
+                            <h1 v-if="errors.length== 1"> Er is 1 probleem gevonden.</h1>
+                            <h1 v-else>Er zijn {{ errors.length }} problemen gevonden.</h1>
+                        </h3>
+                        <div class="mt-2 text-sm text-red-700">
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li v-for="error in errors">
+                                    {{ error }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="pt-5">
                 <div class="flex justify-end">
-                    <button @click="updateUser(user.id)" type="button" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button @click="checkForm" type="button" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Opslaan
                     </button>
                 </div>
@@ -184,7 +207,6 @@ export default {
         getCompanyUser() {
             axios.get('/api/company/' + this.user.company_id + '/company-user')
                 .then((response) => {
-                    console.log(response);
                     this.companyUser = response.data.company;
                 }, (error) => {
                     console.log(error);
@@ -193,7 +215,6 @@ export default {
         getCompanies() {
             axios.get('/api/companies/json')
                 .then((response) => {
-                    console.log(response);
                    this.companiesJson = response.data.companies;
                 }, (error) => {
                     console.log(error);
@@ -202,16 +223,34 @@ export default {
         getManagers() {
             axios.get('/api/company/' + this.user.company_id + '/managers')
                 .then((response) => {
-                    console.log(response);
                     this.managers = response.data.managers;
                 }, (error) => {
                     console.log(error);
                 });
         },
-        updateUser(id){
-            axios.post('/api/user/' + id + '/update', this.user)
+        checkForm:function(e) {
+            this.errors = [];
+            if(!this.user.manager_id) this.user.manager_id = this.user.id;
+            if(!this.user.first_name) this.errors.push("Voornaam vereist.");
+            if(!this.user.last_name) this.errors.push("Achternaam vereist.");
+            if(!this.user.city) this.errors.push("Stad vereist.");
+            if(!this.user.province) this.errors.push("Provincie vereist.");
+            if(!this.user.email) this.errors.push("E-mailadres vereist.");
+            if(!this.user.address) this.errors.push("Adres vereist.");
+            if(!this.user.phone_number) this.errors.push("Telefoonnummer vereist.");
+            if(!this.user.postal_code) this.errors.push("Postcode vereist.");
+            if(!this.user.company_id) this.errors.push("Selecteer een bedrijf.");
+            if(!this.user.role) this.errors.push("Selecteer een bedrijf.");
+
+            if (!this.errors.length) {
+                this.updateUser()
+                return true;
+            }
+            e.preventDefault();
+        },
+        updateUser(){
+            axios.post('/api/user/' + this.user.id + '/update', this.user)
                 .then((response) => {
-                    console.log(response);
                     this.message = "Reservation updated";
                     window.location = "/admin/users";
                 }, (error) => {

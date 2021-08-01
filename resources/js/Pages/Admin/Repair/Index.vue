@@ -4,9 +4,12 @@
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <a href="/admin/repairs/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
-                            Reparatie toevoegen +
-                        </a>
+                        <div class="flex">
+                            <a href="/admin/repairs/create" type="button" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">
+                                Reparatie toevoegen +
+                            </a>
+                            <input @input="searchRepairs" v-model="search" type="text" placeholder="Reparatie zoeken..." class="h-10 my-4 items-center nline-flex ml-8 shadow-sm focus:ring-indigo-500 align-middle focus:border-indigo-500 block max-w-md sm:text-sm border-gray-300 rounded-md">
+                        </div>
                         <table class="min-w-full rounded-md divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                             <tr>
@@ -31,7 +34,7 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <template v-if="users"  v-for="(user, key) in sortedUsers.data || users.data" :key="user.id">
+                            <template v-if="users"  v-for="(user, key) in newRepairs.data || users.data" :key="user.id">
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-bold text-gray-700">
@@ -101,16 +104,20 @@
                                                                     {{repair.product_type.name}}
                                                                 </div>
                                                             </td>
-                                                            <td class="px-6 py-2 whitespace-nowrap">
-                                                                <div class="text-sm text-gray-500">
-                                                                    <button @click="selectRepairEdit(key, selectedRepairEdit, repair.device.brands_models.brand ,repair)">Edit</button>
-                                                                </div>
+
+<!--                                                            <td class="px-6 py-2 whitespace-nowrap">-->
+<!--                                                                <div class="text-sm text-gray-500">-->
+<!--                                                                    <button @click="selectRepairEdit(key, selectedRepairEdit, repair.device.brands_models.brand ,repair)">Edit</button>-->
+<!--                                                                </div>-->
+<!--                                                            </td>-->
+                                                            <td>
+                                                                <popover-repair :data="repair.comment"></popover-repair>
                                                             </td>
                                                             <td>
                                                                 <div class="flex content-center flex-wrap">
                                                                     <div class="flex-initial">
                                                                         <Switch
-                                                                            @click="postRepair(repair)"
+                                                                            @click="postIsRepaired(repair)"
                                                                             v-model="repair.is_repaired"
                                                                             :class="repair.is_repaired ? 'bg-green-600' : 'bg-red-600'"
                                                                             class="relative inline-flex items-center h-7 rounded-full w-14"
@@ -131,6 +138,33 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
+                                                            </td>
+                                                            <td >
+                                                                <div v-if="repair.repair_date" class="text-sm text-gray-500">
+                                                                    {{formatDate(repair.repair_date)}}
+                                                                </div>
+                                                                <div v-else class=" py-1 inline-flex text-xs leading-5 font-semibold text-red-800">
+                                                                    Geen reparatiedatum
+                                                                </div>
+                                                            </td>
+                                                            <td class="relative">
+                                                                <button class="mr-6"  @click="setDateToggle(repair)">
+                                                                    <calendar-icon class="w-6 h-6 mt-1 text-azure-radiance-600" />
+                                                                </button>
+                                                                <dialog-modal :show="toggleDate === repair.id" @close="toggleDate = null">
+                                                                    <template #title>
+                                                                        Plan de reparatie in
+                                                                    </template>
+                                                                    <template #content>
+                                                                        <div>
+                                                                            <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repair.repair_date" />
+                                                                        </div>
+                                                                        <button @click="postDate(repair); setDateToggle(repair)" class="-ml-px mt-4 relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-green-900 bg-green-300 hover:bg-green-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                                                                            Save
+                                                                        </button>
+                                                                    </template>
+                                                                </dialog-modal>
+<!--                                                                <date-planner :repair="repair"></date-planner>-->
                                                             </td>
                                                         </tr>
                                                         <tr v-if="selectedRepairEdit === key">
@@ -166,21 +200,30 @@
 <script>
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import { ChevronUpIcon } from '@heroicons/vue/solid'
-import { EyeIcon, BadgeCheckIcon, BanIcon } from '@heroicons/vue/outline'
+import { EyeIcon, BadgeCheckIcon, BanIcon, CalendarIcon } from '@heroicons/vue/outline'
 import Pagination from "../../../Components/Pagination";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Switch } from '@headlessui/vue'
+import moment from "moment";
 import VueNextSelect from 'vue-next-select';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import Datepicker from 'vue3-datepicker'
+import DialogModal from "../../../Jetstream/DialogModal";
+import PopoverRepair from "./PopoverRepair";
 export default {
     name: "Index",
     props:['users', 'user', 'brands', 'brandsModels','productTypes'],
     components: {
         Disclosure,
+        moment,
         DisclosureButton,
+        PopoverRepair,
         'vue-select': VueNextSelect,
+        Datepicker,
+        CalendarIcon,
         Switch,
+        DialogModal,
         Pagination,
         EyeIcon,
         DisclosurePanel,
@@ -195,6 +238,10 @@ export default {
           model: null,
           productType: null,
           enabled: false,
+          search:null,
+          lowerLimit: null,
+          newRepairs: [],
+          toggleDate: null,
           sortedUsers: [],
           brand: null,
           models: [],
@@ -204,36 +251,90 @@ export default {
       }
     },
     mounted() {
-      this.sortRepairs(this.users.data);
+        // let lower = moment();
+        // lower.subtract(1, 'd');
+        // this.lowerLimit = lower;    },
     },
     watch: {
         brand: function (val) {
             // console.log(val)
           this.getModels(val.name);
-        }
+        },
+        'users.repair.repair_date': function (newVal, oldVal){
+            this.postDate(newVal);
+        },
     },
     computed: {
 
     },
     methods: {
+        setDateToggle(repair) {
+            if(repair.id === this.toggleDate) {
+                this.toggleDate = null;
+            } else {
+                this.toggleDate = repair.id
+            }
+        },
+        postDate(repair) {
+            let date = moment(repair.repair_date)
+            date.add(1, 'd');
+            console.log(repair.repair_date)
+            axios.post('/api/repair/' + repair.id + '/plan' , {repair_date: date})
+                .then((response) => {
+                    console.log(response);
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Datum van reparatie staat ingeplanned.'
+                    })
+
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        formatDate(date) {
+            let formatted = moment(date)
+            return formatted.format('DD-MM-YYYY')
+        },
+        searchRepairs() {
+            axios.post('/api/repairs/search',
+                {search: this.search})
+                .then((response) => {
+                    console.log(response);
+                    this.newRepairs = response.data.users;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         sortRepairs(users) {
             let newArray = [];
             this.sortedUsers = this.users
-            users.forEach((user) => {
-                let repaired = 0;
-                user.repairs.forEach((repair) => {
-                    if(repair.is_repaired) {
-                        repaired++
-                    }
-                })
-                if(repaired < 1) {
-                    newArray.unshift(user);
-                } else {
-                    newArray.push(user);
-                }
-            })
+            // users.forEach((user) => {
+            //     let repaired = 0;
+            //     user.repairs.forEach((repair) => {
+            //         if(repair.is_repaired) {
+            //             repaired++
+            //         }
+            //     })
+            //     if(repaired < 1) {
+            //         newArray.unshift(user);
+            //     } else {
+            //         newArray.push(user);
+            //     }
+            // })
 
-            this.sortedUsers.data = newArray;
+            // this.sortedUsers.data = newArray;
         },
         checkRepaired: function(repairs) {
             var i = 0;
@@ -277,6 +378,25 @@ export default {
                     console.log(error);
                 });
         },
+        postIsRepaired(repair, brand, model){
+            axios.post('/api/repair/' + repair.id + '/is-repaired' , repair)
+                .then((response) => {
+                    console.log(response);
+                    this.models = response.data.data;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        repairItem(repair, brand, model){
+            axios.post('/api/repairs/' + repair.id + '/repair-all')
+                .then((response) => {
+                    console.log(response);
+
+                    this.models = response.data.data;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         repairAll(user) {
             Swal.fire({
                 title: 'Weet u het zeker?',
@@ -289,13 +409,10 @@ export default {
                 cancelButtonText:'Annuleren'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/api/user/' + this.user.id + '/repair-all', user.repairs)
-                        .then((response) => {
-                            console.log(response);
-                            this.models = response.data.data;
-                        }, (error) => {
-                            console.log(error);
-                        });
+                     user.repairs.forEach((repair) => {
+                        this.repairItem(repair)
+                     });
+                     this.searchRepairs();
                     Swal.fire(
                         'Poof!',
                         'Alle reperaties van deze user zijn op \" Gerepareerd \" gezet.',

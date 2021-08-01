@@ -71,14 +71,6 @@
                                 {{ user.phone_number }}
                             </dd>
                         </div>
-                        <div class="sm:col-span-2">
-                            <dt class="text-sm font-medium text-gray-500">
-                                Over ons
-                            </dt>
-                            <dd class="mt-1 text-sm text-gray-900">
-                                Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
-                            </dd>
-                        </div>
                     </dl>
                 </div>
                 <div class="sm:hidden">

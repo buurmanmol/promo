@@ -29,6 +29,9 @@
                             <th scope="col" class="relative px-6 py-3">
                                 <span class="sr-only">Edit</span>
                             </th>
+                            <th scope="col" class="relative px-6 py-3">
+                                <span class="sr-only">Delete</span>
+                            </th>
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -57,7 +60,12 @@
                                 <div class="text-sm text-gray-500">{{ person.company.phone_number }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a :href="'/admin/user/' + person.id + '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>
+                                <PencilIcon @click="editUser(person.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                            </td>
+                            <td v-if="person.id !== currentUser.id" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <XIcon @click="deleteUser(person.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                            </td>
+                            <td v-else class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             </td>
                         </tr>
                         </tbody>
@@ -75,12 +83,16 @@
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import CreateUser from "@/Pages/Admin/User/Create";
 import Pagination from "../../../Components/Pagination";
+import { XIcon, PencilIcon } from "@heroicons/vue/outline";
+import Swal from "sweetalert2";
 export default {
     props:['users', 'currentUser'],
     components: {
       AppLayoutAdmin,
         CreateUser,
-        Pagination
+        Pagination,
+        PencilIcon,
+        XIcon
     },
     setup() {
         return {
@@ -97,7 +109,50 @@ export default {
           },
       }
     },
+
+    mounted() {
+        this.setUserList();
+    },
+
     methods: {
+        setUserList() {
+            this.newUsers = this.users;
+        },
+        
+        deleteUser(selected) {
+            Swal.fire({
+                title: "Weet u zeker dat u deze Gebruiker wilt verwijderen?",
+                text: "Hierdoor zal deze Gebruiker verloren gaan!. ",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ja, verwijder",
+                cancelButtonText: "Annuleren",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .delete("/api/user/" + selected + "/delete")
+                        .then(() => {
+                            this.getUsers();
+                        })
+                        .catch((response) => {
+                            console.log(response);
+                            console.log("FAILURE!!");
+                        });
+                    Swal.fire(
+                        "Poof!",
+                        "Dit factuur is nu verwijderd.",
+                        "success"
+                    );
+                }
+            });
+        },
+
+        editUser(selected){
+            window.location = '/admin/user/' + selected + '/update';
+        },
+
         searchUsers() {
             this.loading = true;
             axios.post('/api/users/search',
@@ -111,7 +166,9 @@ export default {
                 });
         },
         getUsers() {
-            axios.get('/api/users')
+            const formData = new FormData();
+            formData.set("page", this.users.current_page);
+            axios.post('/api/users', formData)
                 .then((response) => {
                     console.log(response);
                     this.newUsers = response.data.users;
@@ -119,9 +176,7 @@ export default {
                     console.log(error);
                 });
         },
-        deleteUser() {
-
-        }
+       
     }
 }
 </script>

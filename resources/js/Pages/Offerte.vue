@@ -30,7 +30,7 @@
                 <nav class="relative max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6" aria-label="Global">
                     <div class="flex items-center flex-1">
                         <div class="flex items-center justify-between w-full md:w-auto">
-                            <a href="#">
+                            <a href="https://www.promofix.nl">
                                 <span class="sr-only">PromoFix</span>
                                 <img class="h-8 w-auto sm:h-10" src="/images/logo.png" />
                             </a>
@@ -89,8 +89,8 @@
             <!-- Header -->
             <div class="py-24 bg-gray-50 sm:py-32">
                 <div class="max-w-md mx-auto pl-4 pr-8 sm:max-w-lg sm:px-6 lg:max-w-7xl lg:px-8">
-                    <h1 class="text-4xl leading-10 font-extrabold tracking-tight text-gray-900 text-center sm:text-5xl sm:leading-none lg:text-6xl">Get in touch</h1>
-                    <p class="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">Convallis feugiat et aliquet pellentesque dictum nisi, velit. Egestas fermentum adipiscing risus quam ac consectetur mattis turpis tristique.</p>
+                    <h1 class="text-4xl leading-10 font-extrabold tracking-tight text-gray-900 text-center sm:text-5xl sm:leading-none lg:text-6xl">Pakket op maat</h1>
+                    <p class="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">Door een offerte aan te vragen kunnen wij u een pakket aanbieden, specifiek voor uw bedrijf!</p>
                 </div>
             </div>
 
@@ -189,11 +189,10 @@
                                         <input type="text" name="how-did-you-hear-about-us" id="how-did-you-hear-about-us" class="shadow-sm focus:ring-grape-500 focus:border-grape-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                                     </div>
                                 </div>
-                                <button type="button" class="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    <MailIcon class="-ml-1 mr-3 h-5 w-5" aria-hidden="true" />
+                                <button type="button" class="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-azure-radiance hover:bg-azure-radiance-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                     Button text
+                                    <MailIcon class="ml-3 -mr-1 h-5 w-5" aria-hidden="true" />
                                 </button>
-
                             </form>
                         </div>
                     </div>
@@ -217,60 +216,6 @@
                                 <span class="sr-only">{{ item.name }}</span>
                                 <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
                             </a>
-                        </div>
-                    </div>
-                    <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
-                                    Solutions
-                                </h3>
-                                <ul class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.solutions" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-400 hover:text-gray-300">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
-                                    Support
-                                </h3>
-                                <ul class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.support" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-400 hover:text-gray-300">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
-                                    Company
-                                </h3>
-                                <ul class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.company" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-400 hover:text-gray-300">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
-                                    Legal
-                                </h3>
-                                <ul class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.legal" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-400 hover:text-gray-300">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -17,11 +17,12 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->float('wallet')->default(0.00);
+            $table->double('wallet')->default(0.00);
             $table->string('postal_code');
             $table->string('email');
             $table->string('phone_number');
             $table->timestamps();
+            
         });
     }
 

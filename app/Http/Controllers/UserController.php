@@ -61,6 +61,12 @@ class UserController extends Controller
         return ['users' => $users];
     }
 
+    public function getUsers(Request $request){
+        $users = User::with('company')
+        ->paginate(10, ['*'], 'page', $request->get('page'));
+        return ['users' => $users];
+    }
+
     public function index()
     {
         $users = User::orderBy('first_name', 'asc')->with('company')->paginate(10);
@@ -126,6 +132,6 @@ class UserController extends Controller
     public function delete(User $user)
     {
         $user->delete();
-        return 'deleted';
+        return ['user' => $user];
     }
 }
