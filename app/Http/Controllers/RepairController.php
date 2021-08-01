@@ -302,6 +302,48 @@ class RepairController extends Controller
         return Inertia::render('Manager/Repair/Details', ['company' => $user->company()->first(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
+    public function managerCreate()
+    {
+
+        $user = User::where('id', Auth::user()->id)->with('devices.brandsModels', 'company')->firstOrFail();
+        $brandsNames = [];
+        $modelNames = [];
+
+        foreach($user->devices as $device) {
+            array_push($brandsNames, $device->brandsModels->brand);
+            array_push($modelNames, $device->brandsModels->model);
+        }
+        $uBrands = array_unique($brandsNames);
+        $uModels = array_unique($modelNames);
+
+        $brands = Brand::whereIn('name', $uBrands)->get();
+        $productTypes = ProductType::all();
+        $models = BrandsModel::whereIn('model', $uModels)->get();
+
+        return Inertia::render('Manager/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+    }
+
+    public function companyCreate()
+    {
+
+        $user = User::where('id', Auth::user()->id)->with('devices.brandsModels', 'company')->firstOrFail();
+        $brandsNames = [];
+        $modelNames = [];
+
+        foreach($user->devices as $device) {
+            array_push($brandsNames, $device->brandsModels->brand);
+            array_push($modelNames, $device->brandsModels->model);
+        }
+        $uBrands = array_unique($brandsNames);
+        $uModels = array_unique($modelNames);
+
+        $brands = Brand::whereIn('name', $uBrands)->get();
+        $productTypes = ProductType::all();
+        $models = BrandsModel::whereIn('model', $uModels)->get();
+
+        return Inertia::render('Company/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+    }
+
 
     public function indexCompany()
     {
