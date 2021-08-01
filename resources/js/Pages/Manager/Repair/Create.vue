@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="currentUser" :company="company" :page="page">
+    <app-layout-company :user="currentUser" :company="company" :page="page">
         <div style="min-height:60vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
             <div class="mx-4 p-4">
                 <div class="flex items-center">
@@ -244,7 +244,7 @@
             </div>
             </div>
         </div>
-    </app-layout-admin>
+    </app-layout-company>
 </template>
 
 <script>
@@ -252,18 +252,19 @@ import { HashtagIcon, DeviceMobileIcon, CalendarIcon, TrashIcon } from '@heroico
 import 'sweetalert2/dist/sweetalert2.min.css';
 import DialogModal from "../../../Jetstream/DialogModal";
 import FadeTransition from "../../../Components/FadeTransition";
-import AppLayoutAdmin from "../../../Layouts/AppLayoutUser";
 import Datepicker from "vue3-datepicker";
 import VueNextSelect from 'vue-next-select';
 import Errors from "../../../Components/Errors";
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import moment from "moment";
+import AppLayoutManager from "../../../Layouts/AppLayoutManager";
 
 export default {
     name: "Create",
     props: ['devices','company', 'currentUser', 'productTypes'],
     components: {
+        AppLayoutManager,
         FadeTransition,
         CalendarIcon,
         DialogModal,
@@ -271,7 +272,6 @@ export default {
         'vue-select': VueNextSelect,
         TrashIcon,
         Datepicker,
-        AppLayoutAdmin,
         HashtagIcon,
         DeviceMobileIcon,
         Errors
