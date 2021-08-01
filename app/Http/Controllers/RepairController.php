@@ -282,7 +282,7 @@ class RepairController extends Controller
         ->orderBy('created_at','DESC')
         ->paginate(20);
 
-        return Inertia::render('Company/Repair/Details', ['invoices' => $invoices, 'company' => $user->company()->get(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
+        return Inertia::render('Company/Repair/Details', ['invoices' => $invoices, 'company' => $user->company()->first(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
     public function detailsManager(User $user)
@@ -297,9 +297,9 @@ class RepairController extends Controller
         $s = array_unique($fullArr, SORT_REGULAR);
 //        dd($user['id'], auth()->user()->id);
 
-        $user->company = $user->company()->get();
+        $user->company = $user->company()->first();
         $devices = Device::with('brandsModels')->where('user_id', $user->id)->paginate(20);
-        return Inertia::render('Manager/Repair/Details', ['company' => $user->company()->get(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
+        return Inertia::render('Manager/Repair/Details', ['company' => $user->company()->first(), 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
 

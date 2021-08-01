@@ -23,6 +23,7 @@ class CompanySeeder extends Seeder
                 'address' => $faker->address,
                 'postal_code' => $faker->postcode,
                 'phone_number' => $faker->phoneNumber,
+                'wallet' => 2000,
                 'email' => $faker->email,
             ]);
         }
