@@ -36,6 +36,9 @@
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Aanpassen</span>
                                 </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Verwijderen</span>
+                                </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -76,7 +79,11 @@
                                     € {{ company.wallet }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a :href="'/admin/company/' + company.id +  '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a>
+                                    <!-- <a :href="'/admin/company/' + company.id +  '/update'" class="text-azure-radiance-600 hover:text-azure-radiance-900">Edit</a> -->
+                                    <PencilIcon @click="editCompany(company.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <XIcon @click="deleteCompany(company.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
                                 </td>
                             </tr>
                             </tbody>
@@ -95,12 +102,16 @@
 import TableLoader from "../../../Components/TableLoader";
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import Pagination from "../../../Components/Pagination";
+import Swal from "sweetalert2";
+import { XIcon, PencilIcon } from "@heroicons/vue/outline";
 export default {
     props:['user' , 'companies'],
     components: {
         AppLayoutAdmin,
         TableLoader,
-        Pagination
+        Pagination,
+        PencilIcon,
+        XIcon
     },
     data: () => {
         return {
@@ -114,12 +125,68 @@ export default {
         // this.getCompanies();
     },
     methods: {
+        editCompany(selected){
+            window.location = "/admin/company/" + selected + "/update";
+        },
+        
+        deleteCompany(selected) {
+            Swal.fire({
+                title: "Weet u zeker dat u dit bedrijf wilt verwijderen?",
+                text: "Hierdoor zal dit bedrijf en alle gebruikers hieronder verloren gaan!. ",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ja, verwijder",
+                cancelButtonText: "Annuleren",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    title: "Weet u ECHT zeker dat u dit bedrijf wilt verwijderen?",
+                    text: "Hierdoor zal dit bedrijf en alle gebruikers hier onder voor altijd verloren gaan!! ",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ja, verwijder",
+                    cancelButtonText: "Annuleren",
+                    }).then((result2) => {
+                        if (result2.isConfirmed) {
+                            axios
+                                .delete("/api/company/" + selected + "/delete")
+                                .then((response) => {
+                                    if(!response.data.error){
+                                        this.getPaginatedCompanies();
+                                        Swal.fire(
+                                            "Poof!",
+                                            "Het bedrijf is nu verwijderd.",
+                                            "success"
+                                        );
+                                    }
+                                    else{
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: 'Uw eigen bedrijf kan niet verwijderd worden'
+                                        });
+                                    }
+                                })
+                                .catch((response) => {
+                                    console.log(response);
+                                    console.log("FAILURE!!");
+                                });
+                            
+                        }
+                    });
+                }
+            });
+        },
+
         searchCompany() {
             this.loading = true;
             axios.post('/api/companies/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(response);
                     this.searchCompanies = response.data.companies;
                     this.loading = false;
                 }, (error) => {
@@ -129,12 +196,23 @@ export default {
         getCompanies() {
             axios.get('/api/companies')
                 .then((response) => {
-                    console.log(response);
                     this.searchCompanies = response.data.companies;
                 }, (error) => {
                     console.log(error);
                 });
         },
+
+        getPaginatedCompanies() {
+            const formData = new FormData();
+            formData.set("page", this.companies.current_page);
+            axios.post('/api/companies/paginated', formData)
+                .then((response) => {
+                    this.searchCompanies = response.data.companies;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+
     },
 
     setup() {

@@ -87,4 +87,15 @@ class CompanyController extends Controller
 
         return ['company' => $company];
     }
+    public function getPaginatedCompanies(Request $request){
+        $companies = Company::paginate(10, ['*'], 'page', $request->get('page'));
+        return ['companies' => $companies];
+    }
+    public function delete(Company $company){
+        if($company->id === Auth::user()->company_id){
+            return ['error' => true, 'company' => $company];
+        }
+        $company->delete();
+        return ['error' => false, 'companies' => $company];
+    }
 }

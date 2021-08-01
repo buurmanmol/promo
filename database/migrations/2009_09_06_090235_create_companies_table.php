@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->timestamps();
+            
         });
     }
 
