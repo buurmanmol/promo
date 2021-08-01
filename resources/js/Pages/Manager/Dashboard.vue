@@ -43,29 +43,6 @@
                                                 {{ user.first_name }}
                                                 {{ user.last_name }}!
                                             </p>
-                                            <p
-                                                class="
-                                                    text-sm
-                                                    font-medium
-                                                    text-gray-600
-                                                "
-                                            >
-                                                "Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit, sed
-                                                do eiusmod tempor incididunt ut
-                                                labore et dolore magna aliqua.
-                                                Ut enim ad minim veniam, quis
-                                                nostrud exercitation ullamco
-                                                laboris nisi ut aliquip ex ea
-                                                commodo consequat. Duis aute
-                                                irure dolor in reprehenderit in
-                                                voluptate velit esse cillum
-                                                dolore eu fugiat nulla pariatur.
-                                                Excepteur sint occaecat
-                                                cupidatat non proident, sunt in
-                                                culpa qui officia deserunt
-                                                mollit anim id est laborum."
-                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +51,7 @@
                     </section>
 
                     <section aria-labelledby="quick-links-title">
-                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 p-6">
+                        <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-4">
                             <div
                                 v-for="action in actions"
                                 :key="action.name"
@@ -94,7 +71,7 @@
                                     focus-within:ring-indigo-500
                                 "
                             >
-                                <div class="mt-8 mb-10">
+                                <div class="mt-8 mb-10 flex-wrap">
                                     <h3 class="text-lg font-medium">
                                         <a
                                             :href="action.href"
@@ -126,6 +103,7 @@
                                     <p class="mt-2 text-sm text-gray-500">
                                         {{ action.message }}
                                     </p>
+
                                     <span
                                         class="
                                             pointer-events-none
@@ -145,6 +123,7 @@
                                             <component
                                                 :is="action.icon"
                                                 class="
+
                                                     h-20
                                                     w-20
                                                     dark:bg-gray-800

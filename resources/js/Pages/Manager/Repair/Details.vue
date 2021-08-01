@@ -8,7 +8,7 @@
                             {{user.first_name}} {{user.last_name}} Reparatie & apparaat informatie
                         </h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                            Alle aangemeldde reparaties en apparaten van de gebruiker {{user.email}}
+                            Alle aangemelde reparaties en apparaten van de gebruiker {{user.email}}
                         </p>
                     </div>
                     <div class="col">
