@@ -1,5 +1,5 @@
 <template>
-    <app-layout-company :user="currentUser" :company="company" :page="page">
+    <app-layout-manager :user="currentUser" :company="company" :page="page">
         <div style="min-height:60vh !important;" class="bg-white h-auto rounded-md shadow overflow-visible p-4">
             <div class="mx-4 p-4">
                 <div class="flex items-center">
@@ -244,7 +244,7 @@
             </div>
             </div>
         </div>
-    </app-layout-company>
+    </app-layout-manager>
 </template>
 
 <script>
