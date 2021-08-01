@@ -104,7 +104,7 @@
                 <!-- Search bar -->
                 <div class="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
                     <div class="flex-1 flex">
-                       <button class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500" v-if="user.is_admin">Admin dashboard</button>
+                        <a href="/admin/users" v-if="user.role === 'admin'" class="my-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Admin dashboard</a>
                     </div>
                     <div class="ml-4 flex items-center md:ml-6">
                         <!-- Profile dropdown -->
