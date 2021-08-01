@@ -89,7 +89,7 @@
                             </template>
                             </tbody>
                         </table>
-                        <pagination v-if="userList.links" :data="users.data" :links="users.links"></pagination>
+                        <pagination v-if="userList.links" :data="users" :links="users.links"></pagination>
                     </div>
                 </div>
             </div>
