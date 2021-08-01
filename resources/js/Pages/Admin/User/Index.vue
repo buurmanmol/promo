@@ -62,6 +62,7 @@
                         </tr>
                         </tbody>
                     </table>
+
                     <pagination v-if="users.links" :links="users.links" :data="users"></pagination>
                 </div>
             </div>

@@ -47,6 +47,9 @@
                         >
                             Factuur toevoegen +
                         </a>
+
+<!--                        <pre>{{newUsers.data}}</pre>-->
+
                         <table
                             class="
                                 min-w-full
@@ -254,7 +257,7 @@
                         </table>
                         <pagination
                             v-if="invoiceList.data"
-                            :data="invoices.data"
+                            :data="invoices"
                             :links="invoices.links"
                         ></pagination>
                     </div>

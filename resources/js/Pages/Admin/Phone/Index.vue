@@ -84,7 +84,8 @@
                         <div v-if="phones">
                             <pagination v-if="phones.links" class="mt-6" :links="phones.links" :data="phones" >
 
-                            </pagination></div>
+                            </pagination>
+                        </div>
 
                     </div>
                 </div>

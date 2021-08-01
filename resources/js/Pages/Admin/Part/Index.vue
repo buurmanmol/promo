@@ -21,6 +21,7 @@
                             sm:rounded-lg
                         "
                     >
+                        <div class="flex">
                         <a
                             href="/admin/part/create"
                             type="button"
@@ -47,7 +48,9 @@
                         >
                             Onderdeel toevoegen +
                         </a>
-                        <table
+                        <input @input="searchPart" v-model="search" type="text" placeholder="Onderdelen zoeken..." class="h-10 my-4 items-center nline-flex ml-8 shadow-sm focus:ring-indigo-500 align-middle focus:border-indigo-500 block max-w-md sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                        <table v-if="partList"
                             class="
                                 min-w-full
                                 rounded-md
@@ -90,8 +93,18 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
+                            <template v-if="loading">
+                                <tr>
+                                    <td colspan="6">
+                                        <svg v-if="loading" class="animate-spin h-5 w-5 mr-3 text-azure-radiance-600" viewBox="0 0 24 24">
+                                            <!-- ... -->
+                                        </svg>
+                                    </td>
+                                </tr>
+                            </template>
                                 <tr
-                                    v-for="part in partList.data"
+                                    v-if="partList"
+                                    v-for="part in searchParts.data || partList.data"
                                     :key="part.id"
                                 >
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -141,11 +154,13 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div v-if="partList">
                         <pagination
                             v-if="partList.data"
                             :data="parts"
                             :links="parts.links"
                         ></pagination>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,12 +188,27 @@ export default {
         return {
             partList: "",
             page: "parts",
+            search: null,
+            searchParts: [],
+            loading:false,
         };
     },
     mounted() {
         this.setPartList();
     },
     methods: {
+        searchPart() {
+            this.loading = true;
+            axios.post('/api/parts/search',
+                {search: this.search})
+                .then((response) => {
+                    console.log(response);
+                    this.searchParts = response.data.parts;
+                    this.loading = false;
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         setPartList() {
             this.partList = this.parts;
         },

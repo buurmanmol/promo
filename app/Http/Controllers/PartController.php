@@ -17,25 +17,30 @@ class PartController extends Controller
 
     /**
      * returns the index page for invoices
-     * 
+     *
      * @author Kevin
-     * 
+     *
      * @version 1.0.0
      */
     public function index()
-    {  
-       
-        $parts = ProductType::orderBy('created_at', 'DESC')->paginate(10);
+    {
+
+        $parts = ProductType::orderBy('name', 'ASC')->paginate(20);
         return Inertia::render('Admin/Part/Index', ['parts' => $parts, 'user' => Auth::user(), 'company' => Auth::user()->company]);
 
+    }
+    public function searchParts(Request $request)
+    {
+        $parts = ProductType::where('name', 'LIKE','%'. $request->get('search') . '%')->paginate(10)->setPath('/admin/parts');
+        return ['parts' => $parts];
     }
 
 
     /**
      * Gets a list of all users, passes it to and loads the create.vue
-     * 
+     *
      * @author Kevin
-     * 
+     *
      * @version 1.0.0
      */
     public function createIndex(){
@@ -46,16 +51,16 @@ class PartController extends Controller
     /**
      * Stores uploaded file and saves the path
      * Creates invoice with all data
-     * 
+     *
      * @author Kevin
-     * 
+     *
      * @version 1.0.0
      */
     public function create(Request $request)
     {
         $part = ProductType::create([
             'name' => $request->get('name'),
-        ]); 
+        ]);
 
         return ['parts' => $part];
     }
@@ -63,29 +68,29 @@ class PartController extends Controller
 
     /**
      * deletes incoming part
-     * 
+     *
      * @author Kevin
-     * 
+     *
      * @version 1.0.0
      */
     public function delete(ProductType $part){
         $part->delete();
         return ['part' => $part];
     }
-    
+
     /**
      * gets a list of all invoices, linked with user where user.id = invoice.user_id
-     * 
+     *
      * @author Kevin
-     * 
+     *
      * @version 1.0.0
      */
     public function getParts(Request $request){
-       
+
         $parts = ProductType::orderBy('created_at', 'DESC')
-        ->paginate(10, ['*'], 'page', $request->get('page'));
+        ->paginate(10, ['*'], 'page', $request->get('page'))->setPath('/admin/parts');
         return ['parts' => $parts ];
- 
+
     }
 
 }

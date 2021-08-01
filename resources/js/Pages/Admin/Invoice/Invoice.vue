@@ -54,6 +54,7 @@
                                         </div>
                                     </template>
                                 </vue-select>
+                                >
                             </td>
                         </div>
                     </div>
