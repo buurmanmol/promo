@@ -42,7 +42,7 @@
  */
 
 /**
- * Vue Currency Input 2.0.0
+ * Vue Currency Input 2.0.1
  * (c) 2018-2021 Matthias Stiller
  * @license MIT
  */

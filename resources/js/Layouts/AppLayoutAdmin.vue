@@ -170,7 +170,7 @@
                     <!-- Activity list (smallest breakpoint only) -->
 <!--                    mobile-->
                     <div class="shadow sm:hidden">
-                        <div class="align-middle min-w-full overflow-x-auto overflow-hidden sm:rounded-lg">
+                        <div class="align-middle min-w-full overflow-x-auto sm:rounded-lg">
                                 <slot></slot>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                     <div class="hidden sm:block">
                         <div class="px-4 sm:px-6 lg:px-8">
                             <div class="flex flex-col mt-2">
-                                <div class="align-middle min-w-full overflow-x-auto overflow-hidden sm:rounded-lg">
+                                <div class="align-middle min-w-full  sm:rounded-lg">
                                     <slot></slot>
                                 </div>
                             </div>

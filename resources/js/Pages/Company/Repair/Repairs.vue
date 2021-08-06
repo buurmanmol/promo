@@ -77,7 +77,7 @@ import {Disclosure, DisclosureButton, DisclosurePanel} from "@headlessui/vue";
 import {ChevronUpIcon} from "@heroicons/vue/solid/esm";
 import { Switch } from '@headlessui/vue'
 // import VueCurrencyInput from 'vue-currency-input'
-import CurrencyInput from "../../../Components/VueCurrency";
+import CurrencyInput from "../../../Components/CurrencyInput";
 export default {
     name: "Repairs",
     props: ['repairs'],

@@ -66,12 +66,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                                        <currency-input
-                                            v-model="rep.price"
-                                            :options="{ currency: 'EUR', precision: 2, locale:'nl-NL' }"
-                                        />
-<!--                                        <input v-model="rep.price" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" type="number">-->
-                                        <button @click="postRepair(rep)" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Save</button>
+                                   <popover-repair-price :repair="rep"></popover-repair-price>
                                     </div>
                                 </td>
                                 <td>
@@ -135,11 +130,12 @@ import moment from "moment";
 import AppLayoutUser from "../../../Layouts/AppLayoutUser";
 import {Disclosure, DisclosureButton, DisclosurePanel} from "@headlessui/vue";
 import {ChevronUpIcon} from "@heroicons/vue/solid/esm";
+import PopoverRepairPrice from "./PopoverRepairPrice";
 import { Switch } from '@headlessui/vue'
 // import VueCurrencyInput from 'vue-currency-input'
 import { TrashIcon, CalendarIcon } from '@heroicons/vue/outline'
 import DialogModal from "../../../Jetstream/DialogModal";
-import CurrencyInput from "../../../Components/VueCurrency";
+import CurrencyInput from "../../../Components/CurrencyInput";
 import Datepicker from "vue3-datepicker";
 import Swal from "sweetalert2";
 export default {
@@ -150,6 +146,7 @@ export default {
         Datepicker,
         DialogModal,
         CalendarIcon,
+        PopoverRepairPrice,
         Disclosure,
         CurrencyInput,
         DisclosureButton,

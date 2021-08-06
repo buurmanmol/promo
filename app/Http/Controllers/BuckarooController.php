@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -10,6 +11,20 @@ class BuckarooController extends Controller
 {
     public function createSubscription(Request $request)
     {
+//        dd($request->all());
+        $startDate = Carbon::create($request->get('start_date'))->format('d-m-Y');
+        $endDate = Carbon::create($request->get('end_date'))->format('d-m-Y');
+        $user = $request->get('user');
+        $addressArray = explode(' ', $user['address']);
+        $housenumber = end($addressArray);
+        if (($key = array_search($housenumber, $addressArray)) !== false) {
+            unset($addressArray[$key]);
+        }
+        $txt = $user['address'];
+        $str= preg_replace('/\W\w+\s*(\W*)$/', '$1', $txt);
+        $street = $str;
+
+
         $postArray =
             array(
                 "Services" => array ("ServiceList" =>
@@ -23,9 +38,9 @@ class BuckarooController extends Controller
                                             0 =>
                                                 array (
                                                     "Name" => "StartDate",
-                                                    "GroupType" => "Addrateplan",
+                                                    "GroupType" => "AddRatePlan",
                                                     "GroupID" => "",
-                                                    "Value" => "11-09-2021",
+                                                    "Value" => $startDate,
                                                 ),
                                             1 =>
                                                 array (
@@ -39,90 +54,104 @@ class BuckarooController extends Controller
                                                     "Name" => "Code",
                                                     "GroupType" => "Debtor",
                                                     "GroupID" => "",
-                                                    "Value" => "AapjeTest",
+                                                    "Value" => $user['id'],
                                                 ),
                                             3 =>
                                                 array (
                                                     "Name" => "FirstName",
                                                     "GroupType" => "Person",
                                                     "GroupID" => "",
-                                                    "Value" => "Aapje",
+                                                    "Value" => $user['first_name'],
                                                 ),
                                             4 =>
                                                 array (
                                                     "Name" => "LastName",
                                                     "GroupType" => "Person",
                                                     "GroupID" => "",
-                                                    "Value" => "de Tester",
+                                                    "Value" => $user['last_name'],
                                                 ),
+//                                            5 =>
+//                                                array (
+//                                                    "Name" => "Gender",
+//                                                    "GroupType" => "Person",
+//                                                    "GroupID" => "",
+//                                                    "Value" => "1",
+//                                                ),
                                             5 =>
-                                                array (
-                                                    "Name" => "Gender",
-                                                    "GroupType" => "Person",
-                                                    "GroupID" => "",
-                                                    "Value" => "1",
-                                                ),
-                                            6 =>
                                                 array (
                                                     "Name" => "Culture",
                                                     "GroupType" => "Person",
                                                     "GroupID" => "",
                                                     "Value" => "nl-NL",
                                                 ),
-                                            7 =>
+                                            6 =>
                                                 array (
                                                     "Name" => "BirthDate",
                                                     "GroupType" => "Person",
                                                     "GroupID" => "",
                                                     "Value" => "01-01-1990",
                                                 ),
-                                            8 =>
+                                            7 =>
                                                 array (
                                                     "Name" => "Street",
                                                     "GroupType" => "Address",
                                                     "GroupID" => "",
-                                                    "Value" => "Hoofdstraat",
+                                                    "Value" => $street,
                                                 ),
-                                            9 =>
+                                            8 =>
                                                 array (
                                                     "Name" => "HouseNumber",
                                                     "GroupType" => "Address",
                                                     "GroupID" => "",
-                                                    "Value" => "90",
+                                                    "Value" => $housenumber,
                                                 ),
-                                            10 =>
+                                            9 =>
                                                 array (
                                                     "Name" => "ZipCode",
                                                     "GroupType" => "Address",
                                                     "GroupID" => "",
-                                                    "Value" => "8441ER",
+                                                    "Value" => $user['postal_code'],
                                                 ),
-                                            11 =>
+                                            10 =>
                                                 array (
                                                     "Name" => "ConfigurationCode",
                                                     "Value" => "r4n7sr9f",
                                                 ),
-                                            12 =>
+                                            11 =>
                                                 array (
                                                     "Name" => "City",
                                                     "GroupType" => "Address",
                                                     "GroupID" => "",
-                                                    "Value" => "Groningen",
+                                                    "Value" => $user['city'],
                                                 ),
-                                            13 =>
+                                            12 =>
                                                 array (
                                                     "Name" => "Country",
                                                     "GroupType" => "Address",
                                                     "GroupID" => "",
                                                     "Value" => "NL",
                                                 ),
-                                            14 =>
+                                            13 =>
                                                 array (
                                                     "Name" => "Email",
                                                     "GroupType" => "Email",
                                                     "GroupID" => "",
-                                                    "Value" => "th-molit@gmail.com",
-                                                )
+                                                    "Value" => $user['email'],
+                                                ),
+                                            14 =>
+                                                array (
+                                                    "Name" => "PricePerUnit",
+                                                    "GroupType" => "UpdateRatePlanCharge",
+                                                    "GroupID" => "",
+                                                    "Value" => $request->get('price'),
+                                                ),
+                                            15 =>
+                                                array (
+                                                    "Name" => "EndDate",
+                                                    "GroupType" => "AddRatePlan",
+                                                    "GroupID" => "",
+                                                    "Value" => $endDate,
+                                                ),
                                         )
                                 )
                         )
@@ -137,7 +166,7 @@ class BuckarooController extends Controller
         $post = base64_encode($md5);
 
         $websiteKey = "mG8nQEY9eA";
-        $uri        = strtolower(urlencode("https://testcheckout.buckaroo.nl/json/DataRequest"));
+        $uri        = strtolower(urlencode("testcheckout.buckaroo.nl/json/DataRequest"));
         $nonce      = "nonce_" . rand(0000000, 9999999);
         $time       = time();
 
@@ -148,11 +177,10 @@ class BuckarooController extends Controller
         $output =  "hmac " . $websiteKey . ":" . $hmac . ":" . $nonce . ":" . $time;
 //        dd($post);
 
-        $url = "https://testcheckout.buckaroo.nl/json/DataRequest";
-//        dd($output);
+//        dd($output, $jsonArray, $nonce, $time);
         $client = new Client(['base_uri' => 'https://testcheckout.buckaroo.nl']);
         $response = $client->post('/json/DataRequest', [
-            'debug' => TRUE,
+//            'debug' => TRUE,
             'headers' => [
                 "Authorization" => $output,
                 "Access-Control-Allow-Origin" => "*",
@@ -162,12 +190,23 @@ class BuckarooController extends Controller
             'body' => $jsonArray,
         ]);
 
+//        dd($response);
+//        $response = Http::withHeaders([
+//            "Authorization" => $output,
+//            "Access-Control-Allow-Origin" => "*",
+//            "Access-Control-Allow-Methods" => "GET, POST",
+//            "Content-Type" => "application/json",
+//        ])->withOptions(['debug'=>true])->post('https://testcheckout.buckaroo.nl/json/DataRequest', [
+//            'body' => $jsonArray,
+//        ]);
 
+
+//        dd($response);
 
 //         dd($response->headers());
 //        dd($response);
 //        dd($response);
-        return ["data" => $response, "hmac" => $output];
+        return ["data" => $request->all(), "hmac" => $output];
     }
 
 

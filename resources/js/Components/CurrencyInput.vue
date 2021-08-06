@@ -1,6 +1,6 @@
 <template>
     <input
-        class="shadow-sm px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-solid border-gray-300 rounded-md"
+        class="shadow-sm px-2 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full sm:text-sm border border-solid border-gray-300 rounded-md"
         ref="inputRef"
         :value="formattedValue"
     >

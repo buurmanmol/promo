@@ -1,6 +1,6 @@
 <template>
     <app-layout-admin :user="currentUser" :page="page">
-            <div class="bg-white pb-4 shadow overflow-hidden sm:rounded-lg">
+            <div class="bg-white pb-4 shadow sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
                     <div class="md:grid-cols-2 grid grid-cols-1">
                         <div class="col">
@@ -19,18 +19,18 @@
                                     Create subscription for: {{user.first_name}} {{user.last_name}}
                                 </template>
                                 <template #content>
-                                    <create-subscription></create-subscription>
+                                    <create-subscription :user="user" @closeModal="setModal"></create-subscription>
                                 </template>
                             </dialog-modal>
-                            <button @click="showModalTwo = true" class="mr-2 inline-flex float-right items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Update subscription</button>
-                            <dialog-modal :show="showModalTwo" @close="showModalTwo = false">
-                                <template #title>
-                                    Update subscription for: {{user.first_name}} {{user.last_name}}
-                                </template>
-                                <template #content>
-                                    <update-subscription></update-subscription>
-                                </template>
-                            </dialog-modal>
+<!--                            <button @click="showModalTwo = true" class="mr-2 inline-flex float-right items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Update subscription</button>-->
+<!--                            <dialog-modal :show="showModalTwo" @close="showModalTwo = false">-->
+<!--                                <template #title>-->
+<!--                                    Update subscription for: {{user.first_name}} {{user.last_name}}-->
+<!--                                </template>-->
+<!--                                <template #content>-->
+<!--                                    <update-subscription></update-subscription>-->
+<!--                                </template>-->
+<!--                            </dialog-modal>-->
                             </div>
                     </div>
 
@@ -136,6 +136,11 @@ export default {
             showModalTwo: false,
             selectedTab: 0,
             page:'repairs',
+        }
+    },
+    methods: {
+        setModal(value) {
+            this.showModal = value;
         }
     }
 }
