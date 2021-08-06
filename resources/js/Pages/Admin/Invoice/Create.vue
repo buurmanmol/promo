@@ -7,7 +7,7 @@
             method="POST"
             enctype="multipart/form-data"
         >
-            <invoice :usersList="usersList"></invoice> 
+            <invoice :repair="repair" :usersList="usersList"></invoice>
         </form>
     </app-layout-admin>
 </template>
@@ -19,7 +19,7 @@ import Invoice from "./Invoice";
 
 export default {
     name: "Create.vue",
-    props: ["user", "usersList",'company'],
+    props: ["user", "usersList",'company', 'repair'],
 
     components: {
         AppLayoutAdmin,
@@ -48,7 +48,7 @@ export default {
 
     /**
      * Hidden but maybe usable in the future. - Add to line 10 after form
-     * 
+     *
                 <div class="pt-8">
                     <div class="sm:hidden">
                         <label for="tabs" class="sr-only">Select a tab</label>
@@ -101,7 +101,7 @@ export default {
                         </div>
                     </div>
                     <div class="space-y-8 divide-y divide-gray-200">
-                    
+
                     <div class="grid-cols-1">
                         <div v-if="selectedTab === 0" class="col">
                             <invoice :usersList="usersList"></invoice>

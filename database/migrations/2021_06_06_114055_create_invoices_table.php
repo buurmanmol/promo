@@ -20,10 +20,10 @@ class CreateInvoicesTable extends Migration
             $table->integer('user_id');
             $table->double('price' ,8 ,2)->nullable();
             $table->timestamps();
-            
+
         });
     }
-        
+
 
     /**
      * Reverse the migrations.

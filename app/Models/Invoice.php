@@ -9,10 +9,7 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $keyType = 'string';
     protected $table = 'invoices';
-
-    public $incrementing = false;
 
     protected $fillable = [
         'name',
@@ -20,7 +17,9 @@ class Invoice extends Model
         'invoice_name',
         'user_id',
         'price',
+        'id'
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

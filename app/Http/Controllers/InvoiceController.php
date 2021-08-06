@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Repair;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Invoice;
@@ -31,6 +32,15 @@ class InvoiceController extends Controller
 
     }
 
+    public function updateWallet(Company $company, Request $request){
+        $price = $request->get('price');
+        $newWallet = $company->wallet - $request->get('price');
+
+        $company->update(['wallet' => $newWallet]);
+
+        return ['company' => $company];
+    }
+
     /**
      * Generates a pdf and allowes it to be downloaded
      *
@@ -50,15 +60,17 @@ class InvoiceController extends Controller
      *
      * @version 1.0.0
      */
-    public function createIndex(){
+    public function createIndex(Repair $repair){
         $usersList = User::all(
             "id",
             "first_name",
             "last_name",
+            "company_id",
             "email",
         );
-        return Inertia::render('Admin/Invoice/Create', ['usersList' => $usersList, 'user' => Auth::user(), 'company' => Auth::user()->company]);
+        return Inertia::render('Admin/Invoice/Create', ['repair'=>$repair, 'usersList' => $usersList, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
+
 
     /**
      * Stores uploaded file and saves the path
@@ -70,6 +82,8 @@ class InvoiceController extends Controller
      */
     public function create(Request $request)
     {
+
+//        dd($request);
         if($request->file('file') !== null){
             $pathToFile = $request->file('file')->store('invoices', 'public');
             $invoice = Invoice::create([
@@ -78,14 +92,29 @@ class InvoiceController extends Controller
                 'user_id' => $request->get('userId'),
                 'price' => $request->get('price'),
             ]);
-            return ['invoice' => $invoice];
+            $repair = '';
+            if($request->get('repairId') !== null) {
+                $repair = Repair::find($request->get('repairId'));
+                $repair->invoice_id = $invoice->id;
+                $repair->save();
+            }
+            return ['invoice' => $invoice, 'repair' => $repair];
         }
+
+
+
         $invoice = Invoice::create([
             'invoice_name' => $request->get('invoiceName'),
             'user_id' => $request->get('userId'),
         ]);
-
-        return ['invoice' => $invoice];
+        $repair = '';
+//        dd($request->get('repairId'));
+        if($request->get('repairId') !== null) {
+            $repair = Repair::find($request->get('repairId'));
+            $repair->invoice_id = $invoice->id;
+            $repair->save();
+        }
+        return ['invoice' => $invoice, 'repair' => $repair];
     }
 
     /**

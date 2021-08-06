@@ -139,6 +139,11 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
+                                                            <td>
+                                                                <div v-if="repair.repair_date" class="text-sm text-gray-500">
+                                                                    <a :href="'/admin/facturen/' + repair.id + '/create'"><DocumentAddIcon class="h-5 w-5 text-azure-radiance-900"></DocumentAddIcon></a>
+                                                                </div>
+                                                            </td>
                                                             <td >
                                                                 <div v-if="repair.repair_date" class="text-sm text-gray-500">
                                                                     {{formatDate(repair.repair_date)}}
@@ -200,7 +205,7 @@
 <script>
 import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
 import { ChevronUpIcon } from '@heroicons/vue/solid'
-import { EyeIcon, BadgeCheckIcon, BanIcon, CalendarIcon } from '@heroicons/vue/outline'
+import { EyeIcon, BadgeCheckIcon, BanIcon, CalendarIcon, DocumentAddIcon } from '@heroicons/vue/outline'
 import Pagination from "../../../Components/Pagination";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Switch } from '@headlessui/vue'
@@ -227,6 +232,7 @@ export default {
         Pagination,
         EyeIcon,
         DisclosurePanel,
+        DocumentAddIcon,
         BanIcon,
         BadgeCheckIcon,
         AppLayoutAdmin,

@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::get('/api/invoice/{invoice}/pdf', [InvoiceController::class, 'generatePdf']);
     Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
     Route::post('/api/invoice', [InvoiceController::class, 'getInvoices']);
+    Route::put('/api/invoice/{company}/wallet', [InvoiceController::class, 'updateWallet']);
 
     //PartController
     Route::post('/api/part/create', [PartController::class, 'create']);
@@ -157,6 +158,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/facturen', [InvoiceController::class, 'index']);
         Route::get('/admin/factuur/{invoice}', [InvoiceController::class, 'details']);
         Route::get('/admin/facturen/create', [InvoiceController::class, 'createIndex']);
+        Route::get('/admin/facturen/{repair}/create', [InvoiceController::class, 'createIndex']);
         Route::get('/admin/factuur/{invoice}/pdf', [InvoiceController::class, 'details']);
         Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'updateIndex']);
 
@@ -169,6 +171,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         //Parts
         Route::get('/admin/parts', [PartController::class, 'index']);
         Route::get('/admin/part/create', [PartController::class, 'createIndex']);
+        Route::post('/api/parts/search', [PartController::class, 'searchParts']);
+
         Route::get('/admin/part/{part}/update', [PartController::class, 'updateIndex']);
 
 

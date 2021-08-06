@@ -54,7 +54,6 @@
                                         </div>
                                     </template>
                                 </vue-select>
-                                >
                             </td>
                         </div>
                     </div>
@@ -85,6 +84,33 @@
                             />
                         </div>
                     </div>
+                    <div v-if="repair" class="sm:col-span-2">
+                        <label
+                            for="repair_id"
+                            class="block text-sm font-medium text-gray-700"
+                        >
+                            Repair ID
+                        </label>
+                        <div class="mt-1">
+                            <input
+                                disabled
+                                id="repair_id"
+                                name="repair_id"
+                                type="text"
+                                class="
+                                    shadow-sm
+                                    focus:ring-indigo-500
+                                    focus:border-indigo-500
+                                    block
+                                    w-full
+                                    sm:text-sm
+                                    border-gray-300
+                                    rounded-md
+                                "
+                                v-model="repair.id"
+                            />
+                        </div>
+                    </div>
 
                     <div class="sm:col-span-2">
                         <label
@@ -112,7 +138,7 @@
                                 v-model="invoice.userId"
                             />
                         </div>
-                        <input hidden id="companyId" name="companyId" v-model="invoice.companyId" /> 
+                        <input hidden id="companyId" name="companyId" v-model="invoice.companyId" />
                     </div>
 
                     <div class="sm:col-span-4">
@@ -309,7 +335,7 @@ import { ref } from "vue";
 
 export default {
     name: "Factuur uploaden",
-    props: ["usersList"],
+    props: ["usersList", 'repair'],
 
     components: {
         AppLayoutAdmin,
@@ -350,6 +376,7 @@ export default {
                 userEmail: option.email,
                 userId: option.id,
                 companyId: option.company_id,
+                repairId: this.repair.id
             };
         },
 
@@ -404,6 +431,7 @@ export default {
         submit() {
             const formData = new FormData();
             formData.set("userId", this.invoice.userId);
+            formData.set("repairId", this.repair.id);
             formData.set("invoiceName", this.invoice.invoiceName);
             formData.set("price", this.invoice.price);
             formData.set("file", this.invoice.file);
@@ -413,7 +441,11 @@ export default {
                 .then(() => {
                     axios.put("/api/invoice/" + this.invoice.companyId + "/wallet", this.invoice)
                     .then((response) => {
-                        window.location = "/admin/facturen";
+                        if(this.repair) {
+                            window.location = "/admin/repairs";
+                        } else {
+                            window.location = "/admin/facturen";
+                        }
                         console.log(response)
                     })
                     .catch((response) => {
