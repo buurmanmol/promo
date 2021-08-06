@@ -71,7 +71,7 @@
                                 </td>
                                 <td>
                                     <Switch
-                                    @click="postRepair(rep)"
+                                    @click="postRepairRepaired(rep)"
                                     v-model="rep.is_repaired"
                                     :class="rep.is_repaired ? 'bg-green-600' : 'bg-red-600'"
                                     class="relative inline-flex items-center h-7 rounded-full w-14"
@@ -227,6 +227,49 @@ export default {
             axios.post('/api/repairs/invoice/' + repair.id + '/batch' , repair)
                 .then((response) => {
                     console.log(response);
+                }, (error) => {
+                    console.log(error);
+                });
+        },
+        postRepairRepaired(repair, brand, model){
+            axios.post('/api/repair/' + repair.id + '/update' , repair)
+                .then((response) => {
+                    console.log(response);
+                    if(repair.is_repaired) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Toestel '  + repair.device.brands_models.brand + ' ' + repair.device.brands_models.model + ' Is nu gerepareerd.'
+                        })
+                    } else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'Toestel '  + repair.device.brands_models.brand + ' ' + repair.device.brands_models.model + ' Is nu niet meer gerepareerd.'
+                        })
+                    }
+
+
                 }, (error) => {
                     console.log(error);
                 });
