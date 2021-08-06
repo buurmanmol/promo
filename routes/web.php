@@ -99,9 +99,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/part/create', [PartController::class, 'create']);
     Route::delete('/api/part/{part}/delete', [PartController::class, 'delete']);
     Route::post('/api/parts', [PartController::class, 'getParts']);
+    Route::post('api/parts/search',[PartController::class, 'searchParts']);
 
     //PhonesController
-    Route::get('/admin/api/phones', [PhoneController::class, 'getPhones']);
+    Route::post('/admin/api/phones', [PhoneController::class, 'getPhones']);
     Route::put('/admin/api/phone/{phone}/update', [PhoneController::class, 'update']);
     Route::post('/admin/api/phone/create', [PhoneController::class, 'create']);
     Route::delete('/admin/api/phone/{brandsModel}/delete', [PhoneController::class, 'delete']);

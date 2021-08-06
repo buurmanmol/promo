@@ -277,7 +277,6 @@ export default {
             axios
                 .post("/api/parts", formData)
                 .then((response) => {
-                    // console.log(response);
                     this.partList = response.data.parts;
                 })
                 .catch((response) => {
