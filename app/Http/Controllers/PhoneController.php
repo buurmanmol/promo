@@ -71,9 +71,11 @@ class PhoneController extends Controller
     }
 
 
-    public function getPhones()
+    public function getPhones(Request $request)
     {
-        $brandsModel =  BrandsModel::orderBy('brand', 'asc')->paginate(20);
-        return $brandsModel;
+        $brandsModel =  BrandsModel::orderBy('brand', 'asc')
+            ->paginate(20, ['*'], 'page', $request->get('page'))->setPath('/admin/phones');
+        return ['brandsModel' => $brandsModel ];
+
     }
 }
