@@ -11,19 +11,19 @@
             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
                     <p class="text-sm text-gray-700">
-                        Showing
+                        Weergeeft
                         {{ ' ' }}
                         <span class="font-medium">{{data.from}}</span>
                         {{ ' ' }}
-                        to
+                        tot
                         {{ ' ' }}
                         <span class="font-medium">{{ data.to }}</span>
                         {{ ' ' }}
-                        of
+                        van de
                         {{ ' ' }}
                         <span class="font-medium">{{data.total}}</span>
                         {{ ' ' }}
-                        results
+                        resultaten.
                     </p>
                 </div>
                 <div class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">

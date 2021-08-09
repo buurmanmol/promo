@@ -184,7 +184,6 @@
                                         </p>
                                     </DisclosurePanel>
                                     <div class="my-4">
-                                        <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Andere klant</button>
                                         <span class="mx-2"></span>
                                         <button @click="selectedSlide = 1" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Ander apparaat</button>
                                         <span class="mx-2"></span>
