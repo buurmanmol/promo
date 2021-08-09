@@ -66,22 +66,22 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                                   <popover-repair-price :repair="rep"></popover-repair-price>
+                                        <popover-repair-price :repair="rep"></popover-repair-price>
                                     </div>
                                 </td>
                                 <td>
                                     <Switch
-                                    @click="postRepairRepaired(rep)"
-                                    v-model="rep.is_repaired"
-                                    :class="rep.is_repaired ? 'bg-green-600' : 'bg-red-600'"
-                                    class="relative inline-flex items-center h-7 rounded-full w-14"
-                                >
-                                    <span class="sr-only">Notificaties inschakelen</span>
-                                    <span
-                                        :class="rep.is_repaired ? 'translate-x-8' : 'translate-x-1'"
-                                        class="inline-block transition duration-200 ease-in-out transform w-5 h-5 transform bg-white rounded-full"
-                                    />
-                                </Switch>
+                                        @click="postRepairRepaired(rep)"
+                                        v-model="rep.is_repaired"
+                                        :class="rep.is_repaired ? 'bg-green-600' : 'bg-red-600'"
+                                        class="relative inline-flex items-center h-7 rounded-full w-14"
+                                    >
+                                        <span class="sr-only">Notificaties inschakelen</span>
+                                        <span
+                                            :class="rep.is_repaired ? 'translate-x-8' : 'translate-x-1'"
+                                            class="inline-block transition duration-200 ease-in-out transform w-5 h-5 transform bg-white rounded-full"
+                                        />
+                                    </Switch>
                                 </td>
                                 <td >
                                     <div v-if="rep.repair_date" class="text-sm text-gray-500">
@@ -187,12 +187,10 @@ export default {
                             toast.addEventListener('mouseleave', Swal.resumeTimer)
                         }
                     })
-
                     Toast.fire({
                         icon: 'success',
                         title: 'Datum van reparatie staat ingeplanned.'
                     })
-
                 }, (error) => {
                     console.log(error);
                 });
@@ -268,8 +266,6 @@ export default {
                             title: 'Toestel '  + repair.device.brands_models.brand + ' ' + repair.device.brands_models.model + ' Is nu niet meer gerepareerd.'
                         })
                     }
-
-
                 }, (error) => {
                     console.log(error);
                 });
@@ -287,5 +283,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

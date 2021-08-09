@@ -170,9 +170,6 @@
                                 <h1 class="ml-3 inline-flex items-center text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
                                     Saldo: € {{ formatPrice(company.wallet) }}
                                 </h1>
-                                <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                                    Saldo toevoegen
-                                </button>
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@
                             </svg>
                         </div>
 
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">User</div>
+                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Gebruiker</div>
                     </div>
                     <div :class="[selectedSlide >= 1 ? 'border-azure-radiance-600' : '']" class="flex-auto border-t-2 transition duration-500 ease-in-out"></div>
                     <div class="flex items-center text-white relative">
@@ -73,21 +73,21 @@
                                     <dt class="text-lg">
                                         <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
                                             <span class="font-medium text-gray-900">
-                                              Zoek De user waar het device moet worden toegevoegd
+                                              Zoek de gebruiker bij wie u een reparatie wilt toevoegen.
                                             </span>
                                         </DisclosureButton>
                                     </dt>
                                     <DisclosurePanel as="dd" class=" pr-12">
                                         <p class="text-base text-gray-500 mt-2">
-                                            Hier kunt u het merk van uw toestel zoeken. <br>
-                                            Klik op het gewenste merk en klik daarna op de "volgende" knop.
+                                            Hier kunt u de gebruiker zoeken. <br>
+                                            Klik op de gewenste gebruiker en klik daarna op de "volgende" knop.
                                         </p>
                                     </DisclosurePanel>
                                 </Disclosure>
                             </div>
                             <div class="col-span-2 px-4 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    User
+                                    Gebruiker
                                 </label>
                                 <vue-select searchable v-model="user" :options="users" label-by="first_name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
                                     <template #dropdown-item="{ option }">
@@ -108,21 +108,21 @@
                                     <dt class="text-lg">
                                         <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
                                             <span class="font-medium text-gray-900">
-                                              Zoek het merk van uw toestel
+                                              Selecteer uw apparaat voor welke u een reparatie wilt inplannen.
                                             </span>
                                         </DisclosureButton>
                                     </dt>
                                     <DisclosurePanel as="dd" class=" pr-12">
                                         <p class="text-base text-gray-500 mt-2">
-                                            Hier kunt u het merk van uw toestel zoeken. <br>
-                                            Klik op het gewenste merk en klik daarna op de "volgende" knop.
+                                            Hier kunt u uw apparaat zoeken. <br>
+                                            Klik op het gewenste apparaat en klik daarna op de "volgende" knop.
                                         </p>
                                     </DisclosurePanel>
                                 </Disclosure>
                             </div>
                             <div class="col-span-2 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    Brand
+                                    Apparaat
                                 </label>
                                 <vue-select  @search:change="getDevices" searchable v-model="device" :options="devices" label-by="brands_models.model" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
                                     <template #dropdown-item="{ option }">

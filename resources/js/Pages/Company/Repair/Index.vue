@@ -47,7 +47,7 @@
                                                 @click="selectDisclosure(key, selectedDisclosure)"
                                                 class="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
                                             >
-                                                <span>Toon managers</span>
+                                                <span>Toon gebruikers</span>
                                                 <ChevronUpIcon
                                                     :class="key === selectedDisclosure ? 'transform transition duration-200 rotate-180' : ''"
                                                     class="w-5 h-5 text-azure-radiance-500"

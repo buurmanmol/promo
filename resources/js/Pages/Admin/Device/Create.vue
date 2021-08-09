@@ -177,11 +177,10 @@
                                     <DisclosurePanel as="dd" class="mt-2 pr-12">
                                         <p class="text-base text-gray-500">
                                             Hier kunt u extra toestelen van het geselecteerde model toevoegen. <br>
-                                            Om een nieuw soort toestel of andere soort schade toe te voegen klikt u hier:
+                                            Om een nieuw soort toestel toe te voegen klikt u hier:
                                         </p>
                                     </DisclosurePanel>
                                     <div class="my-4">
-                                        <button @click="selectedSlide = 2" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button>
                                         <span class="mx-2"></span>
                                         <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw toestel</button>
                                     </div>
@@ -191,7 +190,7 @@
                                 <div class="grid grid-cols-2">
                                     <div class="col-span-1">
                                         <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">
-                                            Reparaties overzicht
+                                            Alle toestellen
                                         </h3>
                                     </div>
                                     <div class="col-span-1">
@@ -331,7 +330,7 @@ export default {
         postsDevices() {
             Swal.fire({
                 title: 'Let op! Heeft u alle toestellen toegevoegd?',
-                text: "Deze inzending van reparaties is eenmalig.",
+                text: "Deze inzending van apparaten is eenmalig.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
