@@ -118,11 +118,11 @@ export default {
         setUserList() {
             this.newUsers = this.users;
         },
-        
+
         deleteUser(selected) {
             Swal.fire({
-                title: "Weet u zeker dat u deze Gebruiker wilt verwijderen?",
-                text: "Hierdoor zal deze Gebruiker verloren gaan!. ",
+                title: "Weet u zeker dat u deze gebruiker wilt verwijderen?",
+                text: "Hierdoor zal deze gebruiker verloren gaan!. ",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -142,7 +142,7 @@ export default {
                         });
                     Swal.fire(
                         "Poof!",
-                        "Dit factuur is nu verwijderd.",
+                        "Deze gebruiker is nu verwijderd.",
                         "success"
                     );
                 }
@@ -176,7 +176,7 @@ export default {
                     console.log(error);
                 });
         },
-       
+
     }
 }
 </script>

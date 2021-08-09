@@ -61,7 +61,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     //UserController
     Route::post('/api/users/create', [UserController::class, 'create']);
     Route::post('/api/user/{user}/update', [UserController::class, 'update']);
-
+    Route::delete('/api/user/{user}/delete', [UserController::class, 'delete']);
+    Route::post('/api/users', [UserController::class, 'getUsers']);
     //BrandsModelsController
     Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
     Route::post('/api/brand/models', [BrandsModelsController::class, 'getBrandsModelsByName']);
@@ -83,8 +84,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
     //CompanyController
     Route::get('/api/companies', [CompanyController::class, 'getCompanies']);
+    Route::post('/api/companies/paginated', [CompanyController::class, 'getPaginatedCompanies']);
     Route::put('/api/company/{company}/update', [CompanyController::class, 'update']);
+    Route::delete('/api/company/{company}/delete', [CompanyController::class, 'delete']);
     Route::post('/api/company/create', [CompanyController::class, 'create']);
+
 
     //InvoiceController
     Route::post('/api/invoice/create', [InvoiceController::class, 'create']);

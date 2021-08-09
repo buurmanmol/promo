@@ -10,7 +10,7 @@
                             </svg>
                         </div>
 
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">User</div>
+                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Gebruiker</div>
                     </div>
                     <div :class="[selectedSlide >= 1 ? 'border-azure-radiance-600' : '']" class="flex-auto border-t-2 transition duration-500 ease-in-out"></div>
                     <div class="flex items-center text-white relative">
@@ -22,7 +22,7 @@
                                 <line x1="23" y1="11" x2="17" y2="11"></line>
                             </svg>
                         </div>
-                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Brand</div>
+                        <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-azure-radiance-600">Merk</div>
                     </div>
                     <div :class="[selectedSlide >= 2 ? 'border-azure-radiance-600' : '']" class="flex-auto border-t-2 transition duration-500 ease-in-out"></div>
                     <div class="flex items-center text-white relative">
@@ -73,7 +73,7 @@
                                     <dt class="text-lg">
                                         <DisclosureButton class="text-left w-full flex justify-between items-start text-gray-400">
                                             <span class="font-medium text-gray-900">
-                                              Zoek de gebruiker waar het device moet worden toegevoegd
+                                              Zoek de gebruiker waarbij het toestel moet worden toegevoegd
                                             </span>
                                         </DisclosureButton>
                                     </dt>
@@ -177,7 +177,7 @@
                                     <DisclosurePanel as="dd" class="mt-2 pr-12">
                                         <p class="text-base text-gray-500">
                                             Hier kunt u extra toestelen van het geselecteerde model toevoegen. <br>
-                                            Om een nieuw soort toestel of andere soort schade toe te voegen klikt u hier:
+                                            Om een nieuw soort toestel toe te voegen klikt u hier:
                                         </p>
                                     </DisclosurePanel>
                                     <div class="my-4">
@@ -191,7 +191,7 @@
                                 <div class="grid grid-cols-2">
                                     <div class="col-span-1">
                                         <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">
-                                            Reparaties overzicht
+                                            Alle toestellen
                                         </h3>
                                     </div>
                                     <div class="col-span-1">
@@ -331,7 +331,7 @@ export default {
         postsDevices() {
             Swal.fire({
                 title: 'Let op! Heeft u alle toestellen toegevoegd?',
-                text: "Deze inzending van reparaties is eenmalig.",
+                text: "Kijk goed of het juiste aantal bij de juiste gebruiker zijn toegevoegd.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

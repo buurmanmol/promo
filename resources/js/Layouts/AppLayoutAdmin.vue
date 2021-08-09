@@ -149,12 +149,12 @@
                                             <dt class="sr-only">Company</dt>
                                             <dd class="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6">
                                                 <OfficeBuildingIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                Duke street studio
+                                                Promofix
                                             </dd>
                                             <dt class="sr-only">Account status</dt>
                                             <dd class="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
                                                 <CheckCircleIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" aria-hidden="true" />
-                                                Verified account
+                                                Admin
                                             </dd>
                                         </dl>
                                     </div>

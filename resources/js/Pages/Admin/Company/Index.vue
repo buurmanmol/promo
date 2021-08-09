@@ -128,7 +128,7 @@ export default {
         editCompany(selected){
             window.location = "/admin/company/" + selected + "/update";
         },
-        
+
         deleteCompany(selected) {
             Swal.fire({
                 title: "Weet u zeker dat u dit bedrijf wilt verwijderen?",
@@ -175,7 +175,7 @@ export default {
                                     console.log(response);
                                     console.log("FAILURE!!");
                                 });
-                            
+
                         }
                     });
                 }
