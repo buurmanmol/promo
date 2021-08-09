@@ -192,6 +192,16 @@
                                     </div>
                                 </Disclosure>
                             </div>
+                            <div class="col">
+                                <div class="col mt-4">
+                                <label for="comment" class="block text-sm font-medium text-gray-700">
+                                    Plan de reparatie in
+                                </label>
+                                <div class="mt-1">
+                                    <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
+                                </div>
+                                <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
+                            </div>
                             <div class="col-span-1 xs:col-span-2">
                                     <label for="comment" class="block text-sm font-medium text-gray-700">
                                         Opmerkingen
@@ -201,6 +211,9 @@
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
                             </div>
+                                <errors v-if="errors.length > 0" :errors="errors"></errors>
+                            </div>
+
                             <div class="relative lg:mt-4 col-span-2" aria-hidden="true">
                                 <div class="grid grid-cols-2">
                                     <div class="col-span-1">
@@ -296,6 +309,7 @@ import VueNextSelect from 'vue-next-select';
 import Errors from "../../../Components/Errors";
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import Datepicker from "vue3-datepicker";
 
 export default {
     name: "Create",
@@ -303,6 +317,7 @@ export default {
     components: {
         FadeTransition,
         Swal,
+        Datepicker,
         'vue-select': VueNextSelect,
         AppLayoutAdmin,
         HashtagIcon,
@@ -315,6 +330,7 @@ export default {
             device: '',
             devices: [],
             repeats: null,
+            repairDate:null,
             comment: '',
             user: null,
             productType: null,
@@ -341,12 +357,22 @@ export default {
     },
     methods: {
         postRepairs() {
+            if(!this.repairDate) {
+                this.errors.push('Geen reparatie datum geselecteerd!')
+                return
+            }
+            if(!this.comment) {
+                this.errors.push('Probleem niet beschreven!')
+                return
+            }
             if(this.repairs.length < 1) {
+                this.repair.repair_date = this.repairDate
                 this.repair.comment = this.comment;
                 this.repairs.push(this.repair)
             } else {
                 this.repairs.forEach((item) => {
                     item.comment = this.comment;
+                    item.repair_date = this.repairDate
                 });
             }
 
@@ -372,7 +398,7 @@ export default {
                         'Uw reparatie(s) is/zijn aangemaakt.',
                         'success'
                     )
-                    window.location = '/user/repair/complete'
+                    window.location = '/admin/repairs';
                 }
             })
 
@@ -399,6 +425,8 @@ export default {
                 user:user,
                 device: device,
                 productType: productType,
+                manager: user.manager_id,
+                company: user.company
             }
             // this.addRepair(this.repair);
             this.selectedSlide += 1;
@@ -412,9 +440,11 @@ export default {
           this.repairs.push(repair);
         },
         nextSlide() {
+            this.errors = [];
             setTimeout(() => this.selectedSlide += 1, 300);
         },
         previousSlide() {
+            this.errors = [];
             setTimeout(() => this.selectedSlide -= 1, 300);
         }
     }
