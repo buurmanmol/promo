@@ -49,7 +49,6 @@
                                     </td>
                                     <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
                                         <span>{{ user.repairs.length }} Reparaties</span>
-                                        <button @click="repairAll(user)" class="ml-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-green-900 bg-green-200 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Repair all</button>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <Disclosure v-if="checkRepaired(user.repairs) < user.repairs.length">
@@ -387,7 +386,7 @@ export default {
                 });
         },
         repairItem(repair, brand, model){
-            axios.post('/api/repairs/' + repair.id + '/repair-all')
+            axios.post('/api/user/' + repair.id + '/repair-all')
                 .then((response) => {
 
                     this.models = response.data.data;

@@ -91,6 +91,7 @@ class InvoiceController extends Controller
                 'user_id' => $request->get('userId'),
                 'price' => $request->get('price'),
             ]);
+
             $repair = '';
             if($request->get('repairId') !== 'undefined') {
                 $repair = Repair::find($request->get('repairId'));
