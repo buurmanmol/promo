@@ -129,7 +129,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div v-if="managers.length > 0" class="sm:col-span-2">
+                        <div v-if="managers.length > 0 && user.role !== 'manager'" class="sm:col-span-2">
                             <label for="zip" class="block text-sm font-medium text-gray-700">
                                 Manager
                             </label>
@@ -264,7 +264,7 @@ export default {
             if(!this.user.postal_code) this.errors.push("Postcode vereist.");
             if(!this.user.password) this.errors.push("Wachtwoord vereist.");
             if(!this.user.company_id) this.errors.push("Selecteer een bedrijf.");
-            if(!this.user.role) this.errors.push("Selecteer een bedrijf.");
+            if(!this.user.role) this.errors.push("Selecteer een role.");
 
             if (!this.errors.length) {
                 this.createUser()
@@ -276,7 +276,10 @@ export default {
             axios.post('/api/users/create', this.user)
                 .then((response) => {
                     console.log(response);
-                    window.location = '/admin/users'
+                    // window.location = '/admin/users'
+                    if (response.data.error) {
+                        this.errors.push(response.data.error)
+                    }
                 }, (error) => {
                     console.log(error);
                 });

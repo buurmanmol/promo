@@ -92,6 +92,7 @@ class InvoiceController extends Controller
                 'user_id' => $request->get('userId'),
                 'price' => $request->get('price'),
             ]);
+
             $repair = '';
             if($request->get('repairId') !== null) {
                 $repair = Repair::find($request->get('repairId'));

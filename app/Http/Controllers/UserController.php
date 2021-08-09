@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\In;
@@ -82,6 +83,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
+        try {
         $user = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -96,8 +98,15 @@ class UserController extends Controller
             'manager_id' => $request->get('manager_id'),
             'password' => bcrypt($request->get('password'))
         ]);
+//        dd($request->get('manager_id'));
+        if($request->get('manager_id') === null) {
+            $user->manager_id = $user->id;
+        }
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return ['error' => $exception->errorInfo[2]];
+        }
 
-        return ['user' => $user];
+            return ['user' => $user];
     }
 
     public function updateIndex(User $user, Request $request)
