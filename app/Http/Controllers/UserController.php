@@ -83,7 +83,6 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        try {
         $user = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -95,18 +94,19 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'company_id' => $request->get('company_id'),
             'role' => $request->get('role'),
-            'manager_id' => $request->get('manager_id'),
             'password' => bcrypt($request->get('password'))
         ]);
-//        dd($request->get('manager_id'));
         if($request->get('manager_id') === null) {
             $user->manager_id = $user->id;
         }
-        } catch (\Illuminate\Database\QueryException $exception) {
-            return ['error' => $exception->errorInfo[2]];
+        
+        $managerId = $request->get('manager_id');
+        if($managerId === null){
+            $managerId = $user->id;
         }
+        $user->update(['manager_id' => $managerId]);
 
-            return ['user' => $user];
+        return ['user' => $user];
     }
 
     public function updateIndex(User $user, Request $request)
