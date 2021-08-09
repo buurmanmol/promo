@@ -259,7 +259,6 @@ import Errors from "../../../Components/Errors";
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import moment from "moment";
-
 export default {
     name: "Create",
     props: ['devices','company', 'currentUser', 'productTypes'],

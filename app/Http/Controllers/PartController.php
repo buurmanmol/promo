@@ -25,7 +25,7 @@ class PartController extends Controller
     public function index()
     {
 
-        $parts = ProductType::orderBy('name', 'ASC')->paginate(20);
+        $parts = ProductType::orderBy('name', 'ASC')->paginate(10);
         return Inertia::render('Admin/Part/Index', ['parts' => $parts, 'user' => Auth::user(), 'company' => Auth::user()->company]);
 
     }
@@ -87,7 +87,7 @@ class PartController extends Controller
      */
     public function getParts(Request $request){
 
-        $parts = ProductType::orderBy('created_at', 'DESC')
+        $parts = ProductType::orderBy('name', 'ASC')
         ->paginate(10, ['*'], 'page', $request->get('page'))->setPath('/admin/parts');
         return ['parts' => $parts ];
 

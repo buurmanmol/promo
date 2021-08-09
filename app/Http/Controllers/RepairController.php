@@ -323,6 +323,15 @@ class RepairController extends Controller
         return Inertia::render('Manager/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 
+    public function repairAll(Repair $repair)
+    {
+           $repair->update([
+               'is_repaired' => 1
+           ]);
+
+        return ['data' => $repair];
+    }
+
     public function companyCreate()
     {
 

@@ -148,7 +148,6 @@ export default {
     },
     watch: {
         brand: function (val) {
-            // console.log(val)
           this.getModels(val.name);
         }
     },
@@ -161,8 +160,6 @@ export default {
             axios.post('/api/devices/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(this.users);
-                    console.log(response.data);
                     this.searchUser = response.data.users;
                     this.loading = false;
                 }, (error) => {
@@ -197,7 +194,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
@@ -217,7 +213,6 @@ export default {
                 if (result.isConfirmed) {
                     axios.post('/api/user/' + this.user.id + '/repair-all', user.repairs)
                         .then((response) => {
-                            console.log(response);
                             this.models = response.data.data;
                         }, (error) => {
                             console.log(error);
@@ -245,7 +240,6 @@ export default {
                 if (result.isConfirmed) {
                     axios.delete('/api/device/' + id + '/delete')
                         .then((response) => {
-                            console.log(response);
                             this.getDevices();
                             // this.models = response.data.data;
                         }, (error) => {
@@ -262,11 +256,9 @@ export default {
         },
         getModels(brand) {
             let newBrand = {'brand': brand}
-            console.log(brand)
 
             axios.post('/api/brand/models', newBrand)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);

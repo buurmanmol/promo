@@ -49,7 +49,6 @@
                                     </td>
                                     <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
                                         <span>{{ user.repairs.length }} Reparaties</span>
-                                        <button @click="repairAll(user)" class="ml-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-green-900 bg-green-200 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Repair all</button>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <Disclosure v-if="checkRepaired(user.repairs) < user.repairs.length">
@@ -263,7 +262,6 @@ export default {
     },
     watch: {
         brand: function (val) {
-            // console.log(val)
           this.getModels(val.name);
         },
         'users.repair.repair_date': function (newVal, oldVal){
@@ -284,10 +282,8 @@ export default {
         postDate(repair) {
             let date = moment(repair.repair_date)
             date.add(1, 'd');
-            console.log(repair.repair_date)
             axios.post('/api/repair/' + repair.id + '/plan' , {repair_date: date})
                 .then((response) => {
-                    console.log(response);
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -317,7 +313,6 @@ export default {
             axios.post('/api/repairs/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(response);
                     this.newRepairs = response.data.users;
                 }, (error) => {
                     console.log(error);
@@ -349,7 +344,6 @@ export default {
                if(repair.is_repaired) {
                    i++;
                }
-                console.log(i);
             });
             return i
         },
@@ -378,7 +372,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
@@ -387,16 +380,14 @@ export default {
         postIsRepaired(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/is-repaired' , repair)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
                 });
         },
         repairItem(repair, brand, model){
-            axios.post('/api/repairs/' + repair.id + '/repair-all')
+            axios.post('/api/user/' + repair.id + '/repair-all')
                 .then((response) => {
-                    console.log(response);
 
                     this.models = response.data.data;
                 }, (error) => {
@@ -430,11 +421,9 @@ export default {
         },
         getModels(brand) {
             let newBrand = {'brand': brand}
-            console.log(brand)
 
             axios.post('/api/brand/models', newBrand)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
