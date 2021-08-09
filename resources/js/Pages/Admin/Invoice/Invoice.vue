@@ -84,7 +84,8 @@
                             />
                         </div>
                     </div>
-                    <div v-if="repair" class="sm:col-span-2">
+                    
+                    <div v-if="Object.keys(repair).length !== 0" class="sm:col-span-2">
                         <label
                             for="repair_id"
                             class="block text-sm font-medium text-gray-700"
@@ -441,12 +442,11 @@ export default {
                 .then(() => {
                     axios.put("/api/invoice/" + this.invoice.companyId + "/wallet", this.invoice)
                     .then((response) => {
-                        if(this.repair) {
+                        if(Object.keys(this.repair).length !== 0) {
                             window.location = "/admin/repairs";
                         } else {
                             window.location = "/admin/facturen";
                         }
-                        console.log(response)
                     })
                     .catch((response) => {
                         console.log(response);

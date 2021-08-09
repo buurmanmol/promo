@@ -83,7 +83,6 @@ class InvoiceController extends Controller
     public function create(Request $request)
     {
 
-//        dd($request);
         if($request->file('file') !== null){
             $pathToFile = $request->file('file')->store('invoices', 'public');
             $invoice = Invoice::create([
@@ -93,7 +92,7 @@ class InvoiceController extends Controller
                 'price' => $request->get('price'),
             ]);
             $repair = '';
-            if($request->get('repairId') !== null) {
+            if($request->get('repairId') !== 'undefined') {
                 $repair = Repair::find($request->get('repairId'));
                 $repair->invoice_id = $invoice->id;
                 $repair->save();
@@ -109,7 +108,7 @@ class InvoiceController extends Controller
         ]);
         $repair = '';
 //        dd($request->get('repairId'));
-        if($request->get('repairId') !== null) {
+        if($request->get('repairId') !== 'undefined') {
             $repair = Repair::find($request->get('repairId'));
             $repair->invoice_id = $invoice->id;
             $repair->save();

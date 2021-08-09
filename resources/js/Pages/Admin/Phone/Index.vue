@@ -122,7 +122,6 @@ export default {
             axios.post('/admin/api/phones/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(response);
                     this.searchModels = response.data.phones;
                     this.loading = false;
                 }, (error) => {
@@ -147,8 +146,7 @@ export default {
                     axios.delete('/admin/api/phone/' + phone + '/delete')
                         .then(() => {
                             this.getPhones();
-                        }).catch((response) => {
-                        console.log(response);
+                        }).catch(() => {
                         console.log(error);
                         console.log("FAILURE!!");
                     });
@@ -165,8 +163,8 @@ export default {
             formData.set('page', this.phones.current_page);
             axios.post('/admin/api/phones', formData)
                 .then((response) => {
-                    console.log(response.data);
                     this.phonesList = response.data.brandsModel;
+                    this.searchModels = response.data.brandsModel 
                 }, (error) => {
                     console.log(error);
                 });

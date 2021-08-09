@@ -202,7 +202,6 @@ export default {
             axios.post('/api/parts/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(response);
                     this.searchParts = response.data.parts;
                     this.loading = false;
                 }, (error) => {
@@ -277,6 +276,7 @@ export default {
             axios
                 .post("/api/parts", formData)
                 .then((response) => {
+                    this.searchParts = response.data.parts;
                     this.partList = response.data.parts;
                 })
                 .catch((response) => {
