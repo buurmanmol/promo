@@ -124,7 +124,11 @@
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
                                     Merk
                                 </label>
-                                <vue-select  @search:change="brand = brand.name; getModels" searchable v-model="brand" :options="brands" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" ></vue-select>
+                                <vue-select searchable v-model="brand" :options="brands" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
+                                    <template #dropdown-item="{ option }">
+                                        <div>{{option.name}}</div>
+                                    </template>
+                                </vue-select>
                                 <!--                                {{selectedSlide}} {{brand}}-->
                                 <errors v-if="errors.length > 0" :errors="errors"></errors>
                             </div>
@@ -181,7 +185,7 @@
                                         </p>
                                     </DisclosurePanel>
                                     <div class="my-4">
-                                        <button @click="selectedSlide = 2" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button>
+                                        <!-- <button @click="selectedSlide = 2" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw soort schade</button> -->
                                         <span class="mx-2"></span>
                                         <button @click="selectedSlide = 0" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  bg-azure-radiance-600 hover:hover:bg-azure-radiance-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nieuw toestel</button>
                                     </div>
@@ -191,37 +195,20 @@
                                 <div class="grid grid-cols-2">
                                     <div class="col-span-1">
                                         <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">
-                                            Reparaties overzicht
+                                            Apparaten overzicht van {{user.first_name}} {{user.last_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-span-1">
-                                        <button @click="postsDevices" class="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Versturen</button>
-                                    </div>
+                                    
                                 </div>
 
 
                                 <table class="mt-10 max-h-96 space-y-10 min-w-full divide-y divide-gray-200">
                                     <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <h2 class="font-bold"># 1</h2>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ device.brand.name }}
-                                                        </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-500">
-                                                    {{ device.model.model }}
-                                                </div>
-                                            </td>
                                             <td>
                                                 <div>
-                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal apparaten van hetzelfde merk/toestel.</label>
-                                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                                    <label for="email" class="block text-sm font-medium text-gray-700">Extra apparaten toevoegen van hetzelfde merk/toestel.</label>
+                                                    <div class="mt-1 flex rounded-md shadow-sm ">
                                                         <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                                 <HashtagIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -230,14 +217,18 @@
                                                         </div>
                                                         <button @click="duplicateDevice(device, repeats)" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                                                             <DeviceMobileIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                            <span>{{ repeats || '' }} keer</span>
+                                                            <span>{{ repeats || '' }} Extra toevoegen</span>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                    <template  v-if="devices.length > 1">
-                                        <tr v-for="(device ,key ) in devices" :key="key">
+                                        <template v-if="devices.length <= 1">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <h2 class="font-bold"># 1</h2>
+                                                </div>
+                                            </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
                                                     {{ device.brand.name }}
@@ -248,10 +239,38 @@
                                                     {{ device.model.model }}
                                                 </div>
                                             </td>
-                                        </tr>
-                                    </template>
+                                        </template>
+                                        <template  v-if="devices.length > 1">
+                                            <tr v-for="(device ,key ) in devices" :key="key">
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        <h2 class="font-bold"># {{ key + 1 }}</h2>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        {{ device.brand.name }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm text-gray-500">
+                                                        {{ device.model.model }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm text-gray-500">
+                                                        <XIcon class=" text-azure-radiance-800 w-5 h-5 text-md " 
+                                                        @click="removeDevice(key)"
+                                                        />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
                                     </tbody>
                                 </table>
+                                <div class="col-span-1">
+                                    <button @click="postsDevices" class="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Versturen</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -263,7 +282,7 @@
 </template>
 
 <script>
-import { HashtagIcon, DeviceMobileIcon } from '@heroicons/vue/outline'
+import { HashtagIcon, DeviceMobileIcon, XIcon} from '@heroicons/vue/outline'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import {
     RadioGroup,
@@ -293,6 +312,7 @@ export default {
         AppLayoutAdmin,
         HashtagIcon,
         DeviceMobileIcon,
+        XIcon,
         Errors
     },
     data() {
@@ -327,7 +347,10 @@ export default {
             this.setDevice(this.user,this.brand, this.model)
         }
     },
+  
+
     methods: {
+        
         postsDevices() {
             Swal.fire({
                 title: 'Let op! Heeft u alle toestellen toegevoegd?',
@@ -342,7 +365,6 @@ export default {
                 if (result.isConfirmed) {
                     axios.post('/api/device/create', this.devices)
                         .then((response) => {
-                            console.log(response);
                             Swal.fire(
                                 'Apparaat aangemaakt!',
                                 'Uw apparaat(en) is/zijn aangemaakt.',
@@ -365,13 +387,14 @@ export default {
           }
         },
         getModels() {
-            axios.get('/api/brands/'  + this.brand.id + '/models')
-                .then((response) => {
-                    // console.log(response);
-                    this.models = response.data.data;
-                }, (error) => {
-                    console.log(error);
-                });
+            if(this.brand !== null){
+                axios.get('/api/brands/'  + this.brand.id + '/models')
+                    .then((response) => {
+                        this.models = response.data.data;
+                    }, (error) => {
+                        console.log(error);
+                    });
+            }
         },
         setDevice(user, brand, model) {
             this.device = {
@@ -395,7 +418,10 @@ export default {
         },
         previousSlide() {
             setTimeout(() => this.selectedSlide -= 1, 300);
-        }
+        },
+        removeDevice(key){
+            this.devices.splice(key, 1);
+        },
     }
 }
 </script>

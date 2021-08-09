@@ -205,11 +205,8 @@
                                 <div class="grid grid-cols-2">
                                     <div class="col-span-1">
                                         <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">
-                                            Reparaties overzicht
+                                            Reparaties overzicht van {{user.first_name}} {{user.last_name}}
                                         </h3>
-                                    </div>
-                                    <div class="col-span-1">
-                                        <button @click="postRepairs" class="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Versturen</button>
                                     </div>
                                 </div>
 
@@ -217,29 +214,9 @@
                                 <table class="mt-10 max-h-96 space-y-10 min-w-full divide-y divide-gray-200">
                                     <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex-shrink-0 h-10 w-10">
-                                                    <h2 class="font-bold"># 1</h2>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">
-                                                            {{ repair.device.brands_models.brand }}
-                                                        </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-500">
-                                                    {{ repair.device.brands_models.model }}
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {{ repair.productType.name }}
-                                                  </span>
-                                            </td>
                                             <td>
                                                 <div>
-                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal reparaties van ditzelfde toestel</label>
+                                                    <label for="email" class="block text-sm font-medium text-gray-700">Extra reparaties toevoegen van ditzelfde toestel</label>
                                                     <div class="mt-1 flex rounded-md shadow-sm">
                                                         <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -249,14 +226,41 @@
                                                         </div>
                                                         <button @click="duplicateRepairs(repair, repeats)" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                                                             <DeviceMobileIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                            <span>{{ repeats || '' }} keer</span>
+                                                            <span>{{ repeats || '' }} Extra toevoegen</span>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
+                                    <template v-if="repairs.length <=1">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <h2 class="font-bold"># 1</h2>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {{ repair.device.brands_models.brand }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-500">
+                                                {{ repair.device.brands_models.model }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            {{ repair.productType.name }}
+                                            </span>
+                                        </td>
+                                    </template>
                                     <template  v-if="repairs.length > 1">
                                         <tr v-for="(repair ,key ) in repairs" :key="key">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    <h2 class="font-bold"># {{ key + 1 }}</h2>
+                                                </div>
+                                            </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
                                                     {{ repair.device.brands_models.brand }}
@@ -271,11 +275,23 @@
                                           <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                             {{ repair.productType.name }}
                                           </span>
+                                        </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-500">
+                                                    <XIcon class=" text-azure-radiance-800 w-5 h-5 text-md " 
+                                                    @click="removeRepair(key)"
+                                                    />
+                                                </div>
                                             </td>
                                         </tr>
+                                        
                                     </template>
                                     </tbody>
                                 </table>
+
+                                <div class="col-span-1">
+                                    <button @click="postRepairs" class="float-right inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azure-radiance-500">Versturen</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -287,7 +303,7 @@
 </template>
 
 <script>
-import { HashtagIcon, DeviceMobileIcon } from '@heroicons/vue/outline'
+import { HashtagIcon, DeviceMobileIcon, XIcon } from '@heroicons/vue/outline'
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 import FadeTransition from "../../../Components/FadeTransition";
@@ -307,6 +323,7 @@ export default {
         AppLayoutAdmin,
         HashtagIcon,
         DeviceMobileIcon,
+        XIcon,
         Errors
     },
     data() {
@@ -363,7 +380,6 @@ export default {
                 if (result.isConfirmed) {
                     axios.post('/api/repairs/'  + this.user.id + '/create', this.repairs)
                         .then((response) => {
-                            console.log(response);
                         }, (error) => {
                             console.log(error);
                         });
@@ -372,7 +388,7 @@ export default {
                         'Uw reparatie(s) is/zijn aangemaakt.',
                         'success'
                     )
-                    window.location = '/user/repair/complete'
+                    // window.location = '/user/repair/complete'
                 }
             })
 
@@ -400,7 +416,7 @@ export default {
                 device: device,
                 productType: productType,
             }
-            // this.addRepair(this.repair);
+            this.addRepair(this.repair);
             this.selectedSlide += 1;
         },
         duplicateRepairs(repair, repeats) {
@@ -416,7 +432,10 @@ export default {
         },
         previousSlide() {
             setTimeout(() => this.selectedSlide -= 1, 300);
-        }
+        },
+        removeRepair(key){
+            this.repairs.splice(key, 1);
+        },
     }
 }
 </script>

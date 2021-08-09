@@ -263,7 +263,6 @@ export default {
     },
     watch: {
         brand: function (val) {
-            // console.log(val)
           this.getModels(val.name);
         },
         'users.repair.repair_date': function (newVal, oldVal){
@@ -284,10 +283,8 @@ export default {
         postDate(repair) {
             let date = moment(repair.repair_date)
             date.add(1, 'd');
-            console.log(repair.repair_date)
             axios.post('/api/repair/' + repair.id + '/plan' , {repair_date: date})
                 .then((response) => {
-                    console.log(response);
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -317,7 +314,6 @@ export default {
             axios.post('/api/repairs/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(response);
                     this.newRepairs = response.data.users;
                 }, (error) => {
                     console.log(error);
@@ -349,7 +345,6 @@ export default {
                if(repair.is_repaired) {
                    i++;
                }
-                console.log(i);
             });
             return i
         },
@@ -378,7 +373,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
@@ -387,7 +381,6 @@ export default {
         postIsRepaired(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/is-repaired' , repair)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
@@ -396,7 +389,6 @@ export default {
         repairItem(repair, brand, model){
             axios.post('/api/repairs/' + repair.id + '/repair-all')
                 .then((response) => {
-                    console.log(response);
 
                     this.models = response.data.data;
                 }, (error) => {
@@ -430,11 +422,9 @@ export default {
         },
         getModels(brand) {
             let newBrand = {'brand': brand}
-            console.log(brand)
 
             axios.post('/api/brand/models', newBrand)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);

@@ -111,7 +111,7 @@ class DeviceController extends Controller
     }
     public function searchUser(Request $request)
     {
-        $users = User::with('company','devices')->where(function ($query) use($request) {
+        $users = User::with('devices.brandsModels','devices.productType','company','devices')->where(function ($query) use($request) {
             $query->where('first_name', 'like', '%' . $request->get('search') . '%')
                 ->orWhere('last_name', 'like', '%' . $request->get('search') . '%');
         })->paginate(10)->setPath('/admin/devices');
