@@ -130,6 +130,7 @@
                             </div>
                         </div>
                         <div v-if="managers.length > 0" class="sm:col-span-2">
+                            <div v-if="user.role !== 'manager'">
                             <label for="zip" class="block text-sm font-medium text-gray-700">
                                 Manager
                             </label>
@@ -137,6 +138,7 @@
                                 <select v-model="user.manager_id" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"  name="company" id="company">
                                     <option v-for="manager in managers" :value="manager.id">{{manager.first_name}} {{manager.last_name}}</option>
                                 </select>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -253,7 +255,7 @@ export default {
         },
         checkForm:function(e) {
             this.errors = [];
-            if(!this.user.manager_id) this.user.manager_id = this.user.id;
+            
             if(!this.user.first_name) this.errors.push("Voornaam vereist.");
             if(!this.user.last_name) this.errors.push("Achternaam vereist.");
             if(!this.user.city) this.errors.push("Stad vereist.");
@@ -264,7 +266,11 @@ export default {
             if(!this.user.postal_code) this.errors.push("Postcode vereist.");
             if(!this.user.password) this.errors.push("Wachtwoord vereist.");
             if(!this.user.company_id) this.errors.push("Selecteer een bedrijf.");
-            if(!this.user.role) this.errors.push("Selecteer een bedrijf.");
+            if(!this.user.role) this.errors.push("Selecteer een rol.");
+            if(this.user.role !== 'manager'){
+                 if(!this.user.manager_id) this.errors.push("Selecteer een manager.");
+            }
+           
 
             if (!this.errors.length) {
                 this.createUser()
@@ -276,7 +282,7 @@ export default {
             axios.post('/api/users/create', this.user)
                 .then((response) => {
                     console.log(response);
-                    window.location = '/admin/users'
+                    // window.location = '/admin/users'
                 }, (error) => {
                     console.log(error);
                 });

@@ -82,6 +82,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
+       //dd($request->get('manager_id')); 
         $user = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -93,9 +94,14 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'company_id' => $request->get('company_id'),
             'role' => $request->get('role'),
-            'manager_id' => $request->get('manager_id'),
             'password' => bcrypt($request->get('password'))
         ]);
+
+        $managerId = $request->get('manager_id');
+        if($managerId === null){
+            $managerId = $user->id;
+        }
+        $user->update(['manager_id' => $managerId]);
 
         return ['user' => $user];
     }
