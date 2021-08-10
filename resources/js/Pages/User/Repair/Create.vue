@@ -146,7 +146,7 @@
                                     Plan de reparatie in
                                 </label>
                                 <div class="mt-1">
-                                    <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
+                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
                             </div>
@@ -261,7 +261,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 import moment from "moment";
 export default {
     name: "Create",
-    props: ['devices','company', 'currentUser', 'productTypes'],
+    props: ['sundays', 'devices','company', 'currentUser', 'productTypes'],
     components: {
         FadeTransition,
         CalendarIcon,
@@ -297,7 +297,11 @@ export default {
             options: [
                 'test1',
                 'test2'
-            ]
+            ],
+            lowLimit: new Date(),
+            disabledDates: {
+                dates: [],
+            },  
         }
     },
     watch: {
@@ -312,9 +316,15 @@ export default {
         }
     },
     mounted() {
-        this.getDevices()
+        this.getDevices();
+        this.disableDates();
     },
     methods: {
+        disableDates(){
+            Object.keys(this.sundays).forEach((key) => {
+                this.disabledDates.dates.push(new Date(this.sundays[key]));
+            });
+        },
         formatDate(date) {
             let formatted = moment(date)
             return formatted.format('DD-MM-YYYY')

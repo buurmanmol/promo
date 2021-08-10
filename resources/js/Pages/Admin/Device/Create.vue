@@ -357,7 +357,7 @@ export default {
         },
         validateSelect(value) {
           if(!value) {
-              this.errors.push('Value is empty!')
+              this.errors.push('Dit mag niet leeg zijn!')
           } else {
               this.selectedSlide += 1;
               this.errors = [];
@@ -366,7 +366,6 @@ export default {
         getModels() {
             axios.get('/api/brands/'  + this.brand.id + '/models')
                 .then((response) => {
-                    // console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);

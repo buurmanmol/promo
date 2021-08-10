@@ -229,7 +229,6 @@ export default {
         getCompanyUser() {
             axios.get('/api/company/' + this.user.company_id + '/company-user')
                 .then((response) => {
-                    console.log(response);
                     this.companyUser = response.data.company;
                 }, (error) => {
                     console.log(error);
@@ -238,7 +237,6 @@ export default {
         getCompaniesJson() {
             axios.get('/api/companies/json')
                 .then((response) => {
-                    console.log(response);
                     this.companiesJson = response.data.companies;
                 }, (error) => {
                     console.log(error);
@@ -247,7 +245,6 @@ export default {
         getManagers() {
             axios.get('/api/company/' + this.user.company_id + '/managers')
                 .then((response) => {
-                    console.log(response);
                     this.managers = response.data.managers;
                 }, (error) => {
                     console.log(error);
@@ -281,10 +278,10 @@ export default {
         createUser(){
             axios.post('/api/users/create', this.user)
                 .then((response) => {
-                    console.log(response);
                     window.location = '/admin/users'
                 }, (error) => {
-                    console.log(error);
+                   this.errors.push("Error 500. Het e-mail adres of telefoonnummer bestaat al");
+                   console.log(error);
                 });
         }
     },

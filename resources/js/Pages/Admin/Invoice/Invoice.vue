@@ -336,7 +336,7 @@ import { ref } from "vue";
 
 export default {
     name: "Factuur uploaden",
-    props: ["usersList", 'repair'],
+    props: ["usersList", 'repair', 'selectedPerson'],
 
     components: {
         AppLayoutAdmin,
@@ -355,15 +355,19 @@ export default {
                 price: "",
                 file: "",
             },
+            userList: {data:""}, 
             allUsers: ref(this.userList),
             userObject: ref(null),
             errors: [],
         };
     },
 
-    mounted() {},
+    mounted() {
+       
+    },
 
     methods: {
+
         /**
          * Sets user variables in form in order to check if user is correct. (In case multiple people have the same name)
          *

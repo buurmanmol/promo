@@ -197,7 +197,7 @@
                                     Plan de reparatie in
                                 </label>
                                 <div class="mt-1">
-                                    <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
+                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" :format="DatePickerFormat" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="model.date" />
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
                             </div>
@@ -328,7 +328,7 @@ import Datepicker from "vue3-datepicker";
 
 export default {
     name: "Create",
-    props: ['users', 'currentUser', 'productTypes'],
+    props: ['sundays', 'users', 'currentUser', 'productTypes'],
     components: {
         FadeTransition,
         Swal,
@@ -361,7 +361,19 @@ export default {
                 'test2'
             ],
             page:'repairs',
+            availableDates:[],
+            model: {
+                date:'',
+            },
+            lowLimit: new Date(),
+            disabledDates: {
+                dates: [],
+            },       
+            
         }
+    },
+    mounted(){
+        this.disableDates();
     },
     watch: {
         user() {
@@ -372,6 +384,15 @@ export default {
         }
     },
     methods: {
+        disableDates(){
+            Object.keys(this.sundays).forEach((key) => {
+                this.disabledDates.dates.push(new Date(this.sundays[key]));
+            });
+        },
+        allowedDates(a) {
+            return this.availableDates.includes(a);
+        },
+
         postRepairs() {
             if(!this.repairDate) {
                 this.errors.push('Geen reparatie datum geselecteerd!')
