@@ -25,7 +25,7 @@
         </tr>
         </tbody>
     </table>
-    <pagination :data="devices" :links="devices.links"></pagination>
+    <pagination v-if="devices.links" :data="devices" :links="devices.links"></pagination>
 </template>
 
 <script>

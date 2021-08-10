@@ -13,15 +13,15 @@
                         </div>
                         <div class="col">
 
-                            <button @click="showModal = true" class="inline-flex ml-2 float-right items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Create subscription</button>
-                            <dialog-modal :show="showModal" @close="showModal = false">
-                                <template #title>
-                                    Create subscription for: {{user.first_name}} {{user.last_name}}
-                                </template>
-                                <template #content>
-                                    <create-subscription :user="user" @closeModal="setModal"></create-subscription>
-                                </template>
-                            </dialog-modal>
+<!--                            <button @click="showModal = true" class="inline-flex ml-2 float-right items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Create subscription</button>-->
+<!--                            <dialog-modal :show="showModal" @close="showModal = false">-->
+<!--                                <template #title>-->
+<!--                                    Create subscription for: {{user.first_name}} {{user.last_name}}-->
+<!--                                </template>-->
+<!--                                <template #content>-->
+<!--                                    <create-subscription :user="user" @closeModal="setModal"></create-subscription>-->
+<!--                                </template>-->
+<!--                            </dialog-modal>-->
 <!--                            <button @click="showModalTwo = true" class="mr-2 inline-flex float-right items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-azure-radiance-600 hover:bg-azure-radiance-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">Update subscription</button>-->
 <!--                            <dialog-modal :show="showModalTwo" @close="showModalTwo = false">-->
 <!--                                <template #title>-->
