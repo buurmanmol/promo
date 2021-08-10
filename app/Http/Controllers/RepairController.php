@@ -232,7 +232,14 @@ class RepairController extends Controller
 
         $productTypes = ProductType::all();
 
-        return Inertia::render('Admin/Repair/Create', ['users' => $users, 'currentUser' => Auth::user(), 'productTypes' => $productTypes]);
+        $sundays = [];
+        $startDate = Carbon::parse(Carbon::now())->next(Carbon::SUNDAY);
+        $endDate = Carbon::now()->add(1,'year');
+        for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+            $sundays[] = $date->format('Y-m-d');
+        }
+
+        return Inertia::render('Admin/Repair/Create', ['sundays' => $sundays, 'users' => $users, 'currentUser' => Auth::user(), 'productTypes' => $productTypes]);
     }
 
     public function createIndex()
@@ -253,7 +260,14 @@ class RepairController extends Controller
         $productTypes = ProductType::all();
         $models = BrandsModel::whereIn('model', $uModels)->get();
 
-        return Inertia::render('User/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        $sundays = [];
+        $startDate = Carbon::parse(Carbon::now())->next(Carbon::SUNDAY);
+        $endDate = Carbon::now()->add(1,'year');
+        for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+            $sundays[] = $date->format('Y-m-d');
+        } 
+
+        return Inertia::render('User/Repair/Create', ['sundays' => $sundays, 'devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 
     public function indexManager()
@@ -320,7 +334,14 @@ class RepairController extends Controller
         $productTypes = ProductType::all();
         $models = BrandsModel::whereIn('model', $uModels)->get();
 
-        return Inertia::render('Manager/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        $sundays = [];
+        $startDate = Carbon::parse(Carbon::now())->next(Carbon::SUNDAY);
+        $endDate = Carbon::now()->add(1,'year');
+        for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+            $sundays[] = $date->format('Y-m-d');
+        }
+
+        return Inertia::render('Manager/Repair/Create', ['sundays' => $sundays, 'devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 
     public function repairAll(Repair $repair)
@@ -350,7 +371,14 @@ class RepairController extends Controller
         $productTypes = ProductType::all();
         $models = BrandsModel::whereIn('model', $uModels)->get();
 
-        return Inertia::render('Company/Repair/Create', ['devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        $sundays = [];
+        $startDate = Carbon::parse(Carbon::now())->next(Carbon::SUNDAY);
+        $endDate = Carbon::now()->add(1,'year');
+        for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+            $sundays[] = $date->format('Y-m-d');
+        }
+
+        return Inertia::render('Company/Repair/Create', ['sundays' => $sundays, 'devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 
 
@@ -367,6 +395,7 @@ class RepairController extends Controller
             $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs'])->where('manager_id', $manager->id)->get();
             $manager->users = $users;
         }
+        
 //        dd($managerArray);
         return Inertia::render('Company/Repair/Index', ['currentUser' => Auth::user(),'managers' => $managerArray, 'company' => Auth::user()->company]);
     }

@@ -51,6 +51,7 @@
         "crypto-js": "^4.1.1",
         "moment": "^2.29.1",
         "sweetalert2": "^11.0.18",
+        "v-calendar": "^3.0.0-alpha.5",
         "vue-currency-filter": "^5.2.0",
         "vue-currency-input": "^2.0.1",
         "vue-next-select": "^2.7.0",
