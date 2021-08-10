@@ -336,7 +336,7 @@ export default {
     },
     data: () => {
         return {
-            page: "invoices",
+            page: "facturen",
             open: false,
             enabled: false,
             sortedUsers: [],
@@ -453,7 +453,7 @@ export default {
             Object.keys(userList).forEach(function(key) {
                Object.keys(userList[key].invoices).forEach(function(key2) {
                     totalPrice+= userList[key].invoices[key2].price;
-                }); 
+                });
             });
             return totalPrice;
         },

@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-span-2 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    Brand
+                                    Merk
                                 </label>
                                 <vue-select  @search:change="getDevices" searchable v-model="device" :options="devices" label-by="brands_models.model" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" >
                                     <template #dropdown-item="{ option }">
@@ -107,7 +107,7 @@
                             </div>
                             <div class="col-span-2 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    Broken
+                                    Beschadigd
                                 </label>
                                 <vue-select  searchable v-model="productType" :options="productTypes" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
                                 <errors v-if="errors.length > 0" :errors="errors"></errors>

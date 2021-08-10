@@ -157,7 +157,7 @@
                             </div>
                             <div class="col-span-2 md:col-span-1">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700">
-                                    Broken
+                                    Beschadigd
                                 </label>
                                 <vue-select  searchable v-model="productType" :options="productTypes" label-by="name" :close-on-select="true" class="shadow-sm z-30 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></vue-select>
                                 <errors v-if="errors.length > 0" :errors="errors"></errors>
@@ -199,8 +199,7 @@
                                 <div class="mt-1">
                                     <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
                                 </div>
-                                <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
-                            </div>
+                               </div>
                             <div class="col-span-1 xs:col-span-2">
                                     <label for="comment" class="block text-sm font-medium text-gray-700">
                                         Opmerkingen

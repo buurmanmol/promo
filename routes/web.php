@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
     //Devices
     Route::get('/user/apparaten', [DeviceController::class, 'deviceIndex']);
+    Route::get('/manager/apparaten', [DeviceController::class, 'deviceIndexManager']);
+    Route::get('/company/apparaten', [DeviceController::class, 'deviceIndexCompany']);
 
     //Repairs
     Route::get('/user/repair/complete', [RepairController::class, 'completeIndex']);
@@ -130,6 +132,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/company/repair/create', [RepairController::class, 'companyCreate']);
         Route::get('/company/repairs', [RepairController::class, 'indexCompany']);
         Route::get('/company/user/{user}', [RepairController::class, 'detailsCompany']);
+        Route::get('/company/manager/{user}', [RepairController::class, 'detailsCompany']);
     });
 
 //Admin page routes

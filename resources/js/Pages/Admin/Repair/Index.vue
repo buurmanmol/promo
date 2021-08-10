@@ -111,6 +111,7 @@
 <!--                                                            </td>-->
                                                             <td>
                                                                 <popover-repair :data="repair.comment"></popover-repair>
+
                                                             </td>
                                                             <td>
                                                                 <div class="flex content-center flex-wrap">

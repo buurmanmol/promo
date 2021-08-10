@@ -50,6 +50,18 @@ class DeviceController extends Controller
 
         return Inertia::render('User/Device/Index', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
     }
+    public function deviceIndexManager()
+    {
+        $devices = Device::with('brandsModels')->where('user_id', auth()->user()->id)->paginate(20);
+
+        return Inertia::render('Manager/Device/Index', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
+    }
+    public function deviceIndexCompany()
+    {
+        $devices = Device::with('brandsModels')->where('user_id', auth()->user()->id)->paginate(20);
+
+        return Inertia::render('Company/Device/Index', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
+    }
 
     public function deviceIndexAdmin()
     {

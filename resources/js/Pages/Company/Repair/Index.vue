@@ -1,5 +1,5 @@
 <template>
-    <app-layout-company :page="'repairs'" :user="user" :company="company">
+    <app-layout-company :page="page" :user="user" :company="company">
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -63,7 +63,7 @@
                                         <BadgeCheckIcon v-if="checkRepaired(manager.users) > 0" class="text-green-600 w-5 h-5 text-md" />
                                     </td>
                                     <td class="px-6 py-4 text-bold whitespace-nowrap text-sm text-gray-700">
-                                        <a :href="'/manager/' + manager.id + '/repairs'">
+                                        <a :href="'/company/manager/' + manager.id">
                                             <EyeIcon class="text-azure-radiance-800 w-5 h-5 text-md" />
                                         </a>
                                     </td>
@@ -152,6 +152,7 @@ export default {
           models: [],
           selectedDisclosure: null,
           selectedRepairEdit: null,
+          page:'reparaties',
       }
     },
     mounted() {

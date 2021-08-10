@@ -46,10 +46,8 @@ class UserController extends Controller
     public function indexCompanyManager(User $user)
     {
         $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs' => function ($q) use ($user) {
-            $q->where('manager_id', $user->id);
+            $q->where('company_id', $user->id);
         }])->get();
-
-
         return Inertia::render('Manager/Repair/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
@@ -99,7 +97,7 @@ class UserController extends Controller
         if($request->get('manager_id') === null) {
             $user->manager_id = $user->id;
         }
-        
+
         $managerId = $request->get('manager_id');
         if($managerId === null){
             $managerId = $user->id;

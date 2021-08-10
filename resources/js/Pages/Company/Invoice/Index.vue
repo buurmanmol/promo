@@ -75,7 +75,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                
+
                                 <template
                                     v-for="(manager, key) in managers"
                                     :key="manager.id"
@@ -313,7 +313,7 @@ export default {
     },
     data: () => {
         return {
-            page: "invoices",
+            page: "facturen",
             open: false,
             enabled: false,
             staffList: [],
@@ -346,7 +346,7 @@ export default {
             Object.keys(userList).forEach(function(key) {
                Object.keys(userList[key].invoices).forEach(function(key2) {
                     totalPrice+= userList[key].invoices[key2].price;
-                }); 
+                });
             });
             return totalPrice;
         },
@@ -398,11 +398,6 @@ export default {
          *
          * @version 1.0.0
          */
-        formatDate(value) {
-            if (value) {
-                return moment(String(value)).format("DD/MM/YYYY, h:mm:ss");
-            }
-        },
 
         /**
          * fetches a new list of the invoices.

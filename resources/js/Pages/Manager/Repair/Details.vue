@@ -1,5 +1,5 @@
 <template>
-    <app-layout-manager :company="company" :user="currentUser">
+    <app-layout-manager :company="company" :user="currentUser" :page="page">
         <div class="bg-white pb-4 shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
                 <div class="md:grid-cols-2 grid grid-cols-1">
@@ -21,7 +21,7 @@
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">
-                            Full name
+                            Volledige naam
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             {{user.first_name}} {{user.last_name}}
@@ -29,17 +29,7 @@
                     </div>
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">
-                            Application for
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                                <span v-if="user.company">{{ user.company.name }}
-                                    </span>
-                            <span v-else>Geen bedrijf gevonden</span>
-                        </dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Email address
+                            E-mailadres
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             {{user.email}}
@@ -47,18 +37,10 @@
                     </div>
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">
-                            Telephone
+                            Telefoon
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900">
                             {{ user.phone_number }}
-                        </dd>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <dt class="text-sm font-medium text-gray-500">
-                            About
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
                         </dd>
                     </div>
                 </dl>
@@ -121,6 +103,7 @@ export default {
             showModal: false,
             showModalTwo: false,
             selectedTab: 0,
+            page:'reparaties',
         }
     }
 }
