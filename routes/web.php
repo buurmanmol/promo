@@ -126,6 +126,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/company/repair/create', [RepairController::class, 'companyCreate']);
         Route::get('/company/repairs', [RepairController::class, 'indexCompany']);
         Route::get('/company/user/{user}', [RepairController::class, 'detailsCompany']);
+
     });
 
 //Admin page routes
@@ -137,6 +138,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::post('/api/companies/search', [CompanyController::class, 'searchCompany']);
         Route::get('/api/company/{company}/company-user', [CompanyController::class, 'getCompanyUser']);
 
+        Route::get('/company/{company}/details', [CompanyController::class, 'adminDetails']);
 
 
         //Users

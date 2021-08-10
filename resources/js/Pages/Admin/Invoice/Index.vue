@@ -256,7 +256,7 @@
                             </tbody>
                         </table>
                         <pagination
-                            v-if="invoiceList.data"
+                            v-if="invoices.links"
                             :data="invoices"
                             :links="invoices.links"
                         ></pagination>

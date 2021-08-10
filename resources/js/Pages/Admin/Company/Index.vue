@@ -24,9 +24,6 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Adres
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Telefoonnummer
-                                </th>
 <!--                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">-->
 <!--                                    Postcode-->
 <!--                                </th>-->
@@ -38,6 +35,9 @@
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Verwijderen</span>
+                                </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">Details</span>
                                 </th>
                             </tr>
                             </thead>
@@ -69,9 +69,9 @@
                                         {{ company.address }}
                                         </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ company.phone_number }}
-                                </td>
+<!--                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-->
+<!--                                    {{ company.phone_number }}-->
+<!--                                </td>-->
 <!--                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-->
 <!--                                    {{ company.postal_code }}-->
 <!--                                </td>-->
@@ -84,6 +84,11 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <XIcon @click="deleteCompany(company.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <a :href="'/company/' + company.id + '/details'">
+                                        <EyeIcon @click="deleteCompany(company.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -103,11 +108,12 @@ import TableLoader from "../../../Components/TableLoader";
 import AppLayoutAdmin from "@/Layouts/AppLayoutAdmin";
 import Pagination from "../../../Components/Pagination";
 import Swal from "sweetalert2";
-import { XIcon, PencilIcon } from "@heroicons/vue/outline";
+import { XIcon, PencilIcon, EyeIcon } from "@heroicons/vue/outline";
 export default {
     props:['user' , 'companies'],
     components: {
         AppLayoutAdmin,
+        EyeIcon,
         TableLoader,
         Pagination,
         PencilIcon,
@@ -128,7 +134,7 @@ export default {
         editCompany(selected){
             window.location = "/admin/company/" + selected + "/update";
         },
-        
+
         deleteCompany(selected) {
             Swal.fire({
                 title: "Weet u zeker dat u dit bedrijf wilt verwijderen?",
@@ -175,7 +181,7 @@ export default {
                                     console.log(response);
                                     console.log("FAILURE!!");
                                 });
-                            
+
                         }
                     });
                 }
