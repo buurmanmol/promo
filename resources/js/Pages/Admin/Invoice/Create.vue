@@ -7,7 +7,7 @@
             method="POST"
             enctype="multipart/form-data"
         >
-            <invoice :repair="repair" :usersList="usersList"></invoice>
+            <invoice :repair="repair" :usersList="usersList" :selectedPerson="selectedPerson"></invoice>
         </form>
     </app-layout-admin>
 </template>
@@ -19,24 +19,27 @@ import Invoice from "./Invoice";
 
 export default {
     name: "Create.vue",
-    props: ["user", "usersList",'company', 'repair'],
+    props: ["user", "usersList",'company', 'repair', 'selectedPerson'],
 
     components: {
         AppLayoutAdmin,
         NewInvoice,
         Invoice,
     },
-    mounted() {},
+    mounted() {
+    },
 
     data: function () {
         return {
             selectedTab: 0,
             page:'invoices',
+            userList:[],
         };
     },
 
     watch: {},
     methods: {
+        
         setTab(tab) {
             this.selectedTab = tab;
         },
