@@ -100,7 +100,6 @@ class CompanyController extends Controller
                 array_push($invoices, $invoice);
             }
         }
-
         return Inertia::render('Admin/Company/Details', ['invoices' => $invoices, 'company' => $company, 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
