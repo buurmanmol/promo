@@ -207,7 +207,7 @@ class RepairController extends Controller
         $repairs = $request->all();
         foreach($repairs as $repair) {
             Repair::create([
-                'comment' => $repair['comment'] || '',
+                'comment' => $repair['comment'],
                 'device_id' => $repair['device']['id'],
                 'product_type_id' => $repair['productType']['id'],
                 'manager_id' => $repair['manager'],
