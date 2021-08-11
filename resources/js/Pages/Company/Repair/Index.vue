@@ -159,7 +159,6 @@ export default {
     },
     watch: {
         brand: function (val) {
-            // console.log(val)
           this.getModels(val.name);
         }
     },
@@ -221,7 +220,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);
@@ -241,7 +239,6 @@ export default {
                 if (result.isConfirmed) {
                     axios.post('/api/user/' + this.user.id + '/repair-all', user.repairs)
                         .then((response) => {
-                            console.log(response);
                             this.models = response.data.data;
                         }, (error) => {
                             console.log(error);
@@ -257,11 +254,9 @@ export default {
         },
         getModels(brand) {
             let newBrand = {'brand': brand}
-            console.log(brand)
 
             axios.post('/api/brand/models', newBrand)
                 .then((response) => {
-                    console.log(response);
                     this.models = response.data.data;
                 }, (error) => {
                     console.log(error);

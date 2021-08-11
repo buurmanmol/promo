@@ -23,8 +23,7 @@ class BuckarooController extends Controller
         $txt = $user['address'];
         $str= preg_replace('/\W\w+\s*(\W*)$/', '$1', $txt);
         $street = $str;
-
-
+//        dd($housenumber);
         $postArray =
             array(
                 "Services" => array ("ServiceList" =>
@@ -151,6 +150,13 @@ class BuckarooController extends Controller
                                                     "GroupType" => "AddRatePlan",
                                                     "GroupID" => "",
                                                     "Value" => $endDate,
+                                                ),
+                                            16 =>
+                                                array (
+                                                    "Name" => "RatePlanChargeCode",
+                                                    "GroupType" => "AddRatePlanChargeCode",
+                                                    "GroupID" => "",
+                                                    "Value" => "nxjshpxt",
                                                 ),
                                         )
                                 )

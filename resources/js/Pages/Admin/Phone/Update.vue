@@ -104,7 +104,6 @@ export default {
             }
             axios.put('/admin/api/phone/' + this.phone.id +  '/update', tellie)
                 .then((response) => {
-                    console.log(response);
                     window.location = '/admin/phones'
                 }, (error) => {
                     console.log(error);

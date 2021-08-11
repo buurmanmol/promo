@@ -256,7 +256,7 @@
                             </tbody>
                         </table>
                         <pagination
-                            v-if="invoiceList.data"
+                            v-if="invoices.links"
                             :data="invoices"
                             :links="invoices.links"
                         ></pagination>
@@ -316,7 +316,6 @@ export default {
                 responseType: "blob",
             })
                 .then((response) => {
-                    console.log(response);
                     const url = window.URL.createObjectURL(
                         new Blob([response.data])
                     );
@@ -398,7 +397,6 @@ export default {
             axios
                 .post("/api/invoice", formData)
                 .then((response) => {
-                    console.log(response);
                     this.invoiceList = response.data.invoices;
                 })
                 .catch((response) => {

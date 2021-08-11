@@ -144,6 +144,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::post('/api/companies/search', [CompanyController::class, 'searchCompany']);
         Route::get('/api/company/{company}/company-user', [CompanyController::class, 'getCompanyUser']);
 
+        Route::get('/company/{company}/details', [CompanyController::class, 'adminDetails']);
 
 
         //Users
@@ -167,7 +168,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
         Route::get('/admin/facturen', [InvoiceController::class, 'index']);
         Route::get('/admin/factuur/{invoice}', [InvoiceController::class, 'details']);
         Route::get('/admin/facturen/create', [InvoiceController::class, 'createIndex']);
-        Route::get('/admin/facturen/{repair}/create', [InvoiceController::class, 'createIndex']);
+        Route::get('/admin/facturen/{repair}/{user}/create', [InvoiceController::class, 'createIndex']);
         Route::get('/admin/factuur/{invoice}/pdf', [InvoiceController::class, 'details']);
         Route::get('/admin/factuur/{invoice}/update', [InvoiceController::class, 'updateIndex']);
 

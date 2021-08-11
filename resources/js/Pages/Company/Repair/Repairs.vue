@@ -5,7 +5,7 @@
                 <DisclosureButton
                     class="relative flex justify-between w-full px-4 py-4 my-2 text-md font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
                 >
-                    <span v-if="repairs.length >= 0">Reparatie batch: {{formatDate(repair[0].created_at)}}</span>
+                    <span v-if="repairs.length >= 0">{{  }} {{formatDate(repair[0].created_at)}}</span>
                     <ChevronUpIcon
                         :class="open ? 'transform rotate-180' : ''"
                         class="w-5 h-5 text-azure-radiance-500"
@@ -103,7 +103,6 @@ export default {
         postBatch(repairs) {
             axios.post('/api/repairs/invoice/' + repair.id + '/batch' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });
@@ -111,7 +110,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });

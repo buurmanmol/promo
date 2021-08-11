@@ -60,7 +60,7 @@ class InvoiceController extends Controller
      *
      * @version 1.0.0
      */
-    public function createIndex(Repair $repair){
+    public function createIndex(Repair $repair, User $user){
         $usersList = User::all(
             "id",
             "first_name",
@@ -68,7 +68,18 @@ class InvoiceController extends Controller
             "company_id",
             "email",
         );
-        return Inertia::render('Admin/Invoice/Create', ['repair'=>$repair, 'usersList' => $usersList, 'user' => Auth::user(), 'company' => Auth::user()->company]);
+        
+        if($user->id !== null){
+            $usersList =User::select(
+                "id",
+                "first_name",
+                "last_name",
+                "company_id",
+                "email",
+            )
+            ->where("id", $user->id)->get(); 
+        }
+        return Inertia::render('Admin/Invoice/Create', ['repair'=>$repair, 'usersList' => $usersList, 'selectedPerson' => $user, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }
 
 

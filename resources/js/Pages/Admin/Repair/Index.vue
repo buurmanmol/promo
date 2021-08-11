@@ -141,7 +141,7 @@
                                                             </td>
                                                             <td>
                                                                 <div v-if="repair.repair_date" class="text-sm text-gray-500">
-                                                                    <a :href="'/admin/facturen/' + repair.id + '/create'"><DocumentAddIcon class="h-5 w-5 text-azure-radiance-900"></DocumentAddIcon></a>
+                                                                    <a :href="'/admin/facturen/' + repair.id + '/' + user.id + '/create'"><DocumentAddIcon class="h-5 w-5 text-azure-radiance-900"></DocumentAddIcon></a>
                                                                 </div>
                                                             </td>
                                                             <td >

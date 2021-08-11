@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Device;
+use App\Models\Invoice;
+use App\Models\Repair;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +57,50 @@ class CompanyController extends Controller
     }
     public function details(Company $company)
     {
+
         return Inertia::render('Admin/Company/Details', ['company' =>$company]);
+    }
+
+    public function adminDetails(Company $company)
+    {
+        $repairs = Company::where('id' , $company->id)->with('users.devices.brandsModels', 'users.invoices', 'users.repairs.device.brandsModels')->first();
+        $fullArr = [];
+//        dd($repairs);
+        $companyUser = Company::where('id', $company->id)->with(['users' => function ($q) {
+            $q->where('role', 'company');
+        }])->first();
+        $user = $companyUser->users[0];
+
+        foreach($repairs->users as $user) {
+            foreach ($user->repairs as $repair) {
+                $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with(['user','productType', 'device.brandsModels']) -> orderBy('created_at', 'desc')->get();
+//            dd($sameDate);
+                $sameDate->user = $user;
+//                dd($sameDate);
+                array_push($fullArr, $sameDate);
+            }
+        }
+
+        $s = array_unique($fullArr, SORT_REGULAR);
+//        dd($user['id'], auth()->user()->id);
+
+        $devices = (object)
+        $deviceArray = [];
+        foreach($repairs->users as $user) {
+            foreach ($user->devices as $device) {
+                array_push($deviceArray, $device);
+            }
+        }
+        $devices->data = $deviceArray;
+//        dd($devices);
+        $invoices = [];
+        foreach($repairs->users as $user) {
+//            dd($user->invoices);
+            foreach ($user->invoices as $invoice) {
+                array_push($invoices, $invoice);
+            }
+        }
+        return Inertia::render('Admin/Company/Details', ['invoices' => $invoices, 'company' => $company, 'repairs' => $s,'currentUser' => Auth::user(),'user' => $user, 'devices' => $devices]);
     }
 
     public function createIndex()

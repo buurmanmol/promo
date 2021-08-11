@@ -197,7 +197,7 @@
                                     Plan de reparatie in
                                 </label>
                                 <div class="mt-1">
-                                    <datepicker placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
+                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" :format="DatePickerFormat" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="model.date" />
                                 </div>
                                </div>
                             <div class="col-span-1 xs:col-span-2">
@@ -244,26 +244,28 @@
                                             </td>
                                         </tr>
                                     <template v-if="repairs.length <=1">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <h2 class="font-bold"># 1</h2>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900">
-                                                {{ repair.device.brands_models.brand }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-500">
-                                                {{ repair.device.brands_models.model }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            {{ repair.productType.name }}
-                                            </span>
-                                        </td>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <h2 class="font-bold"># 1</h2>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    {{ repair.device.brands_models.brand }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-500">
+                                                    {{ repair.device.brands_models.model }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                {{ repair.productType.name }}
+                                                </span>
+                                            </td>
+                                        </tr>
                                     </template>
                                     <template  v-if="repairs.length > 1">
                                         <tr v-for="(repair ,key ) in repairs" :key="key">
@@ -327,7 +329,7 @@ import Datepicker from "vue3-datepicker";
 
 export default {
     name: "Create",
-    props: ['users', 'currentUser', 'productTypes'],
+    props: ['sundays', 'users', 'currentUser', 'productTypes'],
     components: {
         FadeTransition,
         Swal,
@@ -360,7 +362,19 @@ export default {
                 'test2'
             ],
             page:'repairs',
+            availableDates:[],
+            model: {
+                date:'',
+            },
+            lowLimit: new Date(),
+            disabledDates: {
+                dates: [],
+            },       
+            
         }
+    },
+    mounted(){
+        this.disableDates();
     },
     watch: {
         user() {
@@ -371,6 +385,15 @@ export default {
         }
     },
     methods: {
+        disableDates(){
+            Object.keys(this.sundays).forEach((key) => {
+                this.disabledDates.dates.push(new Date(this.sundays[key]));
+            });
+        },
+        allowedDates(a) {
+            return this.availableDates.includes(a);
+        },
+
         postRepairs() {
             if(!this.repairDate) {
                 this.errors.push('Geen reparatie datum geselecteerd!')
@@ -428,7 +451,7 @@ export default {
         getDevices() {
             axios.get('/api/user/'  + this.user.id + '/devices/unique')
                 .then((response) => {
-                    console.log(response);
+
                     this.devices = response.data.data;
                 }, (error) => {
                     console.log(error);

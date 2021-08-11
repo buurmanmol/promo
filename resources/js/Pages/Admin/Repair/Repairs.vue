@@ -5,7 +5,8 @@
                 <DisclosureButton
                     class="relative flex justify-between w-full px-4 py-4 my-2 text-md font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
                 >
-                    <span v-if="repairs.length >= 0">Reparatie batch: {{formatDate(repair[0].created_at)}}</span>
+                     <span v-if="!isCompany">Reparatie batch:</span> <span v-else>{{repair[0].user.first_name}} {{repair[0].user.last_name}} </span> {{formatDate(repair[0].created_at)}}
+
                     <ChevronUpIcon
                         :class="open ? 'transform rotate-180' : ''"
                         class="w-5 h-5 text-azure-radiance-500"
@@ -140,7 +141,7 @@ import Datepicker from "vue3-datepicker";
 import Swal from "sweetalert2";
 export default {
     name: "Repairs",
-    props: ['repairs'],
+    props: ['repairs', 'isCompany'],
     components: {
         AppLayoutUser,
         Datepicker,
@@ -172,10 +173,8 @@ export default {
         postDate(repair) {
             let date = moment(repair.repair_date)
             date.add(1, 'd');
-            console.log(repair.repair_date)
             axios.post('/api/repair/' + repair.id + '/plan' , {repair_date: date})
                 .then((response) => {
-                    console.log(response);
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -198,7 +197,6 @@ export default {
         getRepairs(user) {
             axios.get('/api/repairs/' + user)
                 .then((response) => {
-                    console.log(response);
                     this.newRepairs = response.data.data
                 }, (error) => {
                     console.log(error);
@@ -207,7 +205,6 @@ export default {
         deleteRepair(repair) {
             axios.delete('/api/repair/' + repair.id + '/delete')
                 .then((response) => {
-                    console.log(response);
                     this.getRepairs(repair.user_id);
                 }, (error) => {
                     console.log(error);
@@ -224,7 +221,6 @@ export default {
         postBatch(repairs) {
             axios.post('/api/repairs/invoice/' + repair.id + '/batch' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });
@@ -232,7 +228,6 @@ export default {
         postRepairRepaired(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     if(repair.is_repaired) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -273,7 +268,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });

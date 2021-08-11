@@ -47,7 +47,7 @@ import Swal from "sweetalert2";
 import CurrencyInput from "../../../Components/CurrencyInput";
 
 require(["crypto-js/aes", "crypto-js/sha256"], function (AES, SHA256) {
-    console.log(SHA256("Message"));
+    //console.log(SHA256("Message"));
 });
 
 export default {
@@ -132,7 +132,6 @@ export default {
                         user: this.user,
                     })
                         .then((response) => {
-                            console.log(response);
                             this.$emit('closeModal', false)
                         }, (error) => {
                             console.log(error);
