@@ -148,7 +148,6 @@
                                 <div class="mt-1">
                                     <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
                                 </div>
-                                <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
                             </div>
                                 <div class="col">
                                     <label for="comment" class="block text-sm font-medium text-gray-700">
@@ -302,7 +301,7 @@ export default {
             lowLimit: new Date(),
             disabledDates: {
                 dates: [],
-            },  
+            },
         }
     },
     watch: {

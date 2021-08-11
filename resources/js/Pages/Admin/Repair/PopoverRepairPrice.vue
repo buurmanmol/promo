@@ -80,7 +80,7 @@ export default {
 
                     Toast.fire({
                         icon: 'success',
-                        title: 'Prijs van reparaite ingesteld op ' + '€ ' + (this.repair.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                        title: 'Prijs van reparatie ingesteld op ' + '€ ' + (this.repair.price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                     })
                 }, (error) => {
                     console.log(error);

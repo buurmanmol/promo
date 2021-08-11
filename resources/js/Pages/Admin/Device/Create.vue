@@ -193,17 +193,17 @@
                                             Alle toestellen
                                         </h3>
                                     </div>
-                                    
+
                                 </div>
 
 
                                 <table class="mt-10 max-h-96 space-y-10 min-w-full divide-y divide-gray-200">
                                     <tbody class="bg-white divide-y divide-gray-200 overflow-y-scroll">
                                         <tr>
-                                            
+
                                             <td>
                                                 <div>
-                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal apparaten van hetzelfde merk/toestel.</label>
+                                                    <label for="email" class="block text-sm font-medium text-gray-700">Aantal extra apparaten van hetzelfde merk/toestel.</label>
                                                     <div class="mt-1 flex rounded-md shadow-sm">
                                                         <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -248,7 +248,7 @@
                                                     <h2 class="font-bold"># {{key + 1}}</h2>
                                                 </div>
                                             </td>
-                                            
+
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-gray-900">
                                                     {{ device.brand.name }}

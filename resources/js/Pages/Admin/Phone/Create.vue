@@ -10,7 +10,7 @@
                             Telefoon informatie
                         </h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Voeg een nieuwe telefoon toe mbv het invullen van de velden.
+                            Selecteer het merk en vul handmatig het nieuwe model in om het toe te voegen aan alle telefoons.
                         </p>
                     </div>
                     <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">

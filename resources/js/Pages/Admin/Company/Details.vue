@@ -8,7 +8,7 @@
                             {{company.name}} Reparatie & apparaat informatie
                         </h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                            Alle aangemeldde reparaties en apparaten van de gebruiker {{user.email}}
+                            Alle aangemeldde reparaties en apparaten van het bedrijf {{company.name}}
                         </p>
                     </div>
                     <div class="col">
@@ -33,45 +33,6 @@
                         <!--                            </dialog-modal>-->
                     </div>
                 </div>
-
-            </div>
-            <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
-                <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Volle naam
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {{user.first_name}} {{user.last_name}}
-                        </dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Applicatie voor
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                                <span v-if="company">{{ company.name }}
-                                    </span>
-                            <span v-else>Geen bedrijf gevonden</span>
-                        </dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">
-                            E-mailadres
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {{user.email}}
-                        </dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Telefoonnummer
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900">
-                            {{ user.phone_number }}
-                        </dd>
-                    </div>
-                </dl>
             </div>
             <div class="sm:hidden">
                 <label for="tabs" class="sr-only">Select a tab</label>
@@ -137,7 +98,7 @@ export default {
             showModal: false,
             showModalTwo: false,
             selectedTab: 0,
-            page:'repairs',
+            page:'bedrijven',
         }
     },
     methods: {

@@ -65,12 +65,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ rep.product_type.name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
                                         <popover-repair-price :repair="rep"></popover-repair-price>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="px-8">
                                     <Switch
                                         @click="postRepairRepaired(rep)"
                                         v-model="rep.is_repaired"
