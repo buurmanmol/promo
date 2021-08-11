@@ -107,7 +107,6 @@ export default {
             }
             axios.post('/admin/api/phone/create', tellie)
                 .then((response) => {
-                    console.log(response);
                     window.location = '/admin/phones'
                 }, (error) => {
                     console.log(error);

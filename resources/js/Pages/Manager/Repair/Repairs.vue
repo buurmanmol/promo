@@ -103,7 +103,6 @@ export default {
         postBatch(repairs) {
             axios.post('/api/repairs/invoice/' + repair.id + '/batch' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });
@@ -111,7 +110,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });

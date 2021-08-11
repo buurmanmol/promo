@@ -328,7 +328,6 @@ export default {
     },
     watch: {
         brand: function (val) {
-            // console.log(val)
             this.getModels(val.name);
         },
     },
@@ -373,7 +372,6 @@ export default {
                 responseType: "blob",
             })
                 .then((response) => {
-                    console.log(response);
                     const url = window.URL.createObjectURL(
                         new Blob([response.data])
                     );
@@ -417,7 +415,6 @@ export default {
             axios
                 .post("/api/invoice", formData)
                 .then((response) => {
-                    console.log(response);
                     this.invoiceList = response.data.invoices;
                 })
                 .catch((response) => {

@@ -143,7 +143,6 @@ export default {
         getCompanies() {
             axios.get('/api/companies')
                 .then((response) => {
-                    console.log(response);
                     this.companies = response.data.companies;
                 }, (error) => {
                     console.log(error);
@@ -168,7 +167,6 @@ export default {
         updateCompany(){
             axios.put('/api/company/' + this.company.id +  '/update', this.company)
                 .then((response) => {
-                    console.log(response);
                     window.location = '/admin/companies'
                 }, (error) => {
                     console.log(error);

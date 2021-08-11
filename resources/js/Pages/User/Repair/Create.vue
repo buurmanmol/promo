@@ -362,7 +362,6 @@ export default {
                 if (result.isConfirmed) {
                     axios.post('/api/repairs/'  + this.currentUser.id + '/create', this.repairs)
                         .then((response) => {
-                            console.log(response);
                         }, (error) => {
                             console.log(error);
                         });
@@ -387,7 +386,6 @@ export default {
         getDevices() {
             axios.get('/api/user/'  + this.currentUser.id + '/devices/unique')
                 .then((response) => {
-                    console.log(response);
                     this.devices = response.data.data;
                 }, (error) => {
                     console.log(error);

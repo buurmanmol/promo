@@ -66,7 +66,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',

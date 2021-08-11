@@ -158,7 +158,6 @@ export default {
             axios.post('/api/users/search',
                 {search: this.search})
                 .then((response) => {
-                    console.log(response);
                     this.newUsers = response.data.users;
                     this.loading = false;
                 }, (error) => {
@@ -170,7 +169,6 @@ export default {
             formData.set("page", this.users.current_page);
             axios.post('/api/users', formData)
                 .then((response) => {
-                    console.log(response);
                     this.newUsers = response.data.users;
                 }, (error) => {
                     console.log(error);

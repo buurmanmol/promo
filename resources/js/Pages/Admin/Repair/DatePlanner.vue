@@ -56,7 +56,6 @@ export default {
         postDate() {
             axios.post('/api/repair/' + this.repair.id + '/plan' , {repair_date: this.date})
                 .then((response) => {
-                    console.log(response);
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',

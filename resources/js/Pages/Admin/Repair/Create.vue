@@ -245,26 +245,28 @@
                                             </td>
                                         </tr>
                                     <template v-if="repairs.length <=1">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <h2 class="font-bold"># 1</h2>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900">
-                                                {{ repair.device.brands_models.brand }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-500">
-                                                {{ repair.device.brands_models.model }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            {{ repair.productType.name }}
-                                            </span>
-                                        </td>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <h2 class="font-bold"># 1</h2>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-gray-900">
+                                                    {{ repair.device.brands_models.brand }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-500">
+                                                    {{ repair.device.brands_models.model }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                {{ repair.productType.name }}
+                                                </span>
+                                            </td>
+                                        </tr>
                                     </template>
                                     <template  v-if="repairs.length > 1">
                                         <tr v-for="(repair ,key ) in repairs" :key="key">
@@ -450,7 +452,7 @@ export default {
         getDevices() {
             axios.get('/api/user/'  + this.user.id + '/devices/unique')
                 .then((response) => {
-                    console.log(response);
+
                     this.devices = response.data.data;
                 }, (error) => {
                     console.log(error);

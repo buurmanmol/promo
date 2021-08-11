@@ -456,7 +456,6 @@ export default {
                 .then((response) => {
                     this.invoice.invoice_path = response.data;
                     this.submit();
-                    console.log("WIN");
                 })
                 .catch((response) => {
                     console.log(response);
@@ -479,7 +478,6 @@ export default {
                 )
                 .then(
                     (response) => {
-                        console.log(response);
                         window.location = "/admin/facturen";
                     },
                     (error) => {
@@ -509,7 +507,6 @@ export default {
          */
         handleFileUpload(e) {
             this.invoice.file = e.target.files[0];
-            console.log(this.invoice.file);
         },
     },
 

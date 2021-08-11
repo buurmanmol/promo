@@ -173,10 +173,8 @@ export default {
         postDate(repair) {
             let date = moment(repair.repair_date)
             date.add(1, 'd');
-            console.log(repair.repair_date)
             axios.post('/api/repair/' + repair.id + '/plan' , {repair_date: date})
                 .then((response) => {
-                    console.log(response);
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -199,7 +197,6 @@ export default {
         getRepairs(user) {
             axios.get('/api/repairs/' + user)
                 .then((response) => {
-                    console.log(response);
                     this.newRepairs = response.data.data
                 }, (error) => {
                     console.log(error);
@@ -208,7 +205,6 @@ export default {
         deleteRepair(repair) {
             axios.delete('/api/repair/' + repair.id + '/delete')
                 .then((response) => {
-                    console.log(response);
                     this.getRepairs(repair.user_id);
                 }, (error) => {
                     console.log(error);
@@ -225,7 +221,6 @@ export default {
         postBatch(repairs) {
             axios.post('/api/repairs/invoice/' + repair.id + '/batch' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });
@@ -233,7 +228,6 @@ export default {
         postRepairRepaired(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                     if(repair.is_repaired) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -274,7 +268,6 @@ export default {
         postRepair(repair, brand, model){
             axios.post('/api/repair/' + repair.id + '/update' , repair)
                 .then((response) => {
-                    console.log(response);
                 }, (error) => {
                     console.log(error);
                 });
