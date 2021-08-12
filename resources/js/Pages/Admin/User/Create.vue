@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div v-if="managers.length > 0" class="sm:col-span-2">
-                            <div v-if="user.role !== 'manager' && user.role !== 'company'">
+                            <div v-if="user.role !== 'manager' && user.role !== 'company' && user.role !== 'admin'">
                             <label for="zip" class="block text-sm font-medium text-gray-700">
                                 Manager
                             </label>
@@ -264,8 +264,8 @@ export default {
             if(!this.user.password) this.errors.push("Wachtwoord vereist.");
             if(!this.user.company_id) this.errors.push("Selecteer een bedrijf.");
             if(!this.user.role) this.errors.push("Selecteer een rol.");
-            if(this.user.role !== 'manager' && this.user.role !== 'company'){
-                 if(!this.user.manager_id) this.errors.push("Selecteer een manager.");
+            if(this.user.role !== 'manager' && this.user.role !== 'company' && this.user.role !== "admin"){
+                 if(!this.user.manager_id) this.errors.push("Selecteer een manager. Als er nog geen manager is maak eerst een manager aan");
             }
 
 

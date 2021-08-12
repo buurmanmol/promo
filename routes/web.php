@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/repairs/search', [RepairController::class, 'searchRepairIndexAdmin']);
     Route::post('/api/repair/{repair}/plan', [RepairController::class, 'planRepair']);
     Route::delete('api/repair/{repair}/delete', [RepairController::class, 'deleteRepair']);
+    Route::get('api/company/{company}/repairs',[RepairController::class, 'getCompanyRepairs']);
     //DeviceController
     Route::get('/api/user/{user}/devices/unique', [DeviceController::class, 'getUniqueDevices']);
     Route::post('/api/device/create', [DeviceController::class, 'create']);

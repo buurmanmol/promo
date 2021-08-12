@@ -57,8 +57,9 @@
             </div>
             <div class="grid-cols-1">
                 <div v-if="selectedTab === 0" class="col">
-                    <repairs :is-company="true" :repairs="repairs"></repairs>
+                    <repairs :is-company="true" :company="company" :repairs="repairs"></repairs>
                 </div>
+
                 <div v-if="selectedTab === 1" class="col">
                     <devices :devices="devices"></devices>
                 </div>
