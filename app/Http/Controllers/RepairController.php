@@ -51,10 +51,10 @@ class RepairController extends Controller
         return $repair;
     }
 
-    public function delete(Repair $repair)
+    public function deleteRepair(Repair $repair)
     {
         $repair->delete();
-        return "deleted";
+        return ['repair' => $repair];
     }
 
     public function repairItem(Repair $repair)
@@ -92,6 +92,8 @@ class RepairController extends Controller
             array_push($fullArr, $sameDate);
         }
         $s = array_unique($fullArr, SORT_REGULAR);
+
+        return ['data' => $s];
     }
 
     public function repairIndex()
@@ -197,11 +199,6 @@ class RepairController extends Controller
        return $pagination;
     }
 
-    public function create()
-    {
-
-    }
-
     public function createRepairs(User $user, Request $request)
     {
         $repairs = $request->all();
@@ -265,7 +262,7 @@ class RepairController extends Controller
         $endDate = Carbon::now()->add(1,'year');
         for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
             $sundays[] = $date->format('Y-m-d');
-        } 
+        }
 
         return Inertia::render('User/Repair/Create', ['sundays' => $sundays, 'devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
@@ -395,7 +392,7 @@ class RepairController extends Controller
             $users = User::with(['repairs.device.brandsModels','repairs.productType','company', 'repairs'])->where('manager_id', $manager->id)->get();
             $manager->users = $users;
         }
-        
+
 //        dd($managerArray);
         return Inertia::render('Company/Repair/Index', ['currentUser' => Auth::user(),'managers' => $managerArray, 'company' => Auth::user()->company]);
     }

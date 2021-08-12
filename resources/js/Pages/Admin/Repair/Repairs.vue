@@ -194,21 +194,45 @@ export default {
                     console.log(error);
                 });
         },
-        getRepairs(user) {
-            axios.get('/api/repairs/' + user)
+        getRepairs() {
+            const formData= new FormData();
+            formData.set('page', this.repairs.current_page);
+            axios.post('/api/repairs/', formData)
                 .then((response) => {
                     this.newRepairs = response.data.data
                 }, (error) => {
                     console.log(error);
                 });
+
         },
         deleteRepair(repair) {
-            axios.delete('/api/repair/' + repair.id + '/delete')
-                .then((response) => {
-                    this.getRepairs(repair.user_id);
-                }, (error) => {
-                    console.log(error);
-                });
+            Swal.fire({
+                title: 'Weet u het zeker?',
+                text: "Hierdoor zal deze reparatie verwijderd worden van de gebruiker!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ja, verwijder het!',
+                cancelButtonText:'Annuleren'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/api/repair/' + repair.id + '/delete')
+                        .then((response) => {
+                            this.getRepairs();
+                        }, (error) => {
+                            console.log(error);
+                        });
+                    Swal.fire(
+                        'Poof!',
+                        'Het apparaat is nu verwijderd!',
+                        'success'
+                    )
+                }
+            })
+
+
+
         },
         formatDate(date) {
             moment.locale('nl');
