@@ -51,7 +51,7 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companies = Company::orderBy('name', 'asc')->paginate(10);
+        $companies = Company::with('users')->orderBy('name', 'asc')->paginate(10);
 
         return Inertia::render('Admin/Company/Index', ['companies' => $companies, 'user' => Auth::user()]);
     }

@@ -86,9 +86,11 @@
                                     <XIcon @click="deleteCompany(company.id)" class="text-azure-radiance-800 w-5 h-5 text-md" />
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a :href="'/company/' + company.id + '/details'">
-                                        <EyeIcon class="text-azure-radiance-800 w-5 h-5 text-md" />
-                                    </a>
+                                    <div v-if="company.users.length > 0">
+                                        <a :href="'/company/' + company.id + '/details'">
+                                            <EyeIcon class="text-azure-radiance-800 w-5 h-5 text-md" />
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

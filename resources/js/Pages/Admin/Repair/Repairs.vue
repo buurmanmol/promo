@@ -1,11 +1,11 @@
 <template>
     <div class="w-full px-4">
         <div class="w-full p-2 mx-auto bg-white rounded-2xl">
-            <Disclosure  v-for="repair in repairs" v-slot="{ open }">
+            <Disclosure  v-for="repair in newRepairs" v-slot="{ open }">
                 <DisclosureButton
                     class="relative flex justify-between w-full px-4 py-4 my-2 text-md font-medium text-left text-azure-radiance-900 bg-azure-radiance-100 rounded-lg hover:bg-azure-radiance-200 focus:outline-none focus-visible:ring focus-visible:ring-azure-radiance-500 focus-visible:ring-opacity-75"
                 >
-                     <span v-if="!isCompany">Reparatie batch:</span> <span v-else>{{repair[0].user.first_name}} {{repair[0].user.last_name}} </span> {{formatDate(repair[0].created_at)}}
+                    <span v-if="!isCompany">Reparatie batch:</span> <span v-else>{{repair[0].user.first_name}} {{repair[0].user.last_name}} </span> {{formatDate(repair[0].created_at)}}
 
                     <ChevronUpIcon
                         :class="open ? 'transform rotate-180' : ''"
@@ -51,7 +51,7 @@
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="rep in repair">
+                            <tr v-for="rep in repair ">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-500">
                                         {{ rep.device.brands_models.brand }}
@@ -70,7 +70,7 @@
                                         <popover-repair-price :repair="rep"></popover-repair-price>
                                     </div>
                                 </td>
-                                <td class="px-8">
+                                <td class="px-10">
                                     <Switch
                                         @click="postRepairRepaired(rep)"
                                         v-model="rep.is_repaired"
@@ -84,7 +84,7 @@
                                         />
                                     </Switch>
                                 </td>
-                                <td >
+                                <td class="px-10">
                                     <div v-if="rep.repair_date" class="text-sm text-gray-500">
                                         {{formatDateNormal(rep.repair_date)}}
                                     </div>
@@ -141,7 +141,7 @@ import Datepicker from "vue3-datepicker";
 import Swal from "sweetalert2";
 export default {
     name: "Repairs",
-    props: ['repairs', 'isCompany'],
+    props: ['repairs', 'isCompany','company'],
     components: {
         AppLayoutUser,
         Datepicker,
@@ -158,9 +158,13 @@ export default {
     },
     data() {
         return {
+            newRepairs: [],
             value: 1234,
             toggleDate: null,
         }
+    },
+    mounted(){
+        this.getCompanyRepairs()
     },
     methods: {
         setDateToggle(repair) {
@@ -196,14 +200,22 @@ export default {
         },
         getRepairs() {
             const formData= new FormData();
-            formData.set('page', this.repairs.current_page);
-            axios.post('/api/repairs/', formData)
+            formData.set('page', this.repair.current_page);
+            axios.post('/api/repairs', formData)
                 .then((response) => {
                     this.newRepairs = response.data.data
                 }, (error) => {
                     console.log(error);
                 });
+        },
+        getCompanyRepairs(repair, brand, model){
+            axios.get('/api/company/' + this.company.id + '/repairs')
+                .then((response) => {
+                    this.newRepairs = response.data.repairs;
 
+                }, (error) => {
+                    console.log(error);
+                });
         },
         deleteRepair(repair) {
             Swal.fire({
@@ -219,7 +231,7 @@ export default {
                 if (result.isConfirmed) {
                     axios.delete('/api/repair/' + repair.id + '/delete')
                         .then((response) => {
-                            this.getRepairs();
+                            this.getCompanyRepairs();
                         }, (error) => {
                             console.log(error);
                         });
@@ -230,9 +242,6 @@ export default {
                     )
                 }
             })
-
-
-
         },
         formatDate(date) {
             moment.locale('nl');

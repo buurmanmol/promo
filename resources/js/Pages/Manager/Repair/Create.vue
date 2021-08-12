@@ -370,7 +370,7 @@ export default {
                         'Uw reparatie(s) is/zijn aangemaakt.',
                         'success'
                     )
-                    window.location = '/user/repair/complete'
+                    window.location = '/manager/repairs'
                 }
             })
 

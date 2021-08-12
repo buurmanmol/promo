@@ -96,6 +96,38 @@ class RepairController extends Controller
         return ['data' => $s];
     }
 
+    public function getRepairs(Request $request){
+        $data = Repair::all();
+        return ["data"=>$data];
+    }
+
+    public function getCompanyRepairs(Company $company)
+    {
+        $repairs = Company::where('id' , $company->id)->with('users.devices.brandsModels', 'users.invoices', 'users.repairs.device.brandsModels')->first();
+        $fullArr = [];
+//        dd($repairs);
+        $companyUser = Company::where('id', $company->id)->with(['users' => function ($q) {
+            $q->where('role', 'company');
+        }])->first();
+        $user = $companyUser->users[0];
+
+        foreach($repairs->users as $user) {
+            foreach ($user->repairs as $repair) {
+                $sameDate = Repair::where('user_id', $user->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with(['user','productType', 'device.brandsModels']) -> orderBy('created_at', 'desc')->get();
+//            dd($sameDate);
+                $sameDate->user = $user;
+//                dd($sameDate);
+                array_push($fullArr, $sameDate);
+            }
+        }
+
+        $s = array_unique($fullArr, SORT_REGULAR);
+//        dd($user['id'], auth()->user()->id);
+
+        return ['repairs'=> $s];
+        }
+
+
     public function repairIndex()
     {
         $repairs = Repair::where('user_id', auth()->user()->id)->get();
