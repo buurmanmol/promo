@@ -16,7 +16,7 @@ class BuckarooController extends Controller
         $endDate = Carbon::create($request->get('end_date'))->format('d-m-Y');
         $user = $request->get('user');
         $addressArray = explode(' ', $user['address']);
-        $housenumber = end($addressArray);
+        $housenumber = $res = preg_replace("/[^0-9]/", "", end($addressArray));
         if (($key = array_search($housenumber, $addressArray)) !== false) {
             unset($addressArray[$key]);
         }
@@ -140,7 +140,7 @@ class BuckarooController extends Controller
                                             14 =>
                                                 array (
                                                     "Name" => "PricePerUnit",
-                                                    "GroupType" => "UpdateRatePlanCharge",
+                                                    "GroupType" => "AddRatePlanCharge",
                                                     "GroupID" => "",
                                                     "Value" => $request->get('price'),
                                                 ),
@@ -154,7 +154,7 @@ class BuckarooController extends Controller
                                             16 =>
                                                 array (
                                                     "Name" => "RatePlanChargeCode",
-                                                    "GroupType" => "AddRatePlanChargeCode",
+                                                    "GroupType" => "AddRatePlanCharge",
                                                     "GroupID" => "",
                                                     "Value" => "nxjshpxt",
                                                 ),

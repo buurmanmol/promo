@@ -12,6 +12,10 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    public function currentUser()
+    {
+        return ['user'=> User::with('company')->find(Auth::id())];
+    }
     public function dashboard()
     {
         switch(Auth::user()->role){
@@ -99,7 +103,7 @@ class UserController extends Controller
         if($request->get('manager_id') === null) {
             $user->manager_id = $user->id;
         }
-        
+
         $managerId = $request->get('manager_id');
         if($managerId === null){
             $managerId = $user->id;

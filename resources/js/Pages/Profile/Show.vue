@@ -1,10 +1,5 @@
 <template>
-    <app-layout-user  :user="{user: {
-        first_name: '',
-        last_name: ''
-    }}" :company="{company: {
-        wallet: 0
-    }}">
+    <app-layout-universal v-if="user"  :user="user" :company="user.company">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Profile
@@ -40,11 +35,11 @@
 <!--                </template>-->
             </div>
         </div>
-    </app-layout-user>
+    </app-layout-universal>
 </template>
 
 <script>
-    import AppLayoutUser from '@/Layouts/AppLayoutUser'
+    import AppLayoutUniversal from '@/Layouts/AppLayoutUniversal'
     import DeleteUserForm from './DeleteUserForm'
     import JetSectionBorder from '@/Jetstream/SectionBorder'
     import LogoutOtherBrowserSessionsForm from './LogoutOtherBrowserSessionsForm'
@@ -54,9 +49,8 @@
 
     export default {
         props: ['sessions'],
-
         components: {
-            AppLayoutUser,
+            AppLayoutUniversal,
             DeleteUserForm,
             JetSectionBorder,
             LogoutOtherBrowserSessionsForm,
@@ -64,5 +58,24 @@
             UpdatePasswordForm,
             UpdateProfileInformationForm,
         },
+        data() {
+          return {
+              user: null,
+          }
+        },
+        created() {
+            this.getUser();
+        },
+        methods: {
+            getUser() {
+                axios.get('/api/user/current')
+                    .then((response) => {
+                        this.user = response.data.user;
+                        this.company = response.data.company;
+                    }, (error) => {
+                        console.log(error);
+                    });
+            }
+        }
     }
 </script>
