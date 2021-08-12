@@ -117,7 +117,7 @@
                                     >
                                         <span
                                             :class="[
-                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ring-white',
+                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ',
                                             ]"
                                         >
                                             <component

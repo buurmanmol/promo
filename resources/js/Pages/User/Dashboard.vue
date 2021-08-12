@@ -116,14 +116,14 @@
                                     >
                                         <span
                                             :class="[
-                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ring-white',
+                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ',
                                             ]"
                                         >
                                             <component
                                                 :is="action.icon"
                                                 class="
-                                                    h-20
-                                                    w-20
+                                                    w-5 md:h-20
+                                                    w-5 md:w-20
                                                     dark:bg-gray-800
                                                 "
                                                 aria-hidden="true"
