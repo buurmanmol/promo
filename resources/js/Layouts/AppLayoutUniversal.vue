@@ -1,15 +1,15 @@
 <template>
 <div v-if="newUser">
-    <app-layout-admin v-if="newUser.role === 'admin'" :user="newUser" :company="company">
+    <app-layout-admin v-if="newUser.role === 'admin'" :user="newUser" :company="newCompany">
         <slot></slot>
     </app-layout-admin>
-    <app-layout-manager v-if="newUser.role === 'manager'" :user="newUser" :company="company">
+    <app-layout-manager v-if="newUser.role === 'manager'" :user="newUser" :company="newCompany">
         <slot></slot>
     </app-layout-manager>
-    <app-layout-user v-if="newUser.role === 'user'" :user="newUser" :company="company">
+    <app-layout-user v-if="newUser.role === 'user'" :user="newUser" :company="newCompany">
         <slot></slot>
     </app-layout-user>
-    <app-layout-company v-if="newUser.role === 'company'" :user="newUser" :company="company">
+    <app-layout-company v-if="newUser.role === 'company'" :user="newUser" :company="newCompany">
         <slot></slot>
     </app-layout-company>
 </div>
