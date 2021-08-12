@@ -51,7 +51,7 @@
                     </section>
 
                     <section aria-labelledby="quick-links-title">
-                        <div class="grid grid-flow-col grid-cols-2 grid-rows-2 gap-4">
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 p-6">
                             <div
                                 v-for="action in actions"
                                 :key="action.name"
@@ -71,7 +71,7 @@
                                     focus-within:ring-indigo-500
                                 "
                             >
-                                <div class="mt-8 mb-10 flex-wrap">
+                                <div class="mt-8 mb-10">
                                     <h3 class="text-lg font-medium">
                                         <a
                                             :href="action.href"
@@ -103,7 +103,6 @@
                                     <p class="mt-2 text-sm text-gray-500">
                                         {{ action.message }}
                                     </p>
-
                                     <span
                                         class="
                                             pointer-events-none
@@ -117,15 +116,14 @@
                                     >
                                         <span
                                             :class="[
-                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ',
+                                                'text-azure-radiance-600 prounded-lg inline-flex p-3',
                                             ]"
                                         >
                                             <component
                                                 :is="action.icon"
                                                 class="
-
-                                                    h-20
-                                                    w-20
+                                                    w-5 md:h-10
+                                                    w-5 md:w-10
                                                     dark:bg-gray-800
                                                 "
                                                 aria-hidden="true"
@@ -169,37 +167,38 @@ export default {
             page: "dashboard",
             actions: [
                 {
-                    name: "Mijn facturen",
-                    subname: "",
-                    message:
-                        "Klik hier om naar de pagina te gaan met uw persoonlijke facatures.",
-                    href: "/user/facturen",
-                    icon: ClipboardListIcon,
-                },
-                {
                     name: "Nieuwe reparatie",
                     subname: "",
                     message:
                         "Klik hier om een nieuwe reparatieaanvraag te doen!",
-                    href: "/user/repair/create",
+                    href: "/manager/repair/create",
                     icon: PlusCircleIcon,
+                },
+                {
+                    name: "Mijn reparaties",
+                    subname: "",
+                    message:
+                        "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
+                    href: "/manager/repairs",
+                    icon: BookOpenIcon,
+                },
+                {
+                    name: "Mijn facturen",
+                    subname: "",
+                    message:
+                        "Klik hier om naar de pagina te gaan met de facturen van uw werknemers",
+                    href: "/manager/facturen",
+                    icon: ClipboardListIcon,
                 },
                 {
                     name: "Mijn apparaten",
                     subname: "",
                     message:
                         "Klik hier om naar de lijst te gaan met al uw apparaten.",
-                    href: "/user/apparaten",
+                    href: "/manager/apparaten",
                     icon: DeviceMobileIcon,
                 },
-                {
-                    name: "Min reparaties",
-                    subname: "",
-                    message:
-                        "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
-                    href: "/user/reparaties",
-                    icon: BookOpenIcon,
-                },
+
             ],
         };
     },

@@ -225,10 +225,12 @@ import {
     ChevronRightIcon,
     OfficeBuildingIcon,
     SearchIcon,
+    HomeIcon,
 
 } from '@heroicons/vue/solid'
 
 const navigation = [
+    { name: 'Home', href: '/dashboard', icon: HomeIcon, current: 'dashboard' },
     { name: 'Gebruikers', href: '/admin/users', icon: UserGroupIcon, current:"users"  },
     { name: 'Bedrijven', href: '/admin/companies', icon: OfficeBuildingIcon, current:"companies" },
     { name: 'Apparaten', href: '/admin/devices', icon: DeviceTabletIcon, current:"devices" },

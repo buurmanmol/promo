@@ -116,14 +116,14 @@
                                     >
                                         <span
                                             :class="[
-                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ',
+                                                'text-azure-radiance-600 prounded-lg inline-flex p-3',
                                             ]"
                                         >
                                             <component
                                                 :is="action.icon"
                                                 class="
-                                                    h-20
-                                                    w-20
+                                                    w-5 md:h-10
+                                                    w-5 md:w-10
                                                     dark:bg-gray-800
                                                 "
                                                 aria-hidden="true"
@@ -167,14 +167,6 @@ export default {
             page: "dashboard",
             actions: [
                 {
-                    name: "Mijn facturen",
-                    subname: "",
-                    message:
-                        "Klik hier om naar de pagina te gaan met uw persoonlijke facatures.",
-                    href: "/user/facturen",
-                    icon: ClipboardListIcon,
-                },
-                {
                     name: "Nieuwe reparatie",
                     subname: "",
                     message:
@@ -183,20 +175,28 @@ export default {
                     icon: PlusCircleIcon,
                 },
                 {
+                    name: "Mijn reparaties",
+                    subname: "",
+                    message:
+                        "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
+                    href: "/user/reparaties",
+                    icon: BookOpenIcon,
+                },
+                {
+                    name: "Mijn facturen",
+                    subname: "",
+                    message:
+                        "Klik hier om naar de pagina te gaan met uw persoonlijke facatures.",
+                    href: "/user/facturen",
+                    icon: ClipboardListIcon,
+                },
+                {
                     name: "Mijn apparaten",
                     subname: "",
                     message:
                         "Klik hier om naar de lijst te gaan met al uw apparaten.",
                     href: "/user/apparaten",
                     icon: DeviceMobileIcon,
-                },
-                {
-                    name: "Min reparaties",
-                    subname: "",
-                    message:
-                        "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
-                    href: "/user/reparaties",
-                    icon: BookOpenIcon,
                 },
             ],
         };
