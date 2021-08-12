@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div v-if="managers.length > 0" class="sm:col-span-2">
-                            <div v-if="user.role !== 'manager'">
+                            <div v-if="user.role !== 'manager' && user.role !== 'company'">
                             <label for="zip" class="block text-sm font-medium text-gray-700">
                                 Manager
                             </label>
@@ -252,7 +252,7 @@ export default {
         },
         checkForm:function(e) {
             this.errors = [];
-            
+
             if(!this.user.first_name) this.errors.push("Voornaam vereist.");
             if(!this.user.last_name) this.errors.push("Achternaam vereist.");
             if(!this.user.city) this.errors.push("Stad vereist.");
@@ -264,10 +264,10 @@ export default {
             if(!this.user.password) this.errors.push("Wachtwoord vereist.");
             if(!this.user.company_id) this.errors.push("Selecteer een bedrijf.");
             if(!this.user.role) this.errors.push("Selecteer een rol.");
-            if(this.user.role !== 'manager'){
+            if(this.user.role !== 'manager' && this.user.role !== 'company'){
                  if(!this.user.manager_id) this.errors.push("Selecteer een manager.");
             }
-           
+
 
             if (!this.errors.length) {
                 this.createUser()
