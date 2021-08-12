@@ -12,6 +12,10 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    public function currentUser()
+    {
+        return ['user'=> User::with('company')->find(Auth::id())];
+    }
     public function dashboard()
     {
         switch(Auth::user()->role){

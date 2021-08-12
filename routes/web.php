@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/user/{user}/update', [UserController::class, 'update']);
     Route::delete('/api/user/{user}/delete', [UserController::class, 'delete']);
     Route::post('/api/users', [UserController::class, 'getUsers']);
+    Route::get('/api/user/current', [UserController::class, 'currentUser']);
+
     //BrandsModelsController
     Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
     Route::post('/api/brand/models', [BrandsModelsController::class, 'getBrandsModelsByName']);
