@@ -171,7 +171,7 @@ export default {
                     subname: "",
                     message:
                         "Klik hier om een nieuwe reparatieaanvraag te doen!",
-                    href: "/user/repair/create",
+                    href: "/company/repair/create",
                     icon: PlusCircleIcon,
                 },
                 {
@@ -179,7 +179,7 @@ export default {
                     subname: "",
                     message:
                         "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
-                    href: "/user/reparaties",
+                    href: "/company/repairs",
                     icon: BookOpenIcon,
                 },
                 {
@@ -187,7 +187,7 @@ export default {
                     subname: "",
                     message:
                         "Klik hier om naar de pagina te gaan met uw persoonlijke facatures.",
-                    href: "/user/facturen",
+                    href: "/company/facturen",
                     icon: ClipboardListIcon,
                 },
                 {
@@ -195,7 +195,7 @@ export default {
                     subname: "",
                     message:
                         "Klik hier om naar de lijst te gaan met al uw apparaten.",
-                    href: "/user/apparaten",
+                    href: "/company/apparaten",
                     icon: DeviceMobileIcon,
                 },
             ],
