@@ -116,14 +116,14 @@
                                     >
                                         <span
                                             :class="[
-                                                'text-azure-radiance-600 prounded-lg inline-flex p-3 ring-4 ring-white',
+                                                'text-azure-radiance-600 prounded-lg inline-flex p-3',
                                             ]"
                                         >
                                             <component
                                                 :is="action.icon"
                                                 class="
-                                                    h-20
-                                                    w-20
+                                                    w-5 md:h-10
+                                                    w-5 md:w-10
                                                     dark:bg-gray-800
                                                 "
                                                 aria-hidden="true"
@@ -168,36 +168,36 @@ export default {
             page: "dashboard",
             actions: [
                 {
-                    name: "Mijn facturen",
+                    name: "Alle reparaties",
                     subname: "",
                     message:
-                        "Klik hier om naar de pagina te gaan met uw persoonlijke facatures.",
-                    href: "/user/facturen",
-                    icon: ClipboardListIcon,
+                        "Klik hier om naar het overzicht te gaan met alle huidige reparaties.",
+                    href: "/admin/repairs",
+                    icon: BookOpenIcon,
                 },
                 {
                     name: "Nieuwe reparatie",
                     subname: "",
                     message:
                         "Klik hier om een nieuwe reparatieaanvraag te doen!",
-                    href: "/user/repair/create",
+                    href: "/admin/repairs/create",
                     icon: PlusCircleIcon,
                 },
                 {
                     name: "Mijn apparaten",
                     subname: "",
                     message:
-                        "Klik hier om naar de lijst te gaan met al uw apparaten.",
-                    href: "/user/apparaten",
+                        "Klik hier om naar de lijst te gaan met alle apparaten.",
+                    href: "/admin/devices",
                     icon: DeviceMobileIcon,
                 },
                 {
-                    name: "Mijn reparaties",
+                    name: "Facturen Gebruikers",
                     subname: "",
                     message:
-                        "Klik hier om naar het overzicht te gaan met al uw huidige reparaties.",
-                    href: "/user/reparaties",
-                    icon: BookOpenIcon,
+                        "Klik hier om naar de pagina te gaan met alle facturen.",
+                    href: "/admin/facturen",
+                    icon: ClipboardListIcon,
                 },
             ],
         };
