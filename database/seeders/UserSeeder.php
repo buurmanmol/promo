@@ -30,7 +30,9 @@ class UserSeeder extends Seeder
             'manager_id' => 1,
             'province' => 'Groningen',
             'email' => 'wouter.moelker@hotmail.com',
-            'password' => bcrypt('123')
+            'password' => bcrypt('123'),
+            'IBAN'=>bcrypt('NL55INGB1234567890'),
+            'rek_houder'=>'W. Moelker',
         ]);
 
         User::create([
@@ -45,7 +47,11 @@ class UserSeeder extends Seeder
             'province' => 'Groningen',
             'company_id' => 1,
             'email' => 'th.molit@gmail.com',
-            'password' => bcrypt('123')
+            'password' => bcrypt('123'),
+            'IBAN'=>bcrypt('NL55INGB1234567891'),
+            'rek_houder'=>'T. Mol',
+
+
         ]);
 
         User::create([
@@ -60,7 +66,11 @@ class UserSeeder extends Seeder
             'manager_id' => 2,
             'company_id' => 1,
             'email' => 'adolganov@outlook.nl',
-            'password' => bcrypt('123')
+            'password' => bcrypt('123'),
+            'IBAN'=>bcrypt('NL55INGB1234567892'),
+            'rek_houder'=>'A. Dolganov',
+
+
         ]);
 
         User::create([
@@ -75,7 +85,10 @@ class UserSeeder extends Seeder
             'manager_id' => 2,
             'company_id' => 1,
             'email' => 'kevin-houkema@hotmail.com',
-            'password' => bcrypt('123')
+            'password' => bcrypt('123'),
+            'IBAN'=>bcrypt('NL55INGB1234567893'),
+            'rek_houder'=>'K. Houkema',
+
         ]);
 
         $faker = \Faker\Factory::create();
@@ -93,7 +106,10 @@ class UserSeeder extends Seeder
             'province' => $faker->state,
             'email' => $faker->email,
             'password' => bcrypt('123'),
-        ]);
+                'IBAN'=> bcrypt($faker->bankAccountNumber),
+                'rek_houder'=>$faker->lastName,
+
+            ]);
             $manager->update([
                 'manager_id' => $manager->id
             ]);
@@ -110,6 +126,9 @@ class UserSeeder extends Seeder
                 'province' => $faker->state,
                 'email' => $faker->email,
                 'password' => bcrypt('123'),
+                'IBAN'=> bcrypt($faker->bankAccountNumber),
+                'rek_houder'=>$faker->lastName,
+
             ]);
 
             for ($i = 0; $i < 5; $i++) {
@@ -128,6 +147,8 @@ class UserSeeder extends Seeder
                     'province' => $faker->state,
                     'email' => $faker->email,
                     'password' => bcrypt('123'),
+                    'IBAN'=> bcrypt($faker->bankAccountNumber),
+                    'rek_houder'=>$faker->lastName,
                 ]);
             }
         }

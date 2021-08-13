@@ -26,6 +26,9 @@ class CreateUsersTable extends Migration
             $table->BigInteger('company_id')->unsigned();
             $table->BigInteger('manager_id')->unsigned()->nullable();
             $table->string('phone_number')->unique();
+            $table->string('IBAN')->unique();
+            $table->string('rek_houder');
+
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

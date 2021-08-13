@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -96,7 +97,9 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'company_id' => $request->get('company_id'),
             'role' => $request->get('role'),
-            'password' => bcrypt($request->get('password'))
+            'password' => bcrypt($request->get('password')),
+            'IBAN'=> Crypt::encryptString($request->get('IBAN')),
+            'rek_houder'=> $request->get('rek_houder'),
         ]);
         if($request->get('manager_id') === null) {
             $user->manager_id = $user->id;

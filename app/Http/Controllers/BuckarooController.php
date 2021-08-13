@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 
 class BuckarooController extends Controller
 {
@@ -21,6 +22,8 @@ class BuckarooController extends Controller
             unset($addressArray[$key]);
         }
         $txt = $user['address'];
+        $iban = Crypt::decryptString($user['IBAN']);
+
         $str= preg_replace('/\W\w+\s*(\W*)$/', '$1', $txt);
         $street = $str;
 //        dd($housenumber);
@@ -69,13 +72,6 @@ class BuckarooController extends Controller
                                                     "GroupID" => "",
                                                     "Value" => $user['last_name'],
                                                 ),
-//                                            5 =>
-//                                                array (
-//                                                    "Name" => "Gender",
-//                                                    "GroupType" => "Person",
-//                                                    "GroupID" => "",
-//                                                    "Value" => "1",
-//                                                ),
                                             5 =>
                                                 array (
                                                     "Name" => "Culture",
@@ -157,6 +153,27 @@ class BuckarooController extends Controller
                                                     "GroupType" => "AddRatePlanCharge",
                                                     "GroupID" => "",
                                                     "Value" => "nxjshpxt",
+                                                ),
+                                            16 =>
+                                            array (
+                                                "Name" => "RatePlanChargeCode",
+                                                "GroupType" => "AddRatePlanCharge",
+                                                "GroupID" => "",
+                                                "Value" => "nxjshpxt",
+                                            ),
+                                            17 =>
+                                                array (
+                                                    "Name" => "CustomerIBAN",
+                                                    "GroupType" => "",
+                                                    "GroupID" => "",
+                                                    "Value" => "$iban",
+                                                ),
+                                            18 =>
+                                                array (
+                                                    "Name" => "CustomerAccountName",
+                                                    "GroupType" => "",
+                                                    "GroupID" => "",
+                                                    "Value" => $user['rekeninghouder'],
                                                 ),
                                         )
                                 )

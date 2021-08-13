@@ -71,6 +71,22 @@
                                 <input v-model="user.phone_number" id="phone_number" name="phone_number" type="text" autocomplete="tel" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                             </div>
                         </div>
+                        <div class="sm:col-span-4">
+                            <label for="IBAN" class="block text-sm font-medium text-gray-700">
+                                IBAN
+                            </label>
+                            <div class="mt-1">
+                                <input v-model="user.IBAN" id="IBAN" name="IBAN" type="text" autocomplete="IBAN" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                            </div>
+                        </div>
+                        <div class="sm:col-span-4">
+                            <label for="rek_houder" class="block text-sm font-medium text-gray-700">
+                                Rekening Houder
+                            </label>
+                            <div class="mt-1">
+                                <input v-model="user.rek_houder" id="rek_houder" name="rek_houder" type="text" autocomplete="Rekening Houder" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                            </div>
+                        </div>
 
                         <div class="sm:col-span-6">
                             <label for="street_address" class="block text-sm font-medium text-gray-700">

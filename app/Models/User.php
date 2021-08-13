@@ -36,6 +36,8 @@ class User extends Authenticatable
         'email',
         'phone_number',
         'password',
+        'IBAN',
+        'rek_houder',
     ];
 
     /**
@@ -91,5 +93,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Invoice::class)->orderBy('created_at', 'DESC');
     }
-   
+
 }
