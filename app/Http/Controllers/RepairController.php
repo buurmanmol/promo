@@ -133,7 +133,7 @@ class RepairController extends Controller
         $repairs = Repair::where('user_id', auth()->user()->id)->get();
         $fullArr = [];
         foreach($repairs as $repair) {
-            $sameDate = Repair::where('user_id', auth()->user()->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
+            $sameDate = Repair::where('user_id', auth()->user()->id)->whereBetween('created_at', [$repair->created_at->startOfDay(), $repair->created_at->endOfDay()])->with('invoice','productType', 'device.brandsModels') -> orderBy('created_at', 'desc')->get();
             array_push($fullArr, $sameDate);
         }
             $s = array_unique($fullArr, SORT_REGULAR);

@@ -164,7 +164,7 @@ export default {
             axios.post('/admin/api/phones', formData)
                 .then((response) => {
                     this.phonesList = response.data.brandsModel;
-                    this.searchModels = response.data.brandsModel 
+                    this.searchModels = response.data.brandsModel; 
                 }, (error) => {
                     console.log(error);
                 });

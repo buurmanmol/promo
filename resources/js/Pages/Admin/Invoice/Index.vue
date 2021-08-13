@@ -21,34 +21,57 @@
                             sm:rounded-lg
                         "
                     >
-                        <a
-                            href="/admin/facturen/create"
-                            type="button"
-                            class="
-                                my-4
-                                inline-flex
-                                items-center
-                                px-3
-                                py-2
-                                border border-transparent
-                                text-sm
-                                leading-4
-                                font-medium
-                                rounded-md
-                                shadow-sm
-                                text-white
-                                bg-azure-radiance-600
-                                hover:bg-azure-radiance-700
-                                focus:outline-none
-                                focus:ring-2
-                                focus:ring-offset-2
-                                focus:ring-azure-radiance-500
-                            "
-                        >
-                            Factuur toevoegen +
-                        </a>
+                        <div class="flex">
+                            <a
+                                href="/admin/facturen/create"
+                                type="button"
+                                class="
+                                    my-4
+                                    inline-flex
+                                    items-center
+                                    px-3
+                                    py-2
+                                    border border-transparent
+                                    text-sm
+                                    leading-4
+                                    font-medium
+                                    rounded-md
+                                    shadow-sm
+                                    text-white
+                                    bg-azure-radiance-600
+                                    hover:bg-azure-radiance-700
+                                    focus:outline-none
+                                    focus:ring-2
+                                    focus:ring-offset-2
+                                    focus:ring-azure-radiance-500
+                                "
+                            >
+                                Factuur toevoegen +
+                            </a>
 
-<!--                        <pre>{{newUsers.data}}</pre>-->
+                            <input
+                                @input="searchInvoice"
+                                v-model="search"
+                                type="text"
+                                placeholder="Bedrijf zoeken..."
+                                class="
+                                    h-10
+                                    my-4
+                                    items-center
+                                    nline-flex
+                                    ml-8
+                                    shadow-sm
+                                    focus:ring-indigo-500
+                                    align-middle
+                                    focus:border-indigo-500
+                                    block
+                                    max-w-md
+                                    sm:text-sm
+                                    border-gray-300
+                                    rounded-md
+                                "
+                            />
+                        </div>
 
                         <table
                             class="
@@ -128,7 +151,8 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr
-                                    v-for="invoice in invoiceList.data"
+                                    v-for="invoice in searchInvoices.data ||
+                                    invoiceList.data"
                                     :key="invoice.id"
                                 >
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -293,12 +317,27 @@ export default {
             invoiceName: "F1234101010101",
             targetUser: "1",
             page: "invoices",
+            searchInvoices: [],
+            seach: null,
         };
     },
     mounted() {
         this.setInvoiceList();
     },
     methods: {
+        searchInvoice() {
+            this.loading = true;
+            axios.post("/api/invoice/search", { search: this.search }).then(
+                (response) => {
+                    this.searchInvoices = response.data.invoices;
+                    this.loading = false;
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        },
+
         setInvoiceList() {
             this.invoiceList = this.invoices;
         },
@@ -398,6 +437,7 @@ export default {
                 .post("/api/invoice", formData)
                 .then((response) => {
                     this.invoiceList = response.data.invoices;
+                    this.searchInvoices = response.data.invoices;
                 })
                 .catch((response) => {
                     console.log(response);

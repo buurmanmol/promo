@@ -31,7 +31,7 @@ class CompanyController extends Controller
 
     public function searchCompany(Request $request)
     {
-        $companies = Company::where('name', 'LIKE','%'. $request->get('search') . '%')->paginate(10)->setPath('/admin/companies');
+        $companies = Company::with('users')->orderBy('name', 'asc')->where('name', 'LIKE','%'. $request->get('search') . '%')->paginate(10)->setPath('/admin/companies');
 //        dd($companies);
         return ['companies' => $companies];
     }
@@ -134,7 +134,7 @@ class CompanyController extends Controller
         return ['company' => $company];
     }
     public function getPaginatedCompanies(Request $request){
-        $companies = Company::paginate(10, ['*'], 'page', $request->get('page'));
+        $companies = Company::with('users')->orderBy('name', 'asc')->paginate(10, ['*'], 'page', $request->get('page'));
         return ['companies' => $companies];
     }
     public function delete(Company $company){

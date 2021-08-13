@@ -200,6 +200,19 @@ class InvoiceController extends Controller
 
     }
 
+
+    public function searchInvoice(Request $request)
+    {
+        $invoices = Invoice::with('user')
+        ->orderBy('created_at', 'DESC')
+        ->where('invoice_name', 'LIKE','%'. $request
+        ->get('search') . '%')
+        ->paginate(10)
+        ->setPath('/admin/invoices');
+//        dd($companies);
+        return ['invoices' => $invoices];
+    }
+
     //================= Company part ===================//
     /**
      * returns managerIndex

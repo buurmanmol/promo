@@ -129,7 +129,7 @@
                                         rounded-md
                                     "
                                     placeholder="F12345678"
-                                    v-model="invoice.invoice_name"
+                                    v-model="factuur.invoice_name"
                                 />
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                                     <input
                                         type="text"
                                         name="price"
-                                        v-model="invoice.price"
+                                        v-model="factuur.price"
                                         id="price"
                                         class="
                                             focus:ring-indigo-500
@@ -195,36 +195,65 @@
                             </div>
                         </div>
 
-                        <section
-                            v-if="invoice.invoice_path !== null"
-                            class="sm:col-span-3"
-                        >
-                            <a
-                                @click="downloadInvoice"
-                                type="button"
-                                class="
-                                    my-4
-                                    inline-flex
-                                    items-center
-                                    px-3
-                                    py-2
-                                    border border-transparent
-                                    text-sm
-                                    leading-4
-                                    font-medium
-                                    rounded-md
-                                    shadow-sm
-                                    text-white
-                                    bg-azure-radiance-600
-                                    hover:bg-azure-radiance-700
-                                    focus:outline-none
-                                    focus:ring-2
-                                    focus:ring-offset-2
-                                    focus:ring-azure-radiance-500
-                                "
-                            >
-                                Factuur downloaden
-                            </a>
+                        <section v-if="!newFactuur" class="sm:col-span-3">
+                            <div class="flex space-x-2">
+                                <div>
+                                    <a
+                                        @click="downloadInvoice"
+                                        type="button"
+                                        class="
+                                            my-4
+                                            inline-flex
+                                            items-center
+                                            px-3
+                                            py-2
+                                            border border-transparent
+                                            text-sm
+                                            leading-4
+                                            font-medium
+                                            rounded-md
+                                            shadow-sm
+                                            text-white
+                                            bg-azure-radiance-600
+                                            hover:bg-azure-radiance-700
+                                            focus:outline-none
+                                            focus:ring-2
+                                            focus:ring-offset-2
+                                            focus:ring-azure-radiance-500
+                                        "
+                                    >
+                                        Factuur downloaden
+                                    </a>
+                                </div>
+                                <div>
+                                    <button
+                                        type="button"
+                                        class="
+                                            my-4
+                                            inline-flex
+                                            items-center
+                                            px-3
+                                            py-2
+                                            border border-transparent
+                                            text-sm
+                                            leading-4
+                                            font-medium
+                                            rounded-md
+                                            shadow-sm
+                                            text-white
+                                            bg-azure-radiance-600
+                                            hover:bg-azure-radiance-700
+                                            focus:outline-none
+                                            focus:ring-2
+                                            focus:ring-offset-2
+                                            focus:ring-azure-radiance-500
+                                        "
+                                        @click="uploadNewFile"
+                                    >
+                                        Ander factuur uploaden
+                                    </button>
+                                </div>
+                            </div>
                         </section>
                         <section v-else class="sm:col-span-3">
                             <div>
@@ -243,6 +272,7 @@
                                     flex flex-col
                                     justify-center
                                     items-center
+                                    relative
                                 "
                             >
                                 <p
@@ -254,6 +284,10 @@
                                         justify-center
                                     "
                                 >
+                                    <XIcon
+                                        class="top-0 right-0 h-12 w-12 absolute"
+                                        @click="cancelNewFile"
+                                    />
                                     <span
                                         >Klik hier om een factuur te
                                         uploaden</span
@@ -288,8 +322,12 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-sm font-medium text-red-800">
-                            <h1 v-if="errors.length== 1"> Er is 1 probleem gevonden.</h1>
-                            <h1 v-else>Er zijn {{ errors.length }} problemen gevonden.</h1>
+                            <h1 v-if="errors.length == 1">
+                                Er is 1 probleem gevonden.
+                            </h1>
+                            <h1 v-else>
+                                Er zijn {{ errors.length }} problemen gevonden.
+                            </h1>
                         </h3>
                         <div class="mt-2 text-sm text-red-700">
                             <ul class="list-disc pl-5 space-y-1">
@@ -301,7 +339,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="pt-5">
                 <div class="flex justify-end">
                     <button
@@ -340,12 +378,14 @@ import { ref } from "vue";
 import Swal from "sweetalert2";
 import { Switch } from "@headlessui/vue";
 import moment from "moment";
+import { XIcon } from "@heroicons/vue/outline";
 
 export default {
     props: ["client", "invoice"],
     components: {
         AppLayoutAdmin,
         Switch,
+        XIcon,
     },
 
     data: function () {
@@ -353,16 +393,29 @@ export default {
             fullname: "",
             pdfsrc: "",
             errors: [],
-            page:'invoices',
+            page: "invoices",
+            factuur: [],
+            newFactuur: false,
         };
     },
     mounted() {
         this.fullname = this.client.first_name + " " + this.client.last_name;
+        this.setInvoice();
     },
 
     watch: {},
 
     methods: {
+        setInvoice() {
+            this.factuur = this.invoice;
+        },
+        uploadNewFile() {
+            this.newFactuur = true;
+        },
+        cancelNewFile() {
+            this.newFactuur = false;
+        },
+
         /**
          * Downloads the invoice, sets the name to "invoice_dd/mm/yyyy.pdf"
          *
@@ -375,25 +428,27 @@ export default {
                 url: "/api/invoice/" + this.invoice.id + "/pdf",
                 method: "GET",
                 responseType: "blob",
-            }).then((response) => {
-                const url = window.URL.createObjectURL(
-                    new Blob([response.data])
-                );
-                const link = document.createElement("a");
-                link.href = url;
-                link.setAttribute(
-                    "download",
-                    "invoice_" +
-                        this.formatDate(this.invoice.created_at) +
-                        ".pdf"
-                );
-                document.body.appendChild(link);
-                link.click();
             })
-            .catch((response) => {
-                Swal.fire("Dit factuur kan niet worden gevonden!");
-                this.invoice.invoice_path = null;
-            });
+                .then((response) => {
+                    const url = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute(
+                        "download",
+                        "invoice_" +
+                            this.formatDate(this.invoice.created_at) +
+                            ".pdf"
+                    );
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((response) => {
+                    Swal.fire("Dit factuur bestaat nog niet!");
+                    this.newFactuur = true;
+                    this.factuur.invoice_path = null;
+                });
         },
 
         /**
@@ -423,14 +478,14 @@ export default {
                 this.errors.push("Factuur naam vereist");
 
             if (this.invoice.price.toString().includes(","))
-                this.errors.push("De prijs moet een punt bevatten ipv een komma.");
+                this.errors.push(
+                    "De prijs moet een punt bevatten ipv een komma."
+                );
 
             if (this.hasLetters(this.invoice.price))
                 this.errors.push("De prijs kan geen letters bevatten");
 
-            if (!this.invoice.price)
-                this.errors.push("Factuur prijs vereist");
-
+            if (!this.invoice.price) this.errors.push("Factuur prijs vereist");
 
             if (!this.errors.length) {
                 if (this.invoice.file !== undefined) {
@@ -506,7 +561,7 @@ export default {
          * @version 1.0.0
          */
         handleFileUpload(e) {
-            this.invoice.file = e.target.files[0];
+            this.factuur.file = e.target.files[0];
         },
     },
 

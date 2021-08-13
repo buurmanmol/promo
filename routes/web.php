@@ -104,7 +104,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/api/invoice/{invoice}/delete', [InvoiceController::class, 'delete']);
     Route::post('/api/invoice', [InvoiceController::class, 'getInvoices']);
     Route::put('/api/invoice/{company}/wallet', [InvoiceController::class, 'updateWallet']);
-
+    Route::post('api/invoice/search',[InvoiceController::class, 'searchInvoice']);
+    
 
     //PartController
     Route::post('/api/part/create', [PartController::class, 'create']);
