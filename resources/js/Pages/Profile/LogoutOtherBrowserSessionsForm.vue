@@ -1,16 +1,16 @@
 <template>
     <jet-action-section>
         <template #title>
-            Browser Sessions
+            Browsersessies
         </template>
 
         <template #description>
-            Manage and log out your active sessions on other browsers and devices.
+            Beheer en log uit uw actieve sessies op andere browsers en apparaten.
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
-                If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.
+                Indien nodig kunt u op al uw apparaten uitloggen bij al uw andere browsersessies. Enkele van uw recente sessies staan hieronder vermeld; deze lijst is echter mogelijk niet volledig. Als u denkt dat uw account is gehackt, moet u ook uw wachtwoord bijwerken en contact opnemen met Promofix.
             </div>
 
             <!-- Other Browser Sessions -->
@@ -45,22 +45,22 @@
 
             <div class="flex items-center mt-5">
                 <jet-button @click="confirmLogout">
-                    Log Out Other Browser Sessions
+                    Uitloggen op andere browsersessies
                 </jet-button>
 
                 <jet-action-message :on="form.recentlySuccessful" class="ml-3">
-                    Done.
+                    Voltooid.
                 </jet-action-message>
             </div>
 
             <!-- Log Out Other Devices Confirmation Modal -->
             <jet-dialog-modal :show="confirmingLogout" @close="closeModal">
                 <template #title>
-                    Log Out Other Browser Sessions
+                    Uitloggen op andere browsersessies
                 </template>
 
                 <template #content>
-                    Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
+                    Voer uw wachtwoord in om te bevestigen dat u zich wilt afmelden bij uw andere browsersessies op al uw apparaten.
 
                     <div class="mt-4">
                         <jet-input type="password" class="mt-1 block w-3/4" placeholder="Password"
@@ -74,11 +74,11 @@
 
                 <template #footer>
                     <jet-secondary-button @click="closeModal">
-                        Cancel
+                        Annuleren
                     </jet-secondary-button>
 
                     <jet-button class="ml-2" @click="logoutOtherBrowserSessions" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Log Out Other Browser Sessions
+                        Uitloggen op andere browsersessies
                     </jet-button>
                 </template>
             </jet-dialog-modal>
