@@ -197,7 +197,7 @@
                                     Plan de reparatie in
                                 </label>
                                 <div class="mt-1">
-                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" :format="DatePickerFormat" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="model.date" />
+                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" :format="DatePickerFormat" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
                                 </div>
                                </div>
                             <div class="col-span-1 xs:col-span-2">

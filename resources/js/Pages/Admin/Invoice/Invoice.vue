@@ -394,6 +394,7 @@ export default {
          */
         handleFileUpload(e) {
             this.invoice.file = e.target.files[0];
+            console.log(this.invoice.file);
         },
 
         /**
@@ -409,6 +410,7 @@ export default {
             if (!this.invoice.invoiceName)
                 this.errors.push("Factuur naam vereist.");
             if (!this.invoice.file) this.errors.push("Bestand vereist");
+            if (this.invoice.file.type !== 'application/pdf') this.errors.push("Het bestand moet een PDF formaat hebben");
 
             if (this.invoice.price.toString().includes(","))
                 this.errors.push("De prijs moet een punt hebben ipv een komma.");

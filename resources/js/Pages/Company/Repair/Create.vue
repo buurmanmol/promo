@@ -146,7 +146,8 @@
                                     Plan de reparatie in
                                 </label>
                                 <div class="mt-1">
-                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
+                                    <!-- <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" /> -->
+                                    <datepicker :lower-limit="lowLimit" :disabled-dates="disabledDates" :format="DatePickerFormat" placeholder="Reparatie datum" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300" v-model="repairDate" />
                                 </div>
                             </div>
                                 <div class="col">
@@ -301,7 +302,7 @@ export default {
             lowLimit: new Date(),
             disabledDates: {
                 dates: [],
-            },
+            }, 
         }
     },
     watch: {

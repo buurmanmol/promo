@@ -15,7 +15,7 @@
                         </div>
 
 <!--                        <table-loader v-if="loading"></table-loader>-->
-                        <table  v-if="companies" class="min-w-full rounded-md divide-y divide-gray-200">
+                        <table  v-if="companyList" class="min-w-full rounded-md divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -51,7 +51,7 @@
                                     </td>
                                 </tr>
                             </template>
-                            <tr v-if="companies" v-for="company in  searchCompanies.data || companies.data" :key="company.email">
+                            <tr v-for="company in  searchCompanies.data || companyList.data" :key="company.id">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="ml-4">
@@ -95,8 +95,8 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div v-if="companies">
-                            <pagination v-if="companies.links"  :links="companies.links" :data="companies"></pagination>
+                        <div v-if="companyList">
+                            <pagination  :links="companies.links" :data="companies"></pagination>
                         </div>
                     </div>
                 </div>
@@ -127,12 +127,17 @@ export default {
            searchCompanies: [],
             loading:false,
             page:'companies',
+            companyList: '',
         }
     },
     created() {
         // this.getCompanies();
+        this.setCompanyList();
     },
     methods: {
+        setCompanyList(){
+            this.companyList = this.companies;
+        },
         editCompany(selected){
             window.location = "/admin/company/" + selected + "/update";
         },
@@ -215,6 +220,7 @@ export default {
             formData.set("page", this.companies.current_page);
             axios.post('/api/companies/paginated', formData)
                 .then((response) => {
+                    this.companyList = response.data.companies;
                     this.searchCompanies = response.data.companies;
                 }, (error) => {
                     console.log(error);
