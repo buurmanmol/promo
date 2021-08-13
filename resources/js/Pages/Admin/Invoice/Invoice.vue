@@ -84,8 +84,11 @@
                             />
                         </div>
                     </div>
-                    
-                    <div v-if="Object.keys(repair).length !== 0" class="sm:col-span-2">
+
+                    <div
+                        v-if="Object.keys(repair).length !== 0"
+                        class="sm:col-span-2"
+                    >
                         <label
                             for="repair_id"
                             class="block text-sm font-medium text-gray-700"
@@ -139,7 +142,12 @@
                                 v-model="invoice.userId"
                             />
                         </div>
-                        <input hidden id="companyId" name="companyId" v-model="invoice.companyId" />
+                        <input
+                            hidden
+                            id="companyId"
+                            name="companyId"
+                            v-model="invoice.companyId"
+                        />
                     </div>
 
                     <div class="sm:col-span-4">
@@ -283,8 +291,12 @@
                 </div>
                 <div class="ml-3">
                     <h3 class="text-sm font-medium text-red-800">
-                        <h1 v-if="errors.length== 1"> Er is 1 probleem gevonden.</h1>
-                        <h1 v-else>Er zijn {{ errors.length }} problemen gevonden.</h1>
+                        <h1 v-if="errors.length == 1">
+                            Er is 1 probleem gevonden.
+                        </h1>
+                        <h1 v-else>
+                            Er zijn {{ errors.length }} problemen gevonden.
+                        </h1>
                     </h3>
                     <div class="mt-2 text-sm text-red-700">
                         <ul class="list-disc pl-5 space-y-1">
@@ -336,7 +348,7 @@ import { ref } from "vue";
 
 export default {
     name: "Factuur uploaden",
-    props: ["usersList", 'repair', 'selectedPerson'],
+    props: ["usersList", "repair", "selectedPerson"],
 
     components: {
         AppLayoutAdmin,
@@ -355,19 +367,16 @@ export default {
                 price: "",
                 file: "",
             },
-            userList: {data:""}, 
+            userList: { data: "" },
             allUsers: ref(this.userList),
             userObject: ref(null),
             errors: [],
         };
     },
 
-    mounted() {
-       
-    },
+    mounted() {},
 
     methods: {
-
         /**
          * Sets user variables in form in order to check if user is correct. (In case multiple people have the same name)
          *
@@ -381,7 +390,7 @@ export default {
                 userEmail: option.email,
                 userId: option.id,
                 companyId: option.company_id,
-                repairId: this.repair.id
+                repairId: this.repair.id,
             };
         },
 
@@ -394,7 +403,6 @@ export default {
          */
         handleFileUpload(e) {
             this.invoice.file = e.target.files[0];
-            console.log(this.invoice.file);
         },
 
         /**
@@ -410,16 +418,18 @@ export default {
             if (!this.invoice.invoiceName)
                 this.errors.push("Factuur naam vereist.");
             if (!this.invoice.file) this.errors.push("Bestand vereist");
-            if (this.invoice.file.type !== 'application/pdf') this.errors.push("Het bestand moet een PDF formaat hebben");
+            if (this.invoice.file.type !== "application/pdf")
+                this.errors.push("Het bestand moet een PDF formaat hebben");
 
             if (this.invoice.price.toString().includes(","))
-                this.errors.push("De prijs moet een punt hebben ipv een komma.");
+                this.errors.push(
+                    "De prijs moet een punt hebben ipv een komma."
+                );
 
             if (this.hasLetters(this.invoice.price))
                 this.errors.push("De prijs mag geen letters bevatten.");
 
-            if (!this.invoice.price)
-                this.errors.push("Factuur prijs vereist.");
+            if (!this.invoice.price) this.errors.push("Factuur prijs vereist.");
 
             if (!this.errors.length) {
                 this.submit();
@@ -446,18 +456,24 @@ export default {
             axios
                 .post("/api/invoice/create", formData)
                 .then(() => {
-                    axios.put("/api/invoice/" + this.invoice.companyId + "/wallet", this.invoice)
-                    .then((response) => {
-                        if(Object.keys(this.repair).length !== 0) {
-                            window.location = "/admin/repairs";
-                        } else {
-                            window.location = "/admin/facturen";
-                        }
-                    })
-                    .catch((response) => {
-                        console.log(response);
-                        console.log("FAILURE!!");
-                    });
+                    axios
+                        .put(
+                            "/api/invoice/" +
+                                this.invoice.companyId +
+                                "/wallet",
+                            this.invoice
+                        )
+                        .then((response) => {
+                            if (Object.keys(this.repair).length !== 0) {
+                                window.location = "/admin/repairs";
+                            } else {
+                                window.location = "/admin/facturen";
+                            }
+                        })
+                        .catch((response) => {
+                            console.log(response);
+                            console.log("FAILURE!!");
+                        });
                 })
                 .catch((response) => {
                     console.log(response);

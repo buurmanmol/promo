@@ -140,8 +140,15 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div v-if="repair.repair_date" class="text-sm text-gray-500">
-                                                                    <a :href="'/admin/facturen/' + repair.id + '/' + user.id + '/create'"><DocumentAddIcon class="h-5 w-5 text-azure-radiance-900"></DocumentAddIcon></a>
+                                                                <div v-if="repair.invoice_id === null" class="text-sm text-gray-500">
+                                                                    <a :href="'/admin/facturen/' + repair.id + '/' + user.id + '/create'">
+                                                                        <DocumentAddIcon class="h-5 w-5 text-azure-radiance-900"></DocumentAddIcon>
+                                                                    </a>
+                                                                </div>
+                                                                <div v-else class="text-sm text-gray-500">
+                                                                    
+                                                                    <BadgeCheckIcon class="h-5 w-5 text-azure-radiance-900"></BadgeCheckIcon>
+                                                                    
                                                                 </div>
                                                             </td>
                                                             <td >

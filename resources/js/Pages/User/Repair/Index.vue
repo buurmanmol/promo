@@ -67,12 +67,14 @@
                                                         {{ formatDateNormal(rep.repair_date) || '' }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                      <span v-if="rep.price" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        {{ rep.price || 'To be announced'}}F
-                                      </span>
+                                                        
+                                                        <span v-if="rep.invoice" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            €{{ + rep.invoice.price }}
+                                                        </span>
+                                                            
                                                         <span v-else class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                           {{ rep.price || 'To be announced'}}
-                                    </span>
+                                                            To be announced
+                                                        </span>
                                                     </td>
                                                 </tr>
                                             </tbody>
