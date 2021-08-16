@@ -46,6 +46,8 @@
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Prijs
                                                 </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                </th>
                                             </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
@@ -76,6 +78,23 @@
                                                             To be announced
                                                         </span>
                                                     </td>
+                                                    <td v-if="rep.invoice">
+                                                        <DownloadIcon
+                                                            @click="
+                                                                downloadInvoice(
+                                                                    rep.invoice.id,
+                                                                    rep.invoice.created_at
+                                                                )
+                                                            "
+                                                            class="
+                                                                text-azure-radiance-800
+                                                                w-5
+                                                                h-5
+                                                                text-md
+                                                            "
+                                                        />
+                                                    </td>
+                                                    <td v-else></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -97,7 +116,8 @@ import moment from 'moment';
 
 import AppLayoutUser from "../../../Layouts/AppLayoutUser";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { ChevronUpIcon } from '@heroicons/vue/solid'
+import Swal from "sweetalert2";
+import { ChevronUpIcon, DownloadIcon } from '@heroicons/vue/solid'
 export default {
     name: "Index",
     props:['company','repairs', 'user'],
@@ -106,6 +126,7 @@ export default {
         Disclosure,
         DisclosureButton,
         DisclosurePanel,
+        DownloadIcon,
         ChevronUpIcon,
     },
     data: () =>{
@@ -114,6 +135,37 @@ export default {
         }
     },
     methods: {
+        /**
+         * Downloads the invoice, sets the name to "invoice_dd/mm/yyyy.pdf"
+         *
+         * @author Kevin
+         *
+         * @version 1.0.0
+         */
+        downloadInvoice(invoice_id, invoice_date) {
+            return axios({
+                url: "/api/invoice/" + invoice_id + "/pdf",
+                method: "GET",
+                responseType: "blob",
+            })
+                .then((response) => {
+                    const url = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute(
+                        "download",
+                        "invoice_" + this.formatDate(invoice_date) + ".pdf"
+                    );
+                    document.body.appendChild(link);
+                    link.click();
+                })
+                .catch((response) => {
+                    Swal.fire("Dit factuur kan niet worden gevonden!");
+                });
+        },
+
         formatDate(date) {
             moment.locale('nl');
             return moment(date).format('dddd DD MMMM Y')

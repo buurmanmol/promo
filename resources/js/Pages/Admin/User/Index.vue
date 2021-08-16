@@ -56,7 +56,8 @@
                                 <div class="text-sm text-gray-500">{{ person.role }}</div>
                             </td>
                             <td v-if="person.company" class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company.id">{{ person.company.name }}</a></div>
+                                <!-- <div class="text-sm text-gray-900"><a :href="'/admin/company/' + person.company.id">{{ person.company.name }}</a></div> -->
+                                <div class="text-sm text-gray-900">{{ person.company.name }}</div>
                                 <div class="text-sm text-gray-500">{{ person.company.phone_number }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

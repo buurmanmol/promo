@@ -32,6 +32,20 @@ class CompanyController extends Controller
     public function searchCompany(Request $request)
     {
         $companies = Company::with('users')->orderBy('name', 'asc')->where('name', 'LIKE','%'. $request->get('search') . '%')->paginate(10)->setPath('/admin/companies');
+        foreach($companies as $company){
+            $managerArray = [];
+            foreach($company->users as $user){
+                if ($user->role === 'manager') {
+                    array_push($managerArray, $user);
+                } 
+            }
+            foreach($managerArray as $manager){
+                $users = User::with('invoices')->where('manager_id', $manager->id)
+                ->get();
+                $manager->users = $users; 
+            }
+            $company->managers = $managerArray;
+        }
 //        dd($companies);
         return ['companies' => $companies];
     }
@@ -53,8 +67,27 @@ class CompanyController extends Controller
     {
         $companies = Company::with('users')->orderBy('name', 'asc')->paginate(10);
 
+        foreach($companies as $company){
+            $managerArray = [];
+            foreach($company->users as $user){
+                if ($user->role === 'manager') {
+                    array_push($managerArray, $user);
+                } 
+            }
+            foreach($managerArray as $manager){
+                $users = User::with('invoices')->where('manager_id', $manager->id)
+                ->get();
+                $manager->users = $users; 
+            }
+            $company->managers = $managerArray;
+        }
+        
+
+
         return Inertia::render('Admin/Company/Index', ['companies' => $companies, 'user' => Auth::user()]);
     }
+
+
     public function details(Company $company)
     {
 
@@ -135,6 +168,20 @@ class CompanyController extends Controller
     }
     public function getPaginatedCompanies(Request $request){
         $companies = Company::with('users')->orderBy('name', 'asc')->paginate(10, ['*'], 'page', $request->get('page'));
+        foreach($companies as $company){
+            $managerArray = [];
+            foreach($company->users as $user){
+                if ($user->role === 'manager') {
+                    array_push($managerArray, $user);
+                } 
+            }
+            foreach($managerArray as $manager){
+                $users = User::with('invoices')->where('manager_id', $manager->id)
+                ->get();
+                $manager->users = $users; 
+            }
+            $company->managers = $managerArray;
+        }
         return ['companies' => $companies];
     }
     public function delete(Company $company){

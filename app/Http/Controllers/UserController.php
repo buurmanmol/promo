@@ -145,7 +145,36 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
+        if($user->role === 'admin'){
+            return ['error' => true, 'user' => $user]; 
+        }
+        if($user->id === Auth::user()->id){
+            return ['error' => true, 'user' => $user];
+        }
         $user->delete();
-        return ['user' => $user];
+        return ['error' => false, 'user' => $user];
+    }
+    
+    public function deleteManager(User $user)
+    {
+        $company = User::where('company_id', $user->company_id)->get();
+        $remainingManagers = [];
+        foreach($company as $users){
+            if($users->id === $user->id) continue;
+            if ($users->role === 'manager') {
+                array_push($remainingManagers, $users);
+            } 
+        }
+        if(count($remainingManagers) < 1){
+
+            return ['error' => true, 'user' => $user];
+        }
+        foreach($company as $users){
+            $users->update([
+                'manager_id' => $remainingManagers[0]->id,
+            ]);
+        }
+        $user->delete();
+        return ['error' => false, 'user' => $user];
     }
 }

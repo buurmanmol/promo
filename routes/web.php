@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/users/create', [UserController::class, 'create']);
     Route::post('/api/user/{user}/update', [UserController::class, 'update']);
     Route::delete('/api/user/{user}/delete', [UserController::class, 'delete']);
+    Route::delete('/api/user/manager/{user}/delete', [UserController::class, 'deleteManager']);
     Route::post('/api/users', [UserController::class, 'getUsers']);
     Route::get('/api/user/current', [UserController::class, 'currentUser']);
 
