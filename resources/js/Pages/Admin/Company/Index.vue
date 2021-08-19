@@ -80,6 +80,8 @@
                                 min-w-full
                                 rounded-md
                                 divide-y divide-gray-200
+                                table-auto
+                                min-w-30
                             "
                         >
                             <thead class="bg-gray-50">
@@ -98,20 +100,7 @@
                                     >
                                         Naam
                                     </th>
-                                    <th
-                                        scope="col"
-                                        class="
-                                            px-6
-                                            py-3
-                                            text-left text-xs
-                                            font-medium
-                                            text-gray-500
-                                            uppercase
-                                            tracking-wider
-                                        "
-                                    >
-                                        Adres
-                                    </th>
+
                                     <th
                                         scope="col"
                                         class="
@@ -200,19 +189,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td
-                                            colspan="1"
-                                            class="
-                                                px-6
-                                                py-4
-                                                max-w-3xl
-                                                whitespace-nowrap
-                                            "
-                                        >
-                                            <div class="text-sm text-gray-900">
-                                                {{ company.address }}
-                                            </div>
-                                        </td>
+
                                         <td
                                             class="
                                                 px-6
@@ -429,35 +406,6 @@
                                                                 </div>
                                                             </td>
 
-                                                            <td
-                                                                class="
-                                                                    px-6
-                                                                    py-2
-                                                                    whitespace-nowrap
-                                                                "
-                                                            >
-                                                                <div
-                                                                    class="
-                                                                        text-sm
-                                                                        text-gray-900
-                                                                    "
-                                                                >
-                                                                    Aangemaakt
-                                                                    op
-                                                                </div>
-                                                                <div
-                                                                    class="
-                                                                        text-sm
-                                                                        text-gray-500
-                                                                    "
-                                                                >
-                                                                    {{
-                                                                        formatDate(
-                                                                            manager.created_at
-                                                                        )
-                                                                    }}
-                                                                </div>
-                                                            </td>
                                                             <td
                                                                 class="
                                                                     px-6
@@ -723,35 +671,6 @@
                                                                                     </div>
                                                                                 </td>
 
-                                                                                <td
-                                                                                    class="
-                                                                                        px-6
-                                                                                        py-2
-                                                                                        whitespace-nowrap
-                                                                                    "
-                                                                                >
-                                                                                    <div
-                                                                                        class="
-                                                                                            text-sm
-                                                                                            text-gray-900
-                                                                                        "
-                                                                                    >
-                                                                                        Aangemaakt
-                                                                                        op
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="
-                                                                                            text-sm
-                                                                                            text-gray-500
-                                                                                        "
-                                                                                    >
-                                                                                        {{
-                                                                                            formatDate(
-                                                                                                user.created_at
-                                                                                            )
-                                                                                        }}
-                                                                                    </div>
-                                                                                </td>
                                                                                 <td
                                                                                     class="
                                                                                         px-6
