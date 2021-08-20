@@ -428,4 +428,11 @@ class RepairController extends Controller
 //        dd($managerArray);
         return Inertia::render('Company/Repair/Index', ['currentUser' => Auth::user(),'managers' => $managerArray, 'company' => Auth::user()->company]);
     }
+    public function updateWallet(Company $company, Request $request){
+        $price = $request->get('price');
+        $newWallet = $company->wallet - $request->get('price');
+
+        $company->update(['wallet' => $newWallet]);
+        return ['company' => $company];
+    }
 }

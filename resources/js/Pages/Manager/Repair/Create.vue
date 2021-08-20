@@ -150,15 +150,27 @@
                                 </div>
                             </div>
                                 <div class="col">
-                                    <label for="comment" class="block text-sm font-medium text-gray-700">
-                                        Opmerkingen
+                                    <label for="comment" class="mt-2 block text-sm font-medium text-gray-700">
+                                        Details reparatie
                                     </label>
+                                    <p class="mt-1 text-sm text-gray-500">Wat voor kleur moet het te vervangen onderdeel zijn? Of beschrijf wat er mis is.</p>
                                     <div class="mt-1">
                                         <textarea v-model="comment" id="comment" name="comment" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                                     </div>
-                                    <p class="mt-2 text-sm text-gray-500">Opmerkingen over de reparaties of producten.</p>
-                                </div>
 
+                                </div>
+                                    <legend class="sr-only">Ophalen</legend>
+                                <fieldset class="space-y-5">
+                                    <div class="mt-2 relative flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="ophalen" aria-describedby="comments-description" name="comments" v-model="ophaal.ophalen" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="ophalen" class="font-medium text-gray-700">Ophalen</label>
+                                            <p id="comments-description" class="text-gray-500">Vink aan als u uw apparaten wilt laten ophalen. <br> Let wel op, hiervoor wordt €5,- van het tegoed afgetrokken</p>
+                                        </div>
+                                    </div>
+                                </fieldset>
                                 <div class="col">
                                     <errors v-if="errors.length > 0" :errors="errors"></errors>
                                 </div>
@@ -292,6 +304,10 @@ export default {
                 productType: null,
                 repair_date: null,
             },
+            ophaal: {
+                ophalen: false,
+                price: 5,
+            },
             errors: [],
             repairs: [],
             options: [
@@ -313,6 +329,9 @@ export default {
         },
         productType() {
             this.setRepair(this.currentUser ,this.device, this.productType)
+        },
+        ophalen(){
+            console.log(this.ophalen)
         }
     },
     mounted() {
@@ -350,7 +369,7 @@ export default {
             }
 
             Swal.fire({
-                title: 'Pas op! heeft u alle toestellen toegevoegd?',
+                title: 'Heeft u alle toestellen toegevoegd?',
                 text: "Deze inzending van reparaties is eenmalig.",
                 icon: 'warning',
                 showCancelButton: true,
@@ -360,19 +379,30 @@ export default {
                 cancelButtonText:'Annuleren'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post('/api/repairs/'  + this.currentUser.id + '/create', this.repairs)
+                    axios.post('/api/repairs/'  + this.currentUser.id + '/create', this.repairs,)
                         .then((response) => {
+                            if(this.ophaal.ophalen === true) {
+                                axios.put(
+                                    "/api/repairs/" +
+                                    this.currentUser.company_id +
+                                    "/wallet",
+                                    this.ophaal
+                                )
+                                    .then(()=> {
+                                        Swal.fire(
+                                            'Reparatie aangemaakt!',
+                                            'Uw reparatie(s) is/zijn aangemaakt.',
+                                            'success'
+                                        )
+                                            window.location = '/manager/repairs'
+                                    }
+                                    )
+                            }
                         }, (error) => {
                             console.log(error);
                         });
-                    Swal.fire(
-                        'Reparatie aangemaakt!',
-                        'Uw reparatie(s) is/zijn aangemaakt.',
-                        'success'
-                    )
-                    window.location = '/manager/repairs'
-                }
-            })
+                    }
+                })
 
         },
         validateSelect(value) {

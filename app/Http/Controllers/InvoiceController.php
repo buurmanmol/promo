@@ -37,7 +37,6 @@ class InvoiceController extends Controller
         $newWallet = $company->wallet - $request->get('price');
 
         $company->update(['wallet' => $newWallet]);
-
         return ['company' => $company];
     }
 
@@ -68,7 +67,7 @@ class InvoiceController extends Controller
             "company_id",
             "email",
         );
-        
+
         if($user->id !== null){
             $usersList =User::select(
                 "id",
@@ -77,7 +76,7 @@ class InvoiceController extends Controller
                 "company_id",
                 "email",
             )
-            ->where("id", $user->id)->get(); 
+            ->where("id", $user->id)->get();
         }
         return Inertia::render('Admin/Invoice/Create', ['repair'=>$repair, 'usersList' => $usersList, 'selectedPerson' => $user, 'user' => Auth::user(), 'company' => Auth::user()->company]);
     }

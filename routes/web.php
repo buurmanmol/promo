@@ -81,6 +81,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/repair/{repair}/plan', [RepairController::class, 'planRepair']);
     Route::delete('api/repair/{repair}/delete', [RepairController::class, 'deleteRepair']);
     Route::get('api/company/{company}/repairs',[RepairController::class, 'getCompanyRepairs']);
+    Route::put('/api/repairs/{company}/wallet', [RepairController::class, 'updateWallet']);
+
+
     //DeviceController
     Route::get('/api/user/{user}/devices/unique', [DeviceController::class, 'getUniqueDevices']);
     Route::post('/api/device/create', [DeviceController::class, 'create']);
@@ -106,7 +109,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/invoice', [InvoiceController::class, 'getInvoices']);
     Route::put('/api/invoice/{company}/wallet', [InvoiceController::class, 'updateWallet']);
     Route::post('api/invoice/search',[InvoiceController::class, 'searchInvoice']);
-    
+
 
     //PartController
     Route::post('/api/part/create', [PartController::class, 'create']);

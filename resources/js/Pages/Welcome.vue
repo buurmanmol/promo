@@ -44,10 +44,7 @@
                                     </PopoverButton>
                                 </div>
                             </div>
-                            <div class="hidden space-x-8 md:flex md:ml-10">
-                                <a v-for="item in navigation" :key="item.name" :href="item.href" class="text-base font-medium text-white hover:text-gray-300">{{ item.name }}</a>
-                            </div>
-                        </div>
+                                                    </div>
                         <div class="hidden md:flex md:items-center md:space-x-6">
                             <a href="/login" class="text-base font-medium text-white hover:text-gray-300">
                                 Inloggen
@@ -74,13 +71,7 @@
                                 </div>
                             </div>
                             <div class="pt-5 pb-6">
-                                <div class="px-2 space-y-1">
-                                    <a v-for="item in navigation" :key="item.name" :href="item.href" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">{{ item.name }}</a>
-                                </div>
-                                <div class="mt-6 px-5">
-                                    <a href="#" class="block text-center w-full py-3 px-4 rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-medium hover:from-teal-600 hover:to-cyan-700">Start free trial</a>
-                                </div>
-                                <div class="mt-6 px-5">
+                                                              <div class="mt-6 px-5">
                                     <p class="text-center text-base font-medium text-gray-500">Bestaande klant? <a href="#" class="text-gray-900 hover:underline">Login</a></p>
                                 </div>
                             </div>
@@ -259,18 +250,18 @@
                     <div class="relative mx-auto max-w-md px-4 py-12 sm:max-w-7xl sm:px-6 sm:py-20 md:py-28 lg:px-8 lg:py-32">
                         <div class="md:ml-auto md:w-1/2 md:pl-10">
                             <h2 class="text-base font-semibold uppercase tracking-wider text-gray-300">
-                                Award winning support
+                                De beste van het Noorden
                             </h2>
                             <p class="mt-2 text-white text-3xl font-extrabold tracking-tight sm:text-4xl">
-                                We’re here to help
+                                Vóór professionals, dóór professionals
                             </p>
                             <p class="mt-3 text-lg text-gray-300">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat quisque ut interdum tincidunt duis.
+                                Met meer dan 7 jaar ervaring in het repareren van smart devices, kunnen wij met een gerust hart zeggen dat wij de beste van het Noorden zijn.
                             </p>
                             <div class="mt-8">
                                 <div class="inline-flex rounded-md shadow">
-                                    <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50">
-                                        Visit the help center
+                                    <a href="/offerte" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50">
+                                        Vraag een offerte aan!
                                         <ExternalLinkIcon class="-mr-1 ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
                                     </a>
                                 </div>
@@ -286,7 +277,7 @@
                         <div class="space-y-8 xl:col-span-1">
                             <img class="h-10" src="https://tailwindui.com/img/logos/workflow-mark-gray-300.svg" alt="Company name" />
                             <p class="text-gray-500 text-base">
-                                Making the world a better place through constructing elegant hierarchies.
+                                Een reparatieservice voor onze zakelijke klanten
                             </p>
                             <div class="flex space-x-6">
                                 <a v-for="item in footerNavigation.social" :key="item.name" :href="item.href" class="text-gray-400 hover:text-gray-500">
@@ -295,46 +286,6 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-                            <div class="md:grid md:grid-cols-2 md:gap-8">
-                                <div>
-                                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                        Solutions
-                                    </h3>
-                                    <ul class="mt-4 space-y-4">
-                                        <li v-for="item in footerNavigation.solutions" :key="item.name">
-                                            <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                                {{ item.name }}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="mt-12 md:mt-0">
-                                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                        Support
-                                    </h3>
-                                    <ul class="mt-4 space-y-4">
-                                        <li v-for="item in footerNavigation.support" :key="item.name">
-                                            <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                                {{ item.name }}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="md:grid md:grid-cols-2 md:gap-8">
-                                <div>
-                                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                        Company
-                                    </h3>
-                                    <ul class="mt-4 space-y-4">
-                                        <li v-for="item in footerNavigation.company" :key="item.name">
-                                            <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                                {{ item.name }}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div class="mt-12 md:mt-0">
                                     <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
                                         Legal
@@ -346,8 +297,6 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="mt-12 border-t border-gray-200 py-8">
@@ -472,29 +421,9 @@ const blogPosts = [
     },
 ]
 const footerNavigation = {
-    solutions: [
-        { name: 'Marketing', href: '#' },
-        { name: 'Analytics', href: '#' },
-        { name: 'Commerce', href: '#' },
-        { name: 'Insights', href: '#' },
-    ],
-    support: [
-        { name: 'Pricing', href: '#' },
-        { name: 'Documentation', href: '#' },
-        { name: 'Guides', href: '#' },
-        { name: 'API Status', href: '#' },
-    ],
-    company: [
-        { name: 'About', href: '#' },
-        { name: 'Blog', href: '#' },
-        { name: 'Jobs', href: '#' },
-        { name: 'Press', href: '#' },
-        { name: 'Partners', href: '#' },
-    ],
-    legal: [
-        { name: 'Claim', href: '#' },
+        legal: [
         { name: 'Privacy', href: '#' },
-        { name: 'Terms', href: '#' },
+        { name: 'Algemene voorwaarden', href: '#' },
     ],
     social: [
         {
