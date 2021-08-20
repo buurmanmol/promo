@@ -177,4 +177,45 @@ class UserController extends Controller
         $user->delete();
         return ['error' => false, 'user' => $user];
     }
+
+    ///// Manager Kant //////
+
+    //Index
+    public function indexManager(){
+        $users = User::where('manager_id', Auth::user()->id)
+        ->orderBy('first_name', 'asc')
+        ->with('company')
+        ->paginate(10);
+        return Inertia::render('Manager/User/Index', ['users' => $users, 'currentUser' => Auth::user(), 'company' => Auth::user()->company]); 
+    }
+
+    public function managerUsers(Request $request){
+        $users = User::where('manager_id', Auth::user()->id)
+        ->orderBy('first_name', 'asc')
+        ->with('company')
+        ->paginate(10, ['*'], 'page', $request->get('page'));
+        return ['users' => $users];
+    }
+
+    public function managerSearchUser(Request $request)
+    {
+        $users = User::with('company')->where(function ($query) use($request) {
+            $query->where('first_name', 'like', '%' . $request->get('search') . '%')
+                ->orWhere('last_name', 'like', '%' . $request->get('search') . '%');
+        })
+        ->where('manager_id', Auth::user()->id)
+        ->paginate(10)->setPath('/manager/users');
+        return ['users' => $users];
+    }
+
+    //Create
+    public function managerCreateUser(){
+        return Inertia::render('Manager/User/Create',['company' =>Auth::user()->company, 'currentUser' => Auth::user()]); 
+    }
+
+    //Update
+    public function managerUpdateUser(User $user){
+        $company = Company::where('id', $user->company_id)->firstOrFail(); 
+        return Inertia::render('Manager/User/Update',['company' =>Auth::user()->company, 'bedrijf' => $company, 'user' => $user, 'currentUser' => Auth::user()]); 
+    }
 }

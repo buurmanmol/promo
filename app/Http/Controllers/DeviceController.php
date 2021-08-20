@@ -50,12 +50,45 @@ class DeviceController extends Controller
 
         return Inertia::render('User/Device/Index', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
     }
-    public function deviceIndexManager()
+    public function myDeviceIndexManager()
     {
         $devices = Device::with('brandsModels')->where('user_id', auth()->user()->id)->paginate(20);
 
-        return Inertia::render('Manager/Device/Index', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
+        return Inertia::render('Manager/Device/MyIndex', ['devices' => $devices, 'company' => Auth::user()->company, 'user' => Auth::user()]);
     }
+    public function deviceIndexManager()
+    {
+        $staff = User::with(['devices' => function ($q){
+            $q->with('brandsModels')->get();
+        }])
+        ->where('company_id', Auth::user()->company_id)
+        ->where('manager_id', Auth::user()->id)
+        ->paginate(10);
+
+        return Inertia::render('Manager/Device/Index', ['staff' => $staff, 'company' => Auth::user()->company, 'user' => Auth::user()]);
+    }
+    public function getManagerDevices(Request $request){
+        $staff = User::with(['devices' => function ($q){
+            $q->with('brandsModels')->get();
+        }])
+        ->where('company_id', Auth::user()->company_id)
+        ->where('manager_id', Auth::user()->id)
+        ->paginate(10, ['*'], 'page', $request->get('page'));
+        return ['staff' => $staff];
+    }
+
+    public function deviceCreateManager(){
+        $brands = Brand::all();
+        $productTypes = ProductType::all();
+        $models = BrandsModel::all();
+        $users = User::with('company')
+        ->where('company_id', Auth::user()->company_id)
+        ->where('manager_id', Auth::user()->id)
+        ->get();
+
+        return Inertia::render('Manager/Device/Create', ['currentUser' => Auth::user(),'users' => $users, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+    }
+
     public function deviceIndexCompany()
     {
         $devices = Device::with('brandsModels')->where('user_id', auth()->user()->id)->paginate(20);

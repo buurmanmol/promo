@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
     //Devices
     Route::get('/user/apparaten', [DeviceController::class, 'deviceIndex']);
-    Route::get('/manager/apparaten', [DeviceController::class, 'deviceIndexManager']);
+    
     Route::get('/company/apparaten', [DeviceController::class, 'deviceIndexCompany']);
 
     //Repairs
@@ -67,6 +67,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/api/user/manager/{user}/delete', [UserController::class, 'deleteManager']);
     Route::post('/api/users', [UserController::class, 'getUsers']);
     Route::get('/api/user/current', [UserController::class, 'currentUser']);
+    
+    Route::post('/api/manager/users', [UserController::class, 'managerUsers']);
+    Route::post('/api/manager/userSearch', [UserController::class, 'managerSearchUser']);
+
 
     //BrandsModelsController
     Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
@@ -90,6 +94,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/api/device/{device}/delete', [DeviceController::class, 'delete']);
     Route::post('/api/devices', [DeviceController::class, 'getDevices']);
     Route::post('/api/devices/search', [DeviceController::class, 'searchUser']);
+    Route::post('/api/manager/devices', [DeviceController::class, 'getManagerDevices']);
+    
 
     //CompanyController
     Route::get('/api/companies', [CompanyController::class, 'getCompanies']);
@@ -124,15 +130,23 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::delete('/admin/api/phone/{brandsModel}/delete', [PhoneController::class, 'delete']);
     Route::post('/admin/api/phones/search', [PhoneController::class, 'searchModel']);
 
+
+
     Route::middleware([\App\Http\Middleware\Manager::class])->group(function () {
 
+        Route::get('/manager/apparaten', [DeviceController::class, 'deviceIndexManager']);
+        Route::get('/manager/device/create', [DeviceController::class, 'deviceCreateManager']);
 
         Route::get('/manager/facturen', [InvoiceController::class, 'managerIndex']);
-        Route::get('/manager/repair/create', [RepairController::class, 'managerCreate']);
 
+        Route::get('/manager/repair/create', [RepairController::class, 'managerCreate']);
         Route::get('/manager/repairs', [RepairController::class, 'indexManager']);
         Route::get('/manager/user/{user}', [RepairController::class, 'detailsManager']);
+
         Route::get('/manager/{user}/repairs', [UserController::class, 'indexCompanyManager']);
+        Route::get('/manager/users', [UserController::class, 'indexManager']);
+        Route::get('/manager/users/create', [UserController::class, 'managerCreateUser']);
+        Route::get('/manager/user/{user}/update', [UserController::class, 'managerUpdateUser']);
     });
 
     Route::middleware([\App\Http\Middleware\Company::class])->group(function () {
