@@ -86,7 +86,7 @@ class DeviceController extends Controller
         ->where('manager_id', Auth::user()->id)
         ->get();
 
-        return Inertia::render('Manager/Device/Create', ['currentUser' => Auth::user(),'users' => $users, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        return Inertia::render('Manager/Device/Create', ['company'=>Auth::user()->company, 'currentUser' => Auth::user(),'users' => $users, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
     }
 
     public function deviceIndexCompany()

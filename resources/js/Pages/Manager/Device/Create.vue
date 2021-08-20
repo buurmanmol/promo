@@ -1,5 +1,5 @@
 <template>
-    <app-layout-admin :user="currentUser" :page="page">
+    <app-layout-manager :company="company" :user="currentUser" :page="page">
         <div
             style="min-height: 70vh !important"
             class="bg-white h-auto rounded-md shadow overflow-visible p-4"
@@ -1106,7 +1106,7 @@
                 </div>
             </div>
         </div>
-    </app-layout-admin>
+    </app-layout-manager>
 </template>
 
 <script>
@@ -1120,7 +1120,7 @@ import {
 } from "@headlessui/vue";
 
 import FadeTransition from "../../../Components/FadeTransition";
-import AppLayoutAdmin from "../../../Layouts/AppLayoutAdmin";
+import AppLayoutManager from "../../../Layouts/AppLayoutManager";
 import VueNextSelect from "vue-next-select";
 import Errors from "../../../Components/Errors";
 import Swal from "sweetalert2";
@@ -1128,7 +1128,7 @@ import "sweetalert2/src/sweetalert2.scss";
 
 export default {
     name: "Create",
-    props: ["currentUser", "brands", "users"],
+    props: ["currentUser", "brands", "users", "company"],
     components: {
         FadeTransition,
         Swal,
@@ -1137,7 +1137,7 @@ export default {
         RadioGroupDescription,
         RadioGroupOption,
         "vue-select": VueNextSelect,
-        AppLayoutAdmin,
+        AppLayoutManager,
         HashtagIcon,
         DeviceMobileIcon,
         XIcon,
