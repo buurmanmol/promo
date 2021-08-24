@@ -71,6 +71,13 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::post('/api/manager/users', [UserController::class, 'managerUsers']);
     Route::post('/api/manager/userSearch', [UserController::class, 'managerSearchUser']);
 
+    Route::post('/api/company/createManager', [UserController::class, 'createManager']);
+    Route::post('/api/company/getManagers', [UserController::class, 'getManagersWithUsers']);
+    Route::get('/api/company/{company}/managers', [UserController::class, 'getManagers']);
+
+
+    
+
 
     //BrandsModelsController
     Route::get('/api/brands/{brand}/models', [BrandsModelsController::class, 'getBrandModels']);
@@ -151,10 +158,17 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
 
     Route::middleware([\App\Http\Middleware\Company::class])->group(function () {
         Route::get('/company/facturen', [InvoiceController::class, 'companyIndex']);
+
         Route::get('/company/repair/create', [RepairController::class, 'companyCreate']);
         Route::get('/company/repairs', [RepairController::class, 'indexCompany']);
         Route::get('/company/user/{user}', [RepairController::class, 'detailsCompany']);
         Route::get('/company/manager/{user}', [RepairController::class, 'detailsCompany']);
+
+        Route::get('/company/managers', [UserController::class, 'companyGetManagers']);
+        Route::get('/company/managers/create', [UserController::class, 'companyCreateManager']);
+        Route::get('/company/managers/{user}/update', [UserController::class, 'CompanyUpdateManager']);
+        Route::get('/company/users/{user}/update', [UserController::class, 'CompanyUpdateUser']);
+        
     });
 
 //Admin page routes
@@ -162,7 +176,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function (){
     Route::middleware([\App\Http\Middleware\Admin::class])->group(function () {
 
         Route::post('/api/buckaroo/create-subscription', [BuckarooController::class, 'createSubscription']);
-        Route::get('/api/company/{company}/managers', [UserController::class, 'getManagers']);
         Route::post('/api/companies/search', [CompanyController::class, 'searchCompany']);
         Route::get('/api/company/{company}/company-user', [CompanyController::class, 'getCompanyUser']);
 

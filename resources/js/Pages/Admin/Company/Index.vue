@@ -958,7 +958,7 @@ export default {
             console.log(selected);
             Swal.fire({
                 title: "Weet u zeker dat u deze manager wilt verwijderen?",
-                text: "Hierdoor zal deze manager en alle gebruikers hieronder verloren gaan!. ",
+                text: "Hierdoor zal deze manager verloren gaan! Alle gebruikers onder deze manager zullen doorgeschoven worden!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

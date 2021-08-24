@@ -234,7 +234,14 @@ class RepairController extends Controller
     public function createRepairs(User $user, Request $request)
     {
         $repairs = $request->all();
+        $company = Company::where('id', $user->company_id)->first();
+        if($repairs['0']['pickup']){
+            $newWallet = $company->wallet - 5;
+            $company->update(['wallet' => $newWallet]);
+        }
+        
         foreach($repairs as $repair) {
+            $pickup = $repair['pickup'] === true ? 1 : 0;
             Repair::create([
                 'comment' => $repair['comment'],
                 'device_id' => $repair['device']['id'],
@@ -243,9 +250,10 @@ class RepairController extends Controller
                 'company_id' => $repair['company']['id'],
                 'repair_date' => $repair['repair_date'],
                 'user_id' => $user->id,
+                'pickup' => $pickup,
             ]);
         }
-        return $repairs;
+        return ['repairs' => $repairs, 'company' => $company];
     }
 
     public function completeIndex()
@@ -348,20 +356,11 @@ class RepairController extends Controller
     public function managerCreate()
     {
 
-        $user = User::where('id', Auth::user()->id)->with('devices.brandsModels', 'company')->firstOrFail();
-        $brandsNames = [];
-        $modelNames = [];
+        $users= User::with('company','devices')
+        ->where('manager_id', Auth::user()->id)
+        ->get();
 
-        foreach($user->devices as $device) {
-            array_push($brandsNames, $device->brandsModels->brand);
-            array_push($modelNames, $device->brandsModels->model);
-        }
-        $uBrands = array_unique($brandsNames);
-        $uModels = array_unique($modelNames);
-
-        $brands = Brand::whereIn('name', $uBrands)->get();
         $productTypes = ProductType::all();
-        $models = BrandsModel::whereIn('model', $uModels)->get();
 
         $sundays = [];
         $startDate = Carbon::parse(Carbon::now())->next(Carbon::SUNDAY);
@@ -370,7 +369,7 @@ class RepairController extends Controller
             $sundays[] = $date->format('Y-m-d');
         }
 
-        return Inertia::render('Manager/Repair/Create', ['sundays' => $sundays, 'devices' => $user->devices,'currentUser' => Auth::user(), 'company' => Auth::user()->company, 'models' => $models, 'brands' => $brands, 'productTypes' => $productTypes]);
+        return Inertia::render('Manager/Repair/Create', ['company' => Auth::user()->company, 'sundays' => $sundays, 'users' => $users, 'currentUser' => Auth::user(), 'productTypes' => $productTypes]);
     }
 
     public function repairAll(Repair $repair)
@@ -428,11 +427,12 @@ class RepairController extends Controller
 //        dd($managerArray);
         return Inertia::render('Company/Repair/Index', ['currentUser' => Auth::user(),'managers' => $managerArray, 'company' => Auth::user()->company]);
     }
+
     public function updateWallet(Company $company, Request $request){
         $price = $request->get('price');
         $newWallet = $company->wallet - $request->get('price');
-
         $company->update(['wallet' => $newWallet]);
+        
         return ['company' => $company];
     }
 }

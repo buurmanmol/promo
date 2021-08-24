@@ -124,8 +124,7 @@ class UserController extends Controller
 
     public function update(User $user, Request $request)
     {
-//        dd($request->get('company_id'));
-        $newUser = $user->update([
+        $user->update([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'address' => $request->get('address'),
@@ -135,12 +134,13 @@ class UserController extends Controller
             'province' => $request->get('province'),
             'email' => $request->get('email'),
             'company_id' => $request->get('company_id'),
+            'manager_id' => $request->get('manager_id'),
         ]);
 //        $company = $request->get('company');
 
 //        $company->users()->attach($user);
 
-        return ['user' => $newUser];
+        return ['user' => $user];
     }
 
     public function delete(User $user)
@@ -170,9 +170,11 @@ class UserController extends Controller
             return ['error' => true, 'user' => $user];
         }
         foreach($company as $users){
-            $users->update([
-                'manager_id' => $remainingManagers[0]->id,
-            ]);
+            if($users->manager_id == $user->id){
+                $users->update([
+                    'manager_id' => $remainingManagers[0]->id,
+                ]);
+            }
         }
         $user->delete();
         return ['error' => false, 'user' => $user];
@@ -218,4 +220,60 @@ class UserController extends Controller
         $company = Company::where('id', $user->company_id)->firstOrFail(); 
         return Inertia::render('Manager/User/Update',['company' =>Auth::user()->company, 'bedrijf' => $company, 'user' => $user, 'currentUser' => Auth::user()]); 
     }
+
+
+     ///// Company Kant //////
+
+    //Index
+    public function companyGetManagers(){
+        $users = User::where('company_id', Auth::user()->company->id)->get();
+        $managerArray = [];
+        foreach ($users as $user) {
+            if ($user->role === 'manager') {
+                array_push($managerArray, $user);
+            }
+        }
+        foreach($managerArray as $manager) {
+            $users = User::with('invoices')
+            ->where('manager_id', $manager->id)
+            ->get();
+            $manager->users = $users;
+        }
+        
+        return Inertia::render('Company/Manager/Index', ['managers' => $managerArray, 'user' => Auth::user(), 'company' => Auth::user()->company]);
+    }
+
+    //Create
+    public function companyCreateManager(){
+        return Inertia::render('Company/Manager/Create',['company' =>Auth::user()->company, 'currentUser' => Auth::user()]);  
+    }
+
+    //Update
+    public function CompanyUpdateManager(User $user){
+        $company = Company::where('id', $user->company_id)->firstOrFail(); 
+        return Inertia::render('Company/Manager/Update',['company' =>Auth::user()->company, 'bedrijf' => $company, 'user' => $user, 'currentUser' => Auth::user()]); 
+    }
+
+    public function CompanyUpdateUser(User $user){
+        $company = Company::where('id', $user->company_id)->firstOrFail(); 
+        return Inertia::render('Company/Manager/UserUpdate',['company' =>Auth::user()->company, 'bedrijf' => $company, 'user' => $user, 'currentUser' => Auth::user()]);  
+    }
+    
+    public function getManagersWithUsers(){
+        $users = User::where('company_id', Auth::user()->company->id)->get();
+        $managerArray = [];
+        foreach ($users as $user) {
+            if ($user->role === 'manager') {
+                array_push($managerArray, $user);
+            }
+        }
+        foreach($managerArray as $manager) {
+            $users = User::with('invoices')
+            ->where('manager_id', $manager->id)
+            ->get();
+            $manager->users = $users;
+        } 
+        return ['managers' => $managerArray];
+    }
+    
 }
