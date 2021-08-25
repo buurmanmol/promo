@@ -1,11 +1,11 @@
 <template>
     <jet-authentication-card>
         <template #logo>
-            <jet-authentication-card-logo />
+            <img class="h-8 w-auto sm:h-10" src="/images/logo.png" />
         </template>
 
         <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
+            Bent u uw wachtwoord vergeten? Geen probleem. Vul hieronder uw email adres in van het desbetreffende account en we zullen u een link sturen waar u uw wachtwoord kan wijzigen.
         </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -22,7 +22,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
+                    Email Wachtwoord Reset Link
                 </jet-button>
             </div>
         </form>

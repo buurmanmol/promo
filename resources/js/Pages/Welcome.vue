@@ -242,33 +242,63 @@
                 </div>
 
                 <!-- CTA Section -->
-                <div class="relative bg-gray-900">
-                    <div class="relative h-56 bg-indigo-600 sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2">
-                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&sat=-100" alt="" />
-                        <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-600" style="mix-blend-mode: multiply;" />
-                    </div>
-                    <div class="relative mx-auto max-w-md px-4 py-12 sm:max-w-7xl sm:px-6 sm:py-20 md:py-28 lg:px-8 lg:py-32">
-                        <div class="md:ml-auto md:w-1/2 md:pl-10">
-                            <h2 class="text-base font-semibold uppercase tracking-wider text-gray-300">
-                                De beste van het Noorden
-                            </h2>
-                            <p class="mt-2 text-white text-3xl font-extrabold tracking-tight sm:text-4xl">
-                                Vóór professionals, dóór professionals
-                            </p>
-                            <p class="mt-3 text-lg text-gray-300">
-                                Met meer dan 7 jaar ervaring in het repareren van smart devices, kunnen wij met een gerust hart zeggen dat wij de beste van het Noorden zijn.
-                            </p>
-                            <div class="mt-8">
-                                <div class="inline-flex rounded-md shadow">
-                                    <a href="/offerte" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-50">
-                                        Vraag een offerte aan!
-                                        <ExternalLinkIcon class="-mr-1 ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    </a>
-                                </div>
+                <div class="bg-white">
+                    <div class="mx-auto py-12 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-24">
+                        <div class="grid grid-cols-2 gap-12 lg:grid-cols-3 lg:gap-8">
+                            <div class="space-y-5 sm:space-y-4">
+                                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Ons team</h2>
+                                <p class="text-xl text-gray-500">Ons team bestaat uit meerdere specialisten in hun eigen vakgebied. Hiermee verzekeren wij dat we u altijd van dienst kunnen zijn.</p>
+                            </div>
+                            <div class="col-span-2 lg:col-span-2">
+                                <ul role="list" class="grid grid-cols-1 space-y-12 sm:grid sm:grid-cols-2 sm:gap-12 sm:space-y-0 lg:gap-x-8">
+                                    <li>
+                                        <div class="flex items-center space-x-4 lg:space-x-6">
+                                            <img class="w-60 h-60 rounded-full lg:w-20 lg:h-20" src="/images/Zamir.jpg" alt="">
+                                            <div class="font-medium text-lg leading-6 space-y-1">
+                                                <h3>Zamir Hamidi</h3>
+                                                <p class="text-indigo-600">CEO</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center space-x-4 lg:space-x-6">
+                                            <img class="w-50 h-50 rounded-full lg:w-20 lg:h-20" src="/images/Shahir.jpg" alt="">
+                                            <div class="font-medium text-lg leading-6 space-y-1">
+                                                <h3>Shahir Hamidi</h3>
+                                                <p class="text-indigo-600">Technisch Specialist</p>
+                                            </div>
+                                        </div>
+                                    </li><li>
+                                    <div class="flex items-center space-x-4 lg:space-x-6">
+                                        <img class="w-60 h-60 rounded-full lg:w-20 lg:h-20" src="/images/Max.jpg" alt="">
+                                        <div class="font-medium text-lg leading-6 space-y-1">
+                                            <h3>Max van Dijk</h3>
+                                            <p class="text-indigo-600">Technisch Specialist</p>
+                                        </div>
+                                    </div>
+                                </li><li>
+                                    <div class="flex items-center space-x-4 lg:space-x-6">
+                                        <img class="w-60 h-60 rounded-full lg:w-20 lg:h-20" src="/images/Samir.jpg" alt="">
+                                        <div class="font-medium text-lg leading-6 space-y-1">
+                                            <h3>Samir Hamidi</h3>
+                                            <p class="text-indigo-600">Sales Manager</p>
+                                        </div>
+                                    </div>
+                                </li><li>
+                                    <div class="flex items-center space-x-4 lg:space-x-6">
+                                        <img class="w-60 h-60 rounded-full lg:w-20 lg:h-20" src="/images/Thomas.jpg" alt="">
+                                        <div class="font-medium text-lg leading-6 space-y-1">
+                                            <h3>Thomas Mol</h3>
+                                            <p class="text-indigo-600">Fullstack Developer</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </main>
             <footer class="bg-gray-50" aria-labelledby="footerHeading">
                 <h2 id="footerHeading" class="sr-only">Footer</h2>
@@ -311,6 +341,7 @@
 </template>
 
 <script>
+
 import { defineComponent, h } from 'vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import {
@@ -323,8 +354,11 @@ import {
     ServerIcon,
     ShieldCheckIcon, SupportIcon, SwitchVerticalIcon,
     XIcon,
-} from '@heroicons/vue/outline'
+}
+from '@heroicons/vue/outline'
 import { ChevronRightIcon, ExternalLinkIcon } from '@heroicons/vue/solid'
+
+
 
 const navigation = [
     { name: 'Product', href: '#' },

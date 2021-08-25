@@ -199,7 +199,7 @@
                                                 text-sm text-gray-700
                                             "
                                         >
-                                            <span>{{ user.address }} </span>
+                                            <span>{{ user.address }}, {{user.city}} </span>
                                         </td>
                                         <td
                                             class="
