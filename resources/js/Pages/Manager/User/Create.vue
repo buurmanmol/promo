@@ -361,6 +361,7 @@ export default {
                 postal_code: "",
                 role: "user",
                 phone_number: "",
+                rek_houder:null,
                 manager_id: this.currentUser.id,
                 company_id: this.currentUser.company_id,
                 email: "",
