@@ -214,6 +214,7 @@ import {
     TicketIcon,
     DocumentTextIcon,
     DeviceMobileIcon,
+    QuestionMarkCircleIcon,
 
 } from '@heroicons/vue/outline'
 import {
@@ -234,6 +235,7 @@ const navigation = [
 
 ]
 const secondaryNavigation = [
+    { name: 'Klantenservice', href: '/support', icon: QuestionMarkCircleIcon , current: 'support' },
 
 ]
 const cards = [
@@ -288,7 +290,8 @@ export default {
         MenuAlt1Icon,
         SearchIcon,
         XIcon,
-        OfficeBuildingIcon
+        OfficeBuildingIcon,
+        QuestionMarkCircleIcon,
     },
 
     methods: {

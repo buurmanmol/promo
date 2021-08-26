@@ -167,14 +167,6 @@ export default {
             page: "dashboard",
             actions: [
                 {
-                    name: "Nieuwe reparatie",
-                    subname: "",
-                    message:
-                        "Klik hier om een nieuwe reparatieaanvraag te doen!",
-                    href: "/company/repair/create",
-                    icon: PlusCircleIcon,
-                },
-                {
                     name: "Mijn reparaties",
                     subname: "",
                     message:
